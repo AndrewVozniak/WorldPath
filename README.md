@@ -1,5 +1,11 @@
 # WorldPath
 
+**Notion Info:** https://www.notion.so/WorldPath-Info-f406ebaa1cea4802bdbad5c0b64138cd
+**Notion Tasks:** https://www.notion.so/3cc71bfad31b4a5da3a681104c8aad9e?v=7569cba4a8fb4eeea224cc7c749f7938
+**Microservices architecture:**
+
+---
+
 **Цель проекта:** Создание цифровой платформы для путешественников, позволяющей пользователям планировать, бронировать и наслаждаться уникальными туристическими маршрутами в Финляндии и за её пределами.
 
 ---
