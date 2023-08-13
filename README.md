@@ -34,7 +34,7 @@
 
 **Технологии:** 
 
-- **Backend:** Python (Django/Flask), Node.js (Express.js), Go, Java (Spring Boot).
+- **Backend:** Python (Django/Flask), Node.js (Express.js), Go, Java (Spring Boot), С#/.Net.
 - **Frontend:** JavaScript/TypeScript с использованием современных фреймворков (React/Vue/Angular).
 - **Базы данных:** PostgreSQL, MongoDB, Elasticsearch.
 - **Микросервисы:** Разделение функционала на независимые микросервисы для масштабируемости и гибкости.
