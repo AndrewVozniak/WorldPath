@@ -1,15 +1,58 @@
-<div>
-  <div class="burger">
-    <div class="burger__line"></div>
-    <div class="burger__line"></div>
-    <div class="burger__line"></div>
+<div id="header">
+  <div class="header-container">
+    <div class="burger burger-open">
+      <img ngSrc="/assets/icons/burger_open.svg" class="control" alt="burgerOpen" (click)="toggleMenu()" height="13" width="15">
+    </div>
+
+    <a routerLink="/" class="logo">
+      <h1>WorldPath</h1>
+    </a>
+
+    <div class="search-container">
+      <img ngSrc="/assets/icons/search.svg"
+          class="search-icon control"
+          alt="searchIcon" height="18" width="18"
+          (click)="toggleSearch()">
+    </div>
   </div>
 
-  <div class="logo">
-    <h2>WorldPath</h2>
+  <div *ngIf="showMenu" id="menu-overlay" (click)="handleOverlayClick($event)">
+    <div id="menu">
+      <div class="mx-auto">
+        <div class="close-burger" (click)="toggleMenu()">
+          <img src="/assets/icons/burger_close.svg" alt="burger close" class="mx-auto control">
+        </div>
+
+        <div class="auth-buttons" *ngIf="!auth">
+          <a routerLink="/register" class="btn btn-primary">Register</a>
+
+          <a routerLink="/login" class="btn btn-secondary">Sign In</a>
+        </div>
+
+
+        <div class="main-menu">
+          <a routerLink="{{ item.link }}" routerLinkActive="is-active" class="menu-item" *ngFor="let item of mainMenuItems">
+            {{ item.name }}
+          </a>
+        </div>
+
+        <hr class="menu-line">
+
+        <div class="sub-menu">
+          <a routerLink="{{ item.link }}" routerLinkActive="is-active" class="menu-item" *ngFor="let item of subMenuItems">
+            {{ item.name }}
+          </a>
+        </div>
+
+        <div class="license">
+          <p>© {{ currentYear }} WorldPath</p>
+          <p>All rights reserved.</p>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="search">
-    <img src="#" alt="">
+  <div *ngIf="showSearch" id="search-menu" class="mb-5">
+    <input placeholder="Search" class="search-input" type="text">
   </div>
 </div>

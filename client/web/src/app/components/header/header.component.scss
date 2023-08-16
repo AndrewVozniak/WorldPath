@@ -1,0 +1,143 @@
+#header {
+  margin-top: 5px;
+  margin-bottom: 25px;
+
+  position: relative;
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .burger-open {
+      cursor: pointer;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    .search-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .search-icon {
+        align-self: self-end;
+        cursor: pointer;
+      }
+    }
+  }
+
+  #search-menu {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    right: 0;
+
+    .search-input {
+      border: 2px solid #253158;
+      border-radius: 10px;
+
+      color: #253158;
+      padding: 2px 8px;
+
+      width: 100%;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  #menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: rgba(0, 0, 0, 0.3);
+
+    #menu {
+      width: 50vw;
+      display: flex;
+      flex-direction: column;
+
+      position: fixed;
+      top: 0;
+      left: 0;
+
+      height: 100vh;
+
+      padding-top: 15px;
+
+      background-color: #fff;
+
+      .close-burger {
+        margin-left: auto;
+        margin-right: auto;
+
+        margin-bottom: 10px;
+
+        cursor: pointer;
+      }
+
+      .auth-buttons {
+        .btn {
+          width: 170px;
+          margin-bottom: 15px;
+        }
+
+        @media screen and (max-width: 370px) {
+          .btn {
+            width: 100%;
+          }
+        }
+      }
+
+      .menu-line {
+        width: 100%;
+        height: 2px;
+
+        margin-top: 15px;
+        margin-bottom: 15px;
+
+        background-color: #253158;
+      }
+
+      .main-menu {
+        display: flex;
+        flex-direction: column;
+
+        font-weight: bold;
+      }
+
+      .sub-menu {
+        display: flex;
+        flex-direction: column;
+
+        color: #3A4978;
+      }
+
+      .is-active {
+        text-decoration: underline;
+      }
+
+      .license {
+        position: absolute;
+        bottom: 15px;
+
+        // center
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+}
