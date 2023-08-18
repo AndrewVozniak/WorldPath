@@ -24,14 +24,14 @@
         </div>
 
         <div class="auth-buttons" *ngIf="!auth">
-          <a routerLink="/register" class="btn btn-primary">Register</a>
+          <a (click)="toggleMenu()" routerLink="/register" class="btn btn-primary">Register</a>
 
-          <a routerLink="/login" class="btn btn-secondary">Sign In</a>
+          <a (click)="toggleMenu()" routerLink="/login" class="btn btn-secondary">Sign In</a>
         </div>
 
 
         <div class="main-menu">
-          <a routerLink="{{ item.link }}" routerLinkActive="is-active" class="menu-item" *ngFor="let item of mainMenuItems">
+          <a routerLink="{{ item.link }}" (click)="toggleMenu()" routerLinkActive="is-active" class="menu-item" *ngFor="let item of mainMenuItems">
             {{ item.name }}
           </a>
         </div>
@@ -39,7 +39,7 @@
         <hr class="menu-line">
 
         <div class="sub-menu">
-          <a routerLink="{{ item.link }}" routerLinkActive="is-active" class="menu-item" *ngFor="let item of subMenuItems">
+          <a routerLink="{{ item.link }}" (click)="toggleMenu()" routerLinkActive="is-active" class="menu-item" *ngFor="let item of subMenuItems">
             {{ item.name }}
           </a>
         </div>
@@ -53,6 +53,6 @@
   </div>
 
   <div *ngIf="showSearch" id="search-menu" class="mb-5">
-    <input placeholder="Search" class="search-input" type="text">
+    <app-searchbar></app-searchbar>
   </div>
 </div>

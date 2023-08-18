@@ -33,6 +33,9 @@
 
   #search-menu {
     position: absolute;
+
+    z-index: 100000;
+
     width: 100%;
     top: 100%;
     right: 0;
@@ -54,6 +57,9 @@
 
   #menu-overlay {
     position: fixed;
+
+    z-index: 100000;
+
     top: 0;
     left: 0;
 

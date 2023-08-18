@@ -1,0 +1,42 @@
+
+.search__wrapper {
+  position: relative;
+
+  .search__input {
+    width: 100%;
+    border-radius: 100px;
+
+    color: #253158;
+    background-color: #EAEAEA;
+
+    padding: 3px 10px;
+
+    &::placeholder {
+      color: #635656;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .search__button {
+    position: absolute;
+    right: 0;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    border: none;
+    border-radius: 100px;
+
+
+    padding: 3px 10px;
+
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
