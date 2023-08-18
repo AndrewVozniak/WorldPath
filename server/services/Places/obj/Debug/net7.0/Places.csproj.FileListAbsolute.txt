@@ -225,3 +225,11 @@ C:\Users\prozy\source\repos\WorldPath\server\services\Places\obj\Debug\net7.0\re
 C:\Users\prozy\source\repos\WorldPath\server\services\Places\obj\Debug\net7.0\Places.pdb
 C:\Users\prozy\source\repos\WorldPath\server\services\Places\obj\Debug\net7.0\Places.genruntimeconfig.cache
 C:\Users\prozy\source\repos\WorldPath\server\services\Places\obj\Debug\net7.0\ref\Places.dll
+C:\Users\prozy\source\repos\WorldPath\server\services\Places\bin\Debug\net7.0\MassTransit.dll
+C:\Users\prozy\source\repos\WorldPath\server\services\Places\bin\Debug\net7.0\MassTransit.Abstractions.dll
+C:\Users\prozy\source\repos\WorldPath\server\services\Places\bin\Debug\net7.0\MassTransit.RabbitMqTransport.dll
+C:\Users\prozy\source\repos\WorldPath\server\services\Places\bin\Debug\net7.0\Microsoft.Extensions.Diagnostics.HealthChecks.dll
+C:\Users\prozy\source\repos\WorldPath\server\services\Places\bin\Debug\net7.0\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
+C:\Users\prozy\source\repos\WorldPath\server\services\Places\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\prozy\source\repos\WorldPath\server\services\Places\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+C:\Users\prozy\source\repos\WorldPath\server\services\Places\bin\Debug\net7.0\RabbitMQ.Client.dll
