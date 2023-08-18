@@ -15,6 +15,17 @@ builder.Services.AddDbContext<PlaceDbContext>(options =>
 {
     options.UseInMemoryDatabase("InMem");
 });
+// builder.Services.AddMassTransit(x =>
+// {
+//     x.UsingRabbitMq((context, cfg) =>
+//     {
+//         cfg.Host("localhost", 5672, "/", h =>
+//         {
+//             h.Username("guest");
+//             h.Password("guest");
+//         });
+//     });
+// });
 builder.Services.AddScoped<IPlaceRepository, PlaceRepository>();
 var app = builder.Build();
 
