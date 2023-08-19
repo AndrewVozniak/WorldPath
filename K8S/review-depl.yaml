@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: review-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reviewservice
+  template:
+    metadata:
+      labels:
+        app: reviewservice
+    spec:
+      containers:
+        - name: reviewservice
+          image: protsykyaroslav/reviewservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: review-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: reviewservice
+  ports:
+  - name: service
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  - name: reviewgrpc
+    protocol: TCP
+    port: 666
+    targetPort: 666
