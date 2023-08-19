@@ -1,12 +1,13 @@
 <div class="widget" id="weather-widget">
   <div class="widget__heading">
     <h2 class="widget__city" *ngIf="country">{{ city }}, {{ country }}</h2>
-    <h2 class="widget__city" *ngIf="!country">{{ city }}</h2>
+
+    <h2 class="widget__city" *ngIf="!country">Unable to retrieve your location :(</h2>
 
     <p class="widget__weather">{{ weather }}</p>
   </div>
 
-  <div class="widget__body">
+  <div class="widget__body" *ngIf="temperature">
     <p class="widget__body__info">Temperature: {{ temperature  }} ℃</p>
     <p class="widget__body__info">Pressure: {{ pressure }} hPa</p>
     <p class="widget__body__info">Humidity: {{ humidity }}%</p>

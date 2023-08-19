@@ -23,8 +23,6 @@ export class HomeWeatherComponent {
       navigator.geolocation.getCurrentPosition(position => {
         this.getWeather(position.coords.latitude, position.coords.longitude);
       });
-    } else {
-      this.city = 'Unable to retrieve your location :('
     }
   }
 
@@ -56,15 +54,19 @@ export class HomeWeatherComponent {
         widget.style.backgroundImage = 'url(assets/img/nature/system_weather_widget/cloud.svg)';
       }
 
-      if (weather.includes('Rain')) {
+      else if (weather.includes('Rain')) {
         widget.style.backgroundImage = 'url(assets/img/nature/system_weather_widget/rain.svg)';
       }
 
-      if (weather.includes('Snow')) {
+      else if (weather.includes('Snow')) {
         widget.style.backgroundImage = 'url(assets/img/nature/system_weather_widget/snow.svg)';
       }
 
-      if (weather.includes('Clear')) {
+      else if (weather.includes('Clear')) {
+        widget.style.backgroundImage = 'url(assets/img/nature/system_weather_widget/clear.svg)';
+      }
+
+      else {
         widget.style.backgroundImage = 'url(assets/img/nature/system_weather_widget/clear.svg)';
       }
     }
