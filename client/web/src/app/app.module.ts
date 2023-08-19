@@ -11,6 +11,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
 import { HomeEntryComponent } from './components/home-entry/home-entry.component';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
+import { HomeReviewsComponent } from './components/home-reviews/home-reviews.component';
+import { HomeWeatherComponent } from './components/home-weather/home-weather.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { SearchbarComponent } from './components/searchbar/searchbar.component';
     HomeComponent,
     HomeEntryComponent,
     SearchbarComponent,
+    HomeReviewsComponent,
+    HomeWeatherComponent,
   ],
   imports: [
       BrowserModule,

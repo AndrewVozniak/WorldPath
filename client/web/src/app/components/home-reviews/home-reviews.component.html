@@ -1,0 +1,25 @@
+<div id="reviews_section">
+  <div id="reviews">
+    <h2 class="title">{{ title }}</h2>
+
+    <div class="reviews_wrapper">
+      <div class="review"
+           [ngClass]="{ 'hidden': currentSlide !== review.id }"
+           *ngFor="let review of reviews">
+
+        <img [src]="review.author.img" class="review_image" [alt]="review.author.name">
+
+        <div class="review_content">
+          <div class="review_author">{{ review.author.name }}</div>
+          <div class="review_text">{{ review.text }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="control" [ngClass]="{ 'disabled': currentSlide === 1 }" (click)="toggleReview(1)"></div>
+    <div class="control" [ngClass]="{ 'disabled': currentSlide === 2 }" (click)="toggleReview(2)"></div>
+    <div class="control" [ngClass]="{ 'disabled': currentSlide === 3 }" (click)="toggleReview(3)"></div>
+  </div>
+</div>
