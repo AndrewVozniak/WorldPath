@@ -13,6 +13,7 @@ import { HomeEntryComponent } from './components/home-entry/home-entry.component
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { HomeReviewsComponent } from './components/home-reviews/home-reviews.component';
 import { HomeWeatherComponent } from './components/home-weather/home-weather.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { HomeWeatherComponent } from './components/home-weather/home-weather.com
     SearchbarComponent,
     HomeReviewsComponent,
     HomeWeatherComponent,
+    FooterComponent,
   ],
   imports: [
       BrowserModule,

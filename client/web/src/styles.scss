@@ -11,11 +11,35 @@ $secondary-color: #3A4978;
 $primary-color-dark: #000;
 $secondary-color-dark: #3d3d3d;
 
+// mixins
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white,  50%)) {
+  // For Google Chrome
+  &::-webkit-scrollbar {
+    width:  $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+
+  // For Internet Explorer
+  & {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}
+
 body {
   font-family: 'Montserrat', sans-serif;
   color: $primary-color;
   margin: 0;
   padding: 0;
+  @include scrollbars(10px, $primary-color, $secondary-color);
 }
 
 .container {
