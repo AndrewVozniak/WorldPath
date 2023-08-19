@@ -1,1 +1,15 @@
-<p>home-weather works!</p>
+<div class="widget" id="weather-widget">
+  <div class="widget__heading">
+    <h2 class="widget__city" *ngIf="country">{{ city }}, {{ country }}</h2>
+    <h2 class="widget__city" *ngIf="!country">{{ city }}</h2>
+
+    <p class="widget__weather">{{ weather }}</p>
+  </div>
+
+  <div class="widget__body">
+    <p class="widget__body__info">Temperature: {{ temperature  }} ℃</p>
+    <p class="widget__body__info">Pressure: {{ pressure }} hPa</p>
+    <p class="widget__body__info">Humidity: {{ humidity }}%</p>
+    <p class="widget__body__info">Wind: {{ wind }} m/s</p>
+  </div>
+</div>
