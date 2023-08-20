@@ -10,7 +10,7 @@
     ></app-routes-difficult-level>
   </div>
 
-  <div class="mb-5" *ngFor="let route of avaibleRoutes">
-    <app-routes-card [route]="route"></app-routes-card>
+  <div class="mb-5">
+    <app-routes-card [route]="route" *ngFor="let route of avaibleRoutes"></app-routes-card>
   </div>
 </div>

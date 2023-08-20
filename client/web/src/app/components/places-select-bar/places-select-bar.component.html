@@ -1,0 +1,13 @@
+<div class="places__search__widget">
+  <div class="widget__heading">
+    <h2 class="heading__title">Place name:</h2>
+  </div>
+
+  <div class="widget__body">
+    <input
+      [ngModel]="searchValue"
+      (ngModelChange)="searchChange($event)"
+      placeholder="Search by name"
+      class="search__input" >
+  </div>
+</div>

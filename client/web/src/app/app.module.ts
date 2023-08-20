@@ -17,6 +17,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RoutesComponent } from './pages/routes/routes.component';
 import { RoutesDifficultLevelComponent } from './components/routes-difficult-level/routes-difficult-level.component';
 import { RoutesCardComponent } from './components/routes-card/routes-card.component';
+import { PlacesComponent } from './pages/places/places.component';
+import { PlacesSelectBarComponent } from './components/places-select-bar/places-select-bar.component';
+import { PlacesCardComponent } from './components/places-card/places-card.component';
+import { FormsModule } from '@angular/forms'; // Импортировать FormsModule
 
 @NgModule({
   declarations: [
@@ -33,11 +37,15 @@ import { RoutesCardComponent } from './components/routes-card/routes-card.compon
     RoutesComponent,
     RoutesDifficultLevelComponent,
     RoutesCardComponent,
+    PlacesComponent,
+    PlacesSelectBarComponent,
+    PlacesCardComponent,
   ],
   imports: [
-      BrowserModule,
-      AppRoutingModule,
-      NgOptimizedImage,
+    BrowserModule,
+    AppRoutingModule,
+    NgOptimizedImage,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

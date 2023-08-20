@@ -1,0 +1,17 @@
+<div class="card">
+  <img [src]="place.image" alt="carpatians - worldpath" class="card__image">
+
+  <div class="card__content">
+    <div class="card__heading">
+      <h2 class="card__title">{{ place.name }}</h2>
+
+      <div class="card__geo">{{ place.city }}, {{ place.country }}</div>
+    </div>
+
+    <p class="card__description">{{ place.description }}</p>
+
+    <div class="card__actions">
+      <a routerLink="/place/{{place.id}}" class="btn btn-secondary">Go to place</a>
+    </div>
+  </div>
+</div>

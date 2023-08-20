@@ -1,0 +1,30 @@
+.places__search__widget {
+  display: flex;
+  flex-direction: column;
+
+  .widget__heading {
+    .heading__title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+  }
+
+  .widget__body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+
+    .search__input {
+      width: 100%;
+
+      border-radius: 7px;
+      border: 2px solid #253158;
+
+      padding: 10px 15px;
+    }
+  }
+}

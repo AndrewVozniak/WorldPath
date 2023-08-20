@@ -1,0 +1,15 @@
+<div class="places_page">
+  <div class="mb-5">
+    <button class="btn btn-primary mx-auto">Share your own</button>
+  </div>
+
+  <div class="mb-5">
+    <app-places-select-bar
+      (onSearchChange)="updatePlaces($event)">
+    </app-places-select-bar>
+  </div>
+
+  <div class="mb-5 card-container">
+    <app-places-card [place]="place" *ngFor="let place of avaiblePlaces" class="card_wrapper"></app-places-card>
+  </div>
+</div>

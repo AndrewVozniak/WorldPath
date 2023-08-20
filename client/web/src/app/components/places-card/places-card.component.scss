@@ -1,0 +1,94 @@
+.card {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  .card__image {
+    border-radius: 15px 15px 0 0;
+
+    @media screen and (min-width: 768px) {
+      width: 100%;
+
+      // crop by height
+      height: 50vh;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  .card__content {
+    position: relative;
+    bottom: 10px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 10px 20px;
+
+    color: #fff;
+    background-color: #253158;
+
+    border-radius: 0 0 15px 15px;
+
+    @media screen and (min-width: 768px) {
+      bottom: 40px;
+    }
+
+
+    .card__heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+
+      .card__title {
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .card__geo {
+        font-size: 13px;
+        font-weight: 600;
+
+        color: #fff;
+        background-color: #18213e;
+
+        border-radius: 5px;
+
+        padding: 3px 15px;
+
+        text-align: center;
+      }
+    }
+
+    .card__description {
+      font-size: 15px;
+      font-weight: 400;
+
+      margin-bottom: 10px;
+    }
+
+    .card__actions {
+      padding-bottom: 10px;
+
+      .btn {
+        min-width: 110px;
+        width: 35%;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        @media screen and (min-width: 768px) {
+          width: 45%;
+          font-size: 18px;
+        }
+        &:hover {
+          transform: none;
+          background-color: #ececec;
+          color: #253158;
+        }
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@ export class RoutesComponent {
         '      Create routes adapted to current conditions.\n' +
         '      Stay up to date with most popular destinations',
       level: 'easy',
+      image: '/assets/img/nature/carpatians.svg',
     },
     {
       id: 2,
@@ -23,6 +24,7 @@ export class RoutesComponent {
         '      Create routes adapted to current conditions.\n' +
         '      Stay up to date with most popular destinations',
       level: 'medium',
+      image: '/assets/img/nature/carpatians.svg',
     },
     {
       id: 3,
@@ -31,6 +33,7 @@ export class RoutesComponent {
         '      Create routes adapted to current conditions.\n' +
         '      Stay up to date with most popular destinations',
       level: 'hard',
+      image: '/assets/img/nature/carpatians.svg',
     },
   ];
   public avaibleRoutes = [...this.routes];
