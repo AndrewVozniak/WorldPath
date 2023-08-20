@@ -18,7 +18,7 @@ import { RoutesComponent } from './pages/routes/routes.component';
 import { RoutesDifficultLevelComponent } from './components/routes-difficult-level/routes-difficult-level.component';
 import { RoutesCardComponent } from './components/routes-card/routes-card.component';
 import { PlacesComponent } from './pages/places/places.component';
-import { PlacesSelectBarComponent } from './components/places-select-bar/places-select-bar.component';
+import { PlacesSearchBarComponent } from './components/places-search-bar/places-search-bar.component';
 import { PlacesCardComponent } from './components/places-card/places-card.component';
 import { FormsModule } from '@angular/forms'; // Импортировать FormsModule
 
@@ -38,7 +38,7 @@ import { FormsModule } from '@angular/forms'; // Импортировать Form
     RoutesDifficultLevelComponent,
     RoutesCardComponent,
     PlacesComponent,
-    PlacesSelectBarComponent,
+    PlacesSearchBarComponent,
     PlacesCardComponent,
   ],
   imports: [

@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlacesSelectBarComponent } from './places-select-bar.component';
+import { PlacesSearchBarComponent } from './places-search-bar.component';
 
 describe('PlacesSelectBarComponent', () => {
-  let component: PlacesSelectBarComponent;
-  let fixture: ComponentFixture<PlacesSelectBarComponent>;
+  let component: PlacesSearchBarComponent;
+  let fixture: ComponentFixture<PlacesSearchBarComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PlacesSelectBarComponent]
+      declarations: [PlacesSearchBarComponent]
     });
-    fixture = TestBed.createComponent(PlacesSelectBarComponent);
+    fixture = TestBed.createComponent(PlacesSearchBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
