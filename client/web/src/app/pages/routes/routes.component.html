@@ -1,0 +1,16 @@
+<div class="routes_page">
+  <div class="mb-5">
+    <button class="btn btn-primary mx-auto">Share your own</button>
+  </div>
+
+  <div class="mb-5">
+    <app-routes-difficult-level
+      [difficultLevels]="difficultLevels"
+      (levelsChanged)="updateRoutes($event)"
+    ></app-routes-difficult-level>
+  </div>
+
+  <div class="mb-5" *ngFor="let route of avaibleRoutes">
+    <app-routes-card [route]="route"></app-routes-card>
+  </div>
+</div>

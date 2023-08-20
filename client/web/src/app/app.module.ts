@@ -14,6 +14,9 @@ import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { HomeReviewsComponent } from './components/home-reviews/home-reviews.component';
 import { HomeWeatherComponent } from './components/home-weather/home-weather.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { RoutesComponent } from './pages/routes/routes.component';
+import { RoutesDifficultLevelComponent } from './components/routes-difficult-level/routes-difficult-level.component';
+import { RoutesCardComponent } from './components/routes-card/routes-card.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { FooterComponent } from './components/footer/footer.component';
     HomeReviewsComponent,
     HomeWeatherComponent,
     FooterComponent,
+    RoutesComponent,
+    RoutesDifficultLevelComponent,
+    RoutesCardComponent,
   ],
   imports: [
       BrowserModule,

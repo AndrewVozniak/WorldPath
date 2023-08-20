@@ -1,0 +1,16 @@
+<div class="card">
+  <img [src]="'/assets/img/nature/carpatians.svg'" alt="carpatians - worldpath" class="card__image">
+
+  <div class="card__content">
+    <div class="card__heading">
+      <h2 class="card__title">{{ route.title }}</h2>
+      <p class="card__difficult {{ route.level }}">{{ route.level }}</p>
+    </div>
+
+    <p class="card__description">{{ route.description }}</p>
+
+    <div class="card__actions">
+      <a routerLink="/route/{{route.id}}" class="btn btn-secondary">Go to route</a>
+    </div>
+  </div>
+</div>

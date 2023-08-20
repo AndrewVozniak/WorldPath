@@ -1,0 +1,23 @@
+<div class="levels__widget">
+  <div class="widget__heading">
+    <h2 class="heading__title">Difficulty level</h2>
+  </div>
+
+  <div class="widget__body">
+    <div class="level" *ngFor="let level of difficultLevels">
+      <input type="checkbox"
+             id="{{ level }}"
+             class="level__input"
+             name="level"
+             (click)="toggleLevel(level)"
+             checked
+      >
+
+      <label
+        for="{{ level }}"
+        class="level__title">
+        {{ level | titlecase }}
+      </label>
+    </div>
+  </div>
+</div>
