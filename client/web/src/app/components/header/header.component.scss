@@ -1,6 +1,6 @@
 #header {
   margin-top: 5px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 
   position: relative;
 
@@ -31,26 +31,24 @@
     }
   }
 
-  #search-menu {
+  .search-wrapper {
     position: absolute;
-
-    z-index: 100000;
-
-    width: 100%;
     top: 100%;
-    right: 0;
+    width: 100%;
 
-    .search-input {
-      border: 2px solid #253158;
-      border-radius: 10px;
+    background-color: white;
 
-      color: #253158;
-      padding: 2px 8px;
+    #search-menu {
+      position: absolute;
+
+      z-index: 100000;
 
       width: 100%;
+      top: 100%;
 
-      &:focus {
-        outline: none;
+      .search-input {
+        margin-left: auto;
+        margin-right: auto;
       }
     }
   }
