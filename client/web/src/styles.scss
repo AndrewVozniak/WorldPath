@@ -74,13 +74,15 @@ body {
   transition: 0.3s all ease-in-out;
 
   &:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
   }
 }
 
 .btn-primary {
   background-color: $primary-color;
   color: #fff;
+
+  font-weight: 700;
 
   border-color: $primary-color;
 
@@ -117,5 +119,20 @@ body {
 
   &:hover {
     transform: scale(1.05);
+  }
+}
+
+
+.checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+
+  border-radius: 5px;
+  border: 1px solid $primary-color;
+
+  cursor: pointer;
+
+  &:checked {
+    background-color: $primary-color;
   }
 }

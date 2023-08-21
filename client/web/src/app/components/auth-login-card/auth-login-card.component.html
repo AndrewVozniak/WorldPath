@@ -1,0 +1,28 @@
+<div class="card">
+  <h1 class="card__title">{{ title }}</h1>
+
+  <div class="card__fields">
+    <div class="field_wrapper">
+      <label for="email">Email: </label>
+      <input type="text" class="card__input" id="email" name="email" placeholder="email" required>
+    </div>
+
+    <div class="field_wrapper">
+      <label for="password">Password: </label>
+      <input type="text" class="card__input" id="password" name="password" placeholder="password" required>
+    </div>
+
+    <div class="checkbox_wrapper">
+      <label for="remember_me" class="cursor-pointer">Remember me: </label>
+      <input type="checkbox" class="checkbox" id="remember_me" name="remember_me" required>
+    </div>
+  </div>
+
+  <a routerLink="/register"
+     class="text-gray-500 underline transition duration-500 hover:text-gray-800 mb-2"
+  >
+    Don't have an account yet?
+  </a>
+
+  <button type="submit" class="btn btn-primary">Continue</button>
+</div>

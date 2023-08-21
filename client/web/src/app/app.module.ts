@@ -20,7 +20,9 @@ import { RoutesCardComponent } from './components/routes-card/routes-card.compon
 import { PlacesComponent } from './pages/places/places.component';
 import { PlacesSearchBarComponent } from './components/places-search-bar/places-search-bar.component';
 import { PlacesCardComponent } from './components/places-card/places-card.component';
-import { FormsModule } from '@angular/forms'; // Импортировать FormsModule
+import { FormsModule } from '@angular/forms';
+import { AuthRegisterCardComponent } from './components/auth-register-card/auth-register-card.component';
+import { AuthLoginCardComponent } from './components/auth-login-card/auth-login-card.component'; // Импортировать FormsModule
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { FormsModule } from '@angular/forms'; // Импортировать Form
     PlacesComponent,
     PlacesSearchBarComponent,
     PlacesCardComponent,
+    AuthRegisterCardComponent,
+    AuthLoginCardComponent,
   ],
   imports: [
     BrowserModule,
