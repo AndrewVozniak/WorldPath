@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: place-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: placeservice
+  template:
+    metadata:
+      labels:
+        app: placeservice
+    spec:
+      containers:
+        - name: placeservice
+          image: protsykyaroslav/placeservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: review-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: placeservice
+  ports:
+  - name: service
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  - name: reviewgrpc
+    protocol: TCP
+    port: 5000
+    targetPort: 5000
