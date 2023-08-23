@@ -1,11 +1,11 @@
-<mxfile host="app.diagrams.net" modified="2023-08-23T18:58:48.647Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="k6ILJR56jAwqzs8T4yWa" version="21.6.9" type="github" pages="9">
+<mxfile host="app.diagrams.net" modified="2023-08-23T19:01:26.948Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="nECPCBNTkwMFwH9RWW1Y" version="21.6.9" type="github" pages="9">
   <diagram id="20eTTLnsQ4efWxaFnXi7" name="Users">
     <mxGraphModel dx="2750" dy="534" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="swshb4QQmOywbGdpQhQu-527" value="Users" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;fillColor=#f8cecc;strokeColor=#b85450;rounded=1;" parent="1" vertex="1">
-          <mxGeometry x="-950" y="730" width="270" height="430" as="geometry">
+          <mxGeometry x="-750" y="630" width="270" height="430" as="geometry">
             <mxRectangle x="-960" y="720" width="70" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -327,7 +327,13 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="swshb4QQmOywbGdpQhQu-781" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="swshb4QQmOywbGdpQhQu-766" target="swshb4QQmOywbGdpQhQu-527" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-970" y="395" />
+              <mxPoint x="-970" y="570" />
+              <mxPoint x="-615" y="570" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="swshb4QQmOywbGdpQhQu-782" value="auth_devices -&amp;gt; belongsTo(Users)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="swshb4QQmOywbGdpQhQu-781" vertex="1" connectable="0">
           <mxGeometry x="-0.1137" y="4" relative="1" as="geometry">
@@ -3111,7 +3117,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Мой малиш">
-    <mxGraphModel dx="4050" dy="1863" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+    <mxGraphModel dx="7800" dy="3770" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
