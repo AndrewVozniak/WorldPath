@@ -1,5 +1,6 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Places_Service.Data;
 using Places_Service.Models;
@@ -100,6 +101,16 @@ namespace Places_Service.Controllers
         public async Task<IActionResult> GetPlacesById([FromQuery] int id)
         {
             var place = await _context.Places.FindAsync(id);
+
+            if (place == null) return NotFound();
+
+            return Ok(place);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPlacesByName([FromQuery] string name)
+        {
+            var place = await _context.Places.FirstOrDefaultAsync(p => p.Name == name);
 
             if (place == null) return NotFound();
 
