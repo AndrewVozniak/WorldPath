@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\prozy\\source\\repos\\WorldPath\\server\\services\\Places-Service\\Places-Service\\Places-Service.csproj": {}
+    "D:\\WorldPath\\server\\services\\Places-Service\\Places-Service\\Places-Service.csproj": {}
   },
   "projects": {
-    "C:\\Users\\prozy\\source\\repos\\WorldPath\\server\\services\\Places-Service\\Places-Service\\Places-Service.csproj": {
+    "D:\\WorldPath\\server\\services\\Places-Service\\Places-Service\\Places-Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\prozy\\source\\repos\\WorldPath\\server\\services\\Places-Service\\Places-Service\\Places-Service.csproj",
+        "projectUniqueName": "D:\\WorldPath\\server\\services\\Places-Service\\Places-Service\\Places-Service.csproj",
         "projectName": "Places-Service",
-        "projectPath": "C:\\Users\\prozy\\source\\repos\\WorldPath\\server\\services\\Places-Service\\Places-Service\\Places-Service.csproj",
+        "projectPath": "D:\\WorldPath\\server\\services\\Places-Service\\Places-Service\\Places-Service.csproj",
         "packagesPath": "C:\\Users\\prozy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\prozy\\source\\repos\\WorldPath\\server\\services\\Places-Service\\Places-Service\\obj\\",
+        "outputPath": "D:\\WorldPath\\server\\services\\Places-Service\\Places-Service\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\prozy\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -42,6 +42,14 @@
           "targetAlias": "net7.0",
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[7.0.9, )"
             },

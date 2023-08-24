@@ -1,6 +1,14 @@
-﻿namespace Places_Service.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Places_Service.Models;
 
-public class AppDbContext
+namespace Places_Service.Data;
+
+public class AppDbContext : DbContext
 {
-    
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+        
+    }
+
+    public DbSet<Place> Places { get; set; }
 }

@@ -9,4 +9,5 @@ public class Result
     public string PlaceId { get; set; }
     public double Rating { get; set; }
     public string Vicinity { get; set; }
+    public List<string> Types { get; set; }
 }
