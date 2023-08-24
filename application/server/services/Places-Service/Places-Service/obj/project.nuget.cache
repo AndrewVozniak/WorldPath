@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5Wnl2VGACobD1Na6/duCjFSMVYoHHuNKrgIb3z7jssOj+On4oF9lQUas5TyBu+4wpeNnUdDv1Jl8SmC0hjYbAQ==",
+  "dgSpecHash": "HSUThFyANQyh60xy3FsZufCjp2wTZoK/GYRg68draJCUopH0tzGgHxdYDqPKODLtYsSDw5yKIunSGHAqRewEew==",
   "success": true,
-  "projectFilePath": "D:\\WorldPath\\server\\services\\Places-Service\\Places-Service\\Places-Service.csproj",
+  "projectFilePath": "D:\\WorldPath\\application\\server\\services\\Places-Service\\Places-Service\\Places-Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\prozy\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

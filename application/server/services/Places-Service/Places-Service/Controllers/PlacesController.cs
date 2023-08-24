@@ -95,6 +95,16 @@ namespace Places_Service.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPlacesById([FromQuery] int id)
+        {
+            var place = await _context.Places.FindAsync(id);
+
+            if (place == null) return NotFound();
+
+            return Ok(place);
+        }
     }
 }    
            
