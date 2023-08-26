@@ -5,8 +5,7 @@ namespace Places_Service.Models;
 
 public class PlaceLike
 {
-    [Key] 
-    public int Id { get; set; }
+    [Key] public Guid Id { get; set; } = new Guid();
     [Required]
     public int UserId { get; set; }
     [Required]
