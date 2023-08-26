@@ -6,3 +6,15 @@ body {
 
   font-family: 'Montserrat', sans-serif;
 }
+
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}

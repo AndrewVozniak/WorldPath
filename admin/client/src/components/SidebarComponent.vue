@@ -53,7 +53,7 @@ const pages = [
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -68,40 +68,41 @@ const pages = [
   padding: 15px 30px;
 
   text-align: center;
-}
 
-.sidebar__title {
-  color: #fff;
-  font-size: 24px;
-  font-weight: 600;
+  .sidebar__title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600;
 
-  white-space: nowrap;
+    white-space: nowrap;
 
-  margin-bottom: 20px;
-}
+    margin-bottom: 20px;
+  }
 
-.sidebar__items {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  .sidebar__items {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-  width: 100%;
+    width: 100%;
 
-  .sidebar__item {
-    margin-bottom: 10px;
+    .sidebar__item {
+      margin-bottom: 10px;
 
-    padding: 7px;
+      padding: 7px;
 
-    border-radius: 5px;
+      border-radius: 5px;
 
-    background-color: #253158;
+      background-color: #253158;
 
-    cursor: pointer;
-    transition: 0.2s ease-in;
+      cursor: pointer;
+      transition: 0.2s ease-in;
 
-    &:hover {
-      background-color: #1f3050;
-      transform: scale(1.05);
+      &:hover {
+        background-color: #4d8d28;
+        font-weight: 600;
+        transform: scale(1.05);
+      }
     }
   }
 }
