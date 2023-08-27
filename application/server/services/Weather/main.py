@@ -31,5 +31,11 @@ api.add_resource(GetCurrentWeatherInPlaceByCoordinates, '/weather/now/coordinate
 # * Get weather in place for week by coordinates
 api.add_resource(GetWeekWeatherInPlaceByCoordinates, '/weather/week/coordinates')
 
+
+@app.before_request
+def before_request():
+    print(request.headers)
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=3001)
