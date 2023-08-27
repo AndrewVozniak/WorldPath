@@ -9,29 +9,47 @@ app = Flask(__name__)
 
 @app.route('/user', methods=['GET'])
 def get_user():
-    return jsonify({'user_id': request.headers.get('Userid'), 'token': request.headers.get('Authorization')})
+    print('Handling GET request')
+    data = request.get_json()
+    print('Data received:', data)
+    return jsonify({'user_id': request.headers.get('Userid'), 'token': request.headers.get('Authorization'),
+                    'method': 'GET'})
 
 
 @app.route('/user', methods=['POST'])
 def create_user():
-    try:
-        print('Handling POST request')
-        data = request.get_json()
-        print('Data received:', data)
-        return jsonify({'user_id': request.headers.get('Userid'), 'token': request.headers.get('Authorization')})
-    except Exception as e:
-        print("Error handling POST:", str(e))
-        return jsonify({'error': str(e)}), 500
+    print('Handling POST request')
+    data = request.get_json()
+    print('Data received:', data)
+    return jsonify({'user_id': request.headers.get('Userid'), 'token': request.headers.get('Authorization'),
+                    'method': 'POST'})
 
 
 @app.route('/user', methods=['PUT'])
 def update_user():
-    return jsonify({'user_id': request.headers.get('Userid'), 'token': request.headers.get('Authorization')})
+    print('Handling PUT request')
+    data = request.get_json()
+    print('Data received:', data)
+    return jsonify({'user_id': request.headers.get('Userid'), 'token': request.headers.get('Authorization'),
+                    'method': 'PUT'})
+
+
+@app.route('/user', methods=['PATCH'])
+def patch_user():
+    print('Handling PATCH request')
+    data = request.get_json()
+    print('Data received:', data)
+    return jsonify({'user_id': request.headers.get('Userid'), 'token': request.headers.get('Authorization'),
+                    'method': 'PATCH'})
 
 
 @app.route('/user', methods=['DELETE'])
 def delete_user():
-    return jsonify({'user_id': request.headers.get('Userid'), 'token': request.headers.get('Authorization')})
+    print('Handling DELETE request')
+    data = request.get_json()
+    print('Data received:', data)
+    return jsonify({'user_id': request.headers.get('Userid'), 'token': request.headers.get('Authorization'),
+                    'method': 'DELETE'})
 
 
 @app.route('/validate_token', methods=['POST'])
