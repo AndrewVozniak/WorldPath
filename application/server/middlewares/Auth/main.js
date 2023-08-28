@@ -26,12 +26,6 @@ async function validateToken(authToken) {
 app.all('*', async (req, res) => {
     let url = req.url;
 
-    if (url.indexOf('/auth/') !== 0) {
-        return res.send('Authentication not completed!');
-    }
-
-    url = url.split('/auth')[1];
-
     const service = services.find((service) => {
         return url.indexOf(`/${service.name}`) === 0;
     });

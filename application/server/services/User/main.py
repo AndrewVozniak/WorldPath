@@ -9,6 +9,9 @@ app = Flask(__name__)
 
 @app.route('/user', methods=['GET'])
 def get_user():
+    param_value = request.args.get('param_name', default=None)
+    print('Param value:', param_value)
+
     print('Handling GET request')
     data = request.get_json()
     print('Data received:', data)
