@@ -7,6 +7,12 @@ const hosts = require('./hosts');
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
+    next();
+});
+
 async function validateToken(authToken) {
     const user_service = services.find((service) => {
         return service.name === 'user';

@@ -5,9 +5,11 @@ import {ref} from "vue";
 let title = 'Users';
 let users = ref([]);
 
-axios.get('http://localhost:3000/api/users')
+axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+axios.get('http://localhost:3000/user/get_all_users')
   .then(res => {
     users = res.data;
+    console.log(users);
   })
   .catch(err => {
     console.log(err);

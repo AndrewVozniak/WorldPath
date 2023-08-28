@@ -3,8 +3,8 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-# CORS(allow_headers='Content-Type')
-# CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(allow_headers='Content-Type')
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.route('/user', methods=['GET'])
@@ -53,6 +53,13 @@ def delete_user():
     print('Data received:', data)
     return jsonify({'user_id': request.headers.get('Userid'), 'token': request.headers.get('Authorization'),
                     'method': 'DELETE'})
+
+
+@app.route('/get_all_users', methods=['GET'])
+def get_all_user():
+    print('Handling GET request')
+    return jsonify({'user_id': request.headers.get('Userid'), 'token': request.headers.get('Authorization'),
+                    'method': 'GET'})
 
 
 @app.route('/validate_token', methods=['POST'])
