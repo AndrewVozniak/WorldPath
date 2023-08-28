@@ -42,6 +42,20 @@ USERS = [
 ]
 
 
+@app.route('/sign_in_by_username', methods=['POST'])
+def sign_in_by_username():
+    username = request.json.get('username')
+    password = request.json.get('password')
+
+    # Find user by username and password
+    user = next((item for item in USERS if item["name"] == username and item["password"] == password), None)
+
+    if user is None:
+        return jsonify({'error': 'The user with this credentials does not exist.'})
+
+    return jsonify({'username': user['name'], 'token': user['auth_token']})
+
+
 @app.route('/get_all_users', methods=['GET'])
 def get_all_user():
     return jsonify(USERS)

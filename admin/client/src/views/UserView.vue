@@ -41,7 +41,7 @@ const toggleSort = (column) => {
 
 const getUsers = async () => {
   try {
-    const response = await axios.get('http://localhost:3000/user/get_all_users', {
+    const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/user/get_all_users`, {
       headers: {
         'Authorization': localStorage.getItem('token')
       }
@@ -115,7 +115,9 @@ const manageUser = async(id) => {
             <td>{{ user.is_verified ? 'Yes' : 'No' }}</td>
             <td>{{ user.is_admin ? 'Yes' : 'No' }}</td>
             <td>
-              <WarningButtonComponent @click="manageUser(user.id)">Manage</WarningButtonComponent>
+              <RouterLink :to="'/user/'+user.id">
+                <WarningButtonComponent @click="manageUser(user.id)">Manage</WarningButtonComponent>
+              </RouterLink>
             </td>
           </tr>
         </tbody>
