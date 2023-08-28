@@ -1,6 +1,15 @@
-1. Template
-{auth_protocol}://{auth_domain}/{service_name}/{requested_url}
+Template:
+{protocol}://{auth_domain}/{service_name}/{requested_url}
 
-2. Example
+Example:
 Input: https://example.com/weather/weather/now
 Output: response from https://example.com/weather/now
+
+
+Params:
+Json params ( all methods supported )
+Query params ( all methods supported )
+
+Headers:
+Userid ( user id )
+Authorization ( token )
