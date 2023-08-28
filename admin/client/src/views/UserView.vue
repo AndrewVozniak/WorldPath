@@ -3,10 +3,10 @@ import axios from 'axios';
 import { ref, onMounted, computed } from 'vue';
 import WarningButtonComponent from "@/components/WarningButtonComponent.vue";
 
+// SEARCHING
+const searchQuery = ref('');
 
-const searchQuery = ref('');  // Add this line
-
-const filteredUsers = computed(() => {  // Add this computed property
+const filteredUsers = computed(() => {
   if (!searchQuery.value) return users.value;
 
   return users.value.filter(user => {
@@ -15,6 +15,28 @@ const filteredUsers = computed(() => {  // Add this computed property
         user.id.toString().includes(searchQuery.value);  // преобразование id в строку
   });
 });
+
+// SORTING
+const sortBy = ref('name'); // по умолчанию сортировка по имени
+const sortOrder = ref('asc'); // по умолчанию сортировка по возрастанию
+
+const sortedUsers = computed(() => {
+  return filteredUsers.value.sort((a, b) => {
+    if (a[sortBy.value] < b[sortBy.value]) return sortOrder.value === 'asc' ? -1 : 1;
+    if (a[sortBy.value] > b[sortBy.value]) return sortOrder.value === 'asc' ? 1 : -1;
+    return 0;
+  });
+});
+
+// Функция для изменения сортировки по колонке
+const toggleSort = (column) => {
+  if (sortBy.value === column) {
+    sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortBy.value = column;
+    sortOrder.value = 'asc';
+  }
+};
 
 
 const getUsers = async () => {
@@ -55,19 +77,21 @@ const manageUser = async(id) => {
       <table class="table">
         <thead class="table-head">
         <tr class="table-row">
-          <th>Name</th>
-          <th>Email</th>
-          <th>Banned</th>
-          <th>Warned</th>
-          <th>Muted</th>
-          <th>Verified</th>
-          <th>Admin</th>
+          <th @click="toggleSort('id')">ID</th>
+          <th @click="toggleSort('name')">Name</th>
+          <th @click="toggleSort('email')">Email</th>
+          <th @click="toggleSort('is_banned')">Banned</th>
+          <th @click="toggleSort('is_warned')">Warned</th>
+          <th @click="toggleSort('is_muted')">Muted</th>
+          <th @click="toggleSort('is_verified')">Verified</th>
+          <th @click="toggleSort('is_admin')">Admin</th>
           <th>Manage</th>
         </tr>
         </thead>
 
         <tbody class="table-body">
-          <tr class="table-row" v-for="user in filteredUsers" :key="user.id">
+          <tr class="table-row" v-for="user in sortedUsers" :key="user.id">
+            <td>{{ user.id }}</td>
             <td id="user_info">
               <img :src="user.profile_photo_path" :alt="user.name + 'avatar'">
               <span class="username">{{ user.name }}</span>
@@ -129,6 +153,12 @@ const manageUser = async(id) => {
         font-size: 18px;
         padding: 10px;
         color: #fff;
+
+        cursor: pointer;
+
+        &:hover {
+          background-color: #121a32;
+        }
       }
     }
 
