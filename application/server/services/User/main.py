@@ -42,6 +42,11 @@ USERS = [
 ]
 
 
+@app.route('/user/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    return jsonify(USERS[user_id - 1])
+
+
 @app.route('/sign_in_by_username', methods=['POST'])
 def sign_in_by_username():
     username = request.json.get('username')
