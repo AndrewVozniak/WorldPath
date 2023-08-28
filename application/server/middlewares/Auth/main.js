@@ -1,7 +1,9 @@
 const express = require('express');
 const axios = require('axios');
 const app = express();
+
 const services = require('./services');
+const hosts = require('./hosts');
 
 app.use(express.json());
 
@@ -23,8 +25,19 @@ async function validateToken(authToken) {
     }
 }
 
+async function validateUrl(req) {
+    const host = req.headers.host;
+    const host_without_port = host.split(':')[0];
+
+    return hosts.includes(host_without_port);
+}
+
 app.all('*', async (req, res) => {
     let url = req.url;
+
+    if (!await validateUrl(req)) {
+        return res.status(404).send('Host not found!');
+    }
 
     const service = services.find((service) => {
         return url.indexOf(`/${service.name}`) === 0;
