@@ -43,8 +43,29 @@ USERS = [
 
 
 @app.route('/user/<int:user_id>', methods=['GET'])
-def get_user(user_id):
+def get_user_by_id(user_id):
     return jsonify(USERS[user_id - 1])
+
+
+@app.route('/user', methods=['GET'])
+def get_user_by_token():
+    print(request.headers)
+
+    token = request.headers.get('Authorization')
+
+    # Find user by token
+    user = next((item for item in USERS if item["auth_token"] == token), None)
+
+    if user is None:
+        return jsonify({'error': 'The user with this token does not exist.'})
+
+    return jsonify({
+        'id': user['id'],
+        'name': user['name'],
+        'email': user['email'],
+        'profile_photo_path': user['profile_photo_path'],
+        'is_admin': user['is_admin']
+    })
 
 
 @app.route('/sign_in_by_username', methods=['POST'])
@@ -84,15 +105,13 @@ def get_all_user():
 def validate_token():
     token = request.headers.get('Authorization')
 
-    # TODO: Real validate token logic
-    if token is None:
-        return jsonify({'user_id': None, 'token_valid': False})
+    # Find user by token
+    user = next((item for item in USERS if item["auth_token"] == token), None)
 
-    elif token == 'test':
-        return jsonify({'user_id': 1, 'token_valid': True})
+    if user is None:
+        return jsonify({'error': 'The user with this token does not exist.'})
 
-    else:
-        return jsonify({'user_id': None, 'token_valid': False})
+    return jsonify({'user_id': user['id'], 'token_valid': True})
 
 
 if __name__ == '__main__':

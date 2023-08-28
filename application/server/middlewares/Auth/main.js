@@ -70,6 +70,7 @@ app.all('*', async (req, res) => {
 
         if (!response.token_valid) {
             req.headers.Authorization = null;
+            return res.status(401).send(response.error);
         } else {
             req.headers.Authorization = req.headers.authorization;
             req.headers.Userid = response.user_id;
