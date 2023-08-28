@@ -54,7 +54,6 @@ app.all('*', async (req, res) => {
         } else {
             req.headers.Authorization = req.headers.authorization;
             req.headers.Userid = response.user_id;
-            console.log(response);
         }
     }
 
@@ -68,7 +67,6 @@ app.all('*', async (req, res) => {
                 'Userid': req.headers['Userid'],
                 'Authorization': req.headers['Authorization']
             },
-            params: req.query
         });
 
         res.send(response.data);

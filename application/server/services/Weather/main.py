@@ -34,6 +34,8 @@ api.add_resource(GetWeekWeatherInPlaceByCoordinates, '/weather/week/coordinates'
 
 @app.before_request
 def before_request():
+    # print json body
+    print(request.get_json())
     print(request.headers)
 
 
