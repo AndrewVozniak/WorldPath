@@ -59,6 +59,17 @@ const users = ref([]);
 
 onMounted(getUsers);
 
+// pagination
+const currentPage = ref(1);
+const pageSize = ref(10);
+const totalPages = computed(() => Math.ceil(sortedUsers.value.length / pageSize.value));
+
+const paginatedUsers = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value;
+  const end = start + pageSize.value;
+  return sortedUsers.value.slice(start, end);
+});
+
 
 const manageUser = async(id) => {
   alert(id)
@@ -90,7 +101,7 @@ const manageUser = async(id) => {
         </thead>
 
         <tbody class="table-body">
-          <tr class="table-row" v-for="user in sortedUsers" :key="user.id">
+          <tr class="table-row" v-for="user in paginatedUsers" :key="user.id">
             <td>{{ user.id }}</td>
             <td id="user_info">
               <img :src="user.profile_photo_path" :alt="user.name + 'avatar'">
@@ -109,6 +120,12 @@ const manageUser = async(id) => {
           </tr>
         </tbody>
       </table>
+
+      <div class="pagination">
+        <button @click="currentPage = Math.max(currentPage - 1, 1)" :disabled="currentPage === 1">Previous</button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button @click="currentPage = Math.min(currentPage + 1, totalPages)" :disabled="currentPage === totalPages">Next</button>
+      </div>
     </div>
   </div>
 </template>
@@ -197,6 +214,37 @@ const manageUser = async(id) => {
           background-color: #0d142a;
         }
       }
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+
+    button {
+      padding: 10px 15px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #0d142a;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:disabled {
+        background-color: #0d142a;
+        cursor: not-allowed;
+      }
+
+      &:not(:disabled):hover {
+        background-color: #121a32;
+      }
+    }
+
+    span {
+      margin: 0 10px;
     }
   }
 }
