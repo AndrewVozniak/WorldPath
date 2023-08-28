@@ -1,0 +1,32 @@
+<script setup>
+</script>
+
+<template>
+  <button class="btn btn-danger">
+    <slot></slot>
+  </button>
+</template>
+
+<style scoped>
+.btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+
+  width: 100%;
+}
+
+.btn-danger {
+  background-color: #de3535;
+  color: #fff;
+
+  transition: 0.2s ease-in;
+
+  &:hover {
+    background-color: #da3e3e;
+  }
+}
+</style>
