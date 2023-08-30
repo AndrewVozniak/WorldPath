@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map with Route</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmCZMRuxBtuJmFRJAuGKhobIExrksG4l0&libraries=geometry"></script>
+</head>
+<body>
+    <div id="map" style="width: 100%; height: 500px;"></div>
+
+    <script>
+        // Отримані координати та ключ API
+        var startLocation = "40.712776,-74.005974"; // Замініть на ваші дані
+        var endLocation = "34.052235,-118.243683"; // Замініть на ваші дані
+        var apiKey = "AIzaSyCmCZMRuxBtuJmFRJAuGKhobIExrksG4l0"; // Замініть на ваш API ключ
+
+        // Створення об'єкта запиту
+        var requestData = {
+            startLocation: startLocation,
+            endLocation: endLocation,
+            key: apiKey
+        };
+
+        // Відправка POST-запиту на ваше API
+        fetch('http://localhost:5092/api/Route', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Отримані дані від API
+            var encodedPolyline = data[0].overviewPolyline.points;
+
+            // Декодування координат
+            var decodedPath = google.maps.geometry.encoding.decodePath(encodedPolyline);
+
+            // Створення мапи
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: decodedPath[0], // Встановити центр мапи на першу точку маршруту
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            // Створення маршруту на мапі
+            var routePath = new google.maps.Polyline({
+                path: decodedPath,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            });
+
+            // Додати маршрут на мапу
+            routePath.setMap(map);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    </script>
+</body>
+</html>
