@@ -79,11 +79,13 @@ def sign_in_by_username():
 
 @app.route('/sign_in_by_email', methods=['POST'])
 def sign_in_by_email():
+    collection = db['Users']
+
     email = request.json.get('email')
     password = request.json.get('password')
 
     # Find user by email and password
-    user = next((item for item in USERS if item["email"] == email and item["password"] == password), None)
+    user = collection.find_one({'email': email, 'password': password})
 
     if user is None:
         return jsonify({'error': 'The user with this credentials does not exist.'})
