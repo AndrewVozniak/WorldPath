@@ -36,6 +36,9 @@ def generate_auth_token(users):
 
 
 def hash_password(password):
+    if password is None:
+        return None
+
     # Hash password
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
@@ -139,6 +142,46 @@ def create_user():
                     'token': user_document['auth_token']})
 
 
+@app.route('/update_user', methods=['PUT'])
+def update_user():
+    # Prepare fields for update
+    id = int(request.json.get('id'))
+
+    password = hash_password(request.json.get('password'))
+    updated_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    collection = db['Users']
+
+    # Find user by id
+    user = collection.find_one({'id': id})
+
+    if user is None:
+        return jsonify({'error': 'The user with this id does not exist.'})
+
+    # Update all fields if they are not empty
+    updated_info = {
+        'name': request.json.get('name') if request.json.get('name') is not None else user['name'],
+        'email': request.json.get('email') if request.json.get('email') is not None else user['email'],
+        'password': password if request.json.get('password') is not None else user['password'],
+        'email_verified_at': request.json.get('email_verified_at') if request.json.get(
+            'email_verified_at') is not None else user['email_verified_at'],
+        'profile_photo_path': request.json.get('profile_photo_path') if request.json.get(
+            'profile_photo_path') is not None else user['profile_photo_path'],
+        'is_banned': request.json.get('is_banned') if request.json.get('is_banned') is not None else user['is_banned'],
+        'is_warned': request.json.get('is_warned') if request.json.get('is_warned') is not None else user['is_warned'],
+        'is_muted': request.json.get('is_muted') if request.json.get('is_muted') is not None else user['is_muted'],
+        'is_verified': request.json.get('is_verified') if request.json.get('is_verified') is not None else user[
+            'is_verified'],
+        'is_admin': request.json.get('is_admin') if request.json.get('is_admin') is not None else user['is_admin'],
+        'updated_at': updated_at
+    }
+
+    # Update user
+    collection.update_one({'id': id}, {'$set': updated_info})
+
+    return jsonify({'success': 'User updated successfully.'})
+
+
 @app.route('/sign_in_by_username', methods=['POST'])
 def sign_in_by_username():
     username = request.json.get('username')
@@ -151,6 +194,21 @@ def sign_in_by_username():
 
     if user is None:
         return jsonify({'error': 'The user with this credentials does not exist.'})
+
+    return jsonify({'username': user['name'], 'token': user['auth_token']})
+
+
+@app.route('/sign_in_by_auth_token', methods=['POST'])
+def sign_in_by_auth_token():
+    token = request.headers.get('Authorization')
+
+    collection = db['Users']
+
+    # Find user by token
+    user = collection.find_one({'auth_token': token})
+
+    if user is None:
+        return jsonify({'error': 'The user with this token does not exist.'})
 
     return jsonify({'username': user['name'], 'token': user['auth_token']})
 
