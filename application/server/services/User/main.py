@@ -94,8 +94,21 @@ def sign_in_by_email():
 
 
 @app.route('/get_all_users', methods=['GET'])
-def get_all_user():
-    return jsonify(USERS)
+def get_all_users():
+    collection = db['Users']
+
+    users_cursor = collection.find({})
+
+    users_list = []
+
+    for user in users_cursor:
+        user.pop('_id', None) # Remove _id field from user
+        users_list.append(user)
+
+    if not users_list:
+        return jsonify({'error': 'No users found.'})
+
+    return jsonify(users_list)
 
 
 @app.route('/validate_token', methods=['POST'])
