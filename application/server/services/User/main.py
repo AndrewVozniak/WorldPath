@@ -5,6 +5,7 @@ from pymongo.mongo_client import MongoClient
 
 uri = "mongodb+srv://worldpath:uoSwHCbCc86dcHX3@cluster0.dumeyxp.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(uri)
+db = client['Users']
 
 try:
     client.admin.command('ping')
@@ -21,7 +22,6 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/user/<int:user_id>', methods=['GET'])
 def get_user_by_id(user_id):
-    db = client['Users']
     collection = db['Users']
 
     user = collection.find_one({'id': user_id})
@@ -40,7 +40,6 @@ def get_user_by_id(user_id):
 
 @app.route('/user', methods=['GET'])
 def get_user_by_token():
-    db = client['Users']
     collection = db['Users']
 
     print(request.headers)
@@ -67,8 +66,10 @@ def sign_in_by_username():
     username = request.json.get('username')
     password = request.json.get('password')
 
+    collection = db['Users']
+
     # Find user by username and password
-    user = next((item for item in USERS if item["name"] == username and item["password"] == password), None)
+    user = collection.find_one({'name': username, 'password': password})
 
     if user is None:
         return jsonify({'error': 'The user with this credentials does not exist.'})
