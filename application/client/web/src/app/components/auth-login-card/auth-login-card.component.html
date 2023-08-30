@@ -1,20 +1,46 @@
 <div class="card">
-  <h1 class="card__title">{{ title }}</h1>
+  <div class="card__heading">
+    <h1 class="card__title">{{ title }}</h1>
+    <p class="card__error">{{ error }}</p>
+  </div>
 
   <div class="card__fields">
     <div class="field_wrapper">
       <label for="email">Email: </label>
-      <input type="text" class="card__input" id="email" name="email" placeholder="email" required>
+      <input
+        type="text"
+        class="card__input"
+        id="email"
+        name="email"
+        placeholder="email"
+        #email
+        (keyup)="emailChange(email.value)"
+      >
     </div>
 
     <div class="field_wrapper">
       <label for="password">Password: </label>
-      <input type="text" class="card__input" id="password" name="password" placeholder="password" required>
+      <input
+        type="text"
+        class="card__input"
+        id="password"
+        name="password"
+        placeholder="password"
+        #password
+        (keyup)="passwordChange(password.value)"
+      >
     </div>
 
     <div class="checkbox_wrapper">
       <label for="remember_me" class="cursor-pointer">Remember me: </label>
-      <input type="checkbox" class="checkbox" id="remember_me" name="remember_me" required>
+      <input
+        type="checkbox"
+        class="checkbox"
+        id="remember_me"
+        name="remember_me"
+        #remember
+        (change)="rememberChange(remember.checked)"
+      >
     </div>
   </div>
 
@@ -24,5 +50,5 @@
     Don't have an account yet?
   </a>
 
-  <button type="submit" class="btn btn-primary">Continue</button>
+  <button type="submit" class="btn btn-primary" (click)="signIn()">Continue</button>
 </div>

@@ -29,6 +29,11 @@
           <a (click)="toggleMenu()" routerLink="/login" class="btn btn-secondary">Sign In</a>
         </div>
 
+        <div class="auth-buttons" *ngIf="auth">
+          <a (click)="toggleMenu()" routerLink="/profile" class="btn btn-secondary font-bold">{{ username }}</a>
+          <a (click)="logout()" routerLink="/login" class="btn btn-primary">Logout</a>
+        </div>
+
 
         <div class="main-menu">
           <a routerLink="{{ item.link }}" (click)="toggleMenu()" routerLinkActive="is-active" class="menu-item" *ngFor="let item of mainMenuItems">

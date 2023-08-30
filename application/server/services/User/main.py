@@ -93,7 +93,7 @@ def sign_in_by_email():
     if user is None:
         return jsonify({'error': 'The user with this credentials does not exist.'})
 
-    return jsonify({'email': user['email'], 'token': user['auth_token']})
+    return jsonify({'username': user['name'], 'token': user['auth_token']})
 
 
 @app.route('/get_all_users', methods=['GET'])

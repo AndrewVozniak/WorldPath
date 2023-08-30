@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'app-header',
@@ -23,9 +24,21 @@ export class HeaderComponent {
   mainMenuItems: any[];
   subMenuItems: any[];
   currentYear: number;
-  auth: boolean = false;
 
-  constructor() {
+  auth: boolean = false;
+  username: any = localStorage.getItem('username');
+
+  constructor(private authService: AuthService) {
+    this.authService.auth$.subscribe(isAuth => {
+      this.auth = isAuth;
+      if (isAuth) {
+        this.username = localStorage.getItem('username');
+      } else {
+        this.username = null;
+      }
+    });
+
+
     this.mainMenuItems = [
       { name: 'Weather', link: '/weather' },
       { name: 'Hotels', link: '/hotels' },
@@ -35,7 +48,7 @@ export class HeaderComponent {
 
     this.subMenuItems = [
       { name: 'Make a review', link: '/review' },
-      { name: 'About us', link: '/about' },
+      { name: 'About us', link: '/about'  },
       { name: 'Terms of use', link: '/terms' },
       { name: 'Privacy policy', link: '/privacy' },
     ];
@@ -54,5 +67,9 @@ export class HeaderComponent {
     if (targetElement === menuOverlay) {
       this.toggleMenu(); // Вызываем toggleMenu() только если клик был на menuOverlay
     }
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }
