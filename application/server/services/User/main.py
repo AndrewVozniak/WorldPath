@@ -10,13 +10,6 @@ try:
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
 
-    if 'Users' in client.list_database_names():
-        print("The database exists.")
-
-        if 'Users' in db.list_collection_names():
-            print("The collection exists.")
-
-
 except Exception as e:
     print(e)
 
