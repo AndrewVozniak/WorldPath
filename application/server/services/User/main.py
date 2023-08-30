@@ -42,9 +42,10 @@ def get_user_by_id(user_id):
 def get_user_by_token():
     collection = db['Users']
 
-    print(request.headers)
-
     token = request.headers.get('Authorization')
+
+    if token is None:
+        return jsonify({'error': 'No token provided.'})
 
     # Find user by token
     user = collection.find_one({'auth_token': token})
@@ -102,7 +103,7 @@ def get_all_users():
     users_list = []
 
     for user in users_cursor:
-        user.pop('_id', None) # Remove _id field from user
+        user.pop('_id', None)  # Remove _id field from user
         users_list.append(user)
 
     if not users_list:
@@ -113,10 +114,11 @@ def get_all_users():
 
 @app.route('/validate_token', methods=['POST'])
 def validate_token():
+    collection = db['Users']
     token = request.headers.get('Authorization')
 
     # Find user by token
-    user = next((item for item in USERS if item["auth_token"] == token), None)
+    user = collection.find_one({'auth_token': token})
 
     if user is None:
         return jsonify({'error': 'The user with this token does not exist.'})
