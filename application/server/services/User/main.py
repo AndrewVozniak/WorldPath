@@ -1,6 +1,28 @@
 from flask import request, jsonify, Flask
 from flask_cors import CORS
 
+from pymongo.mongo_client import MongoClient
+
+uri = "mongodb+srv://worldpath:uoSwHCbCc86dcHX3@cluster0.dumeyxp.mongodb.net/?retryWrites=true&w=majority"
+client = MongoClient(uri)
+db = client['Users']
+collection = db['Users']
+
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+
+    if 'Users' in client.list_database_names():
+        print("The database exists.")
+
+        if 'Users' in db.list_collection_names():
+            print("The collection exists.")
+
+
+except Exception as e:
+    print(e)
+
+
 app = Flask(__name__)
 
 CORS(allow_headers='Content-Type')
@@ -40,7 +62,6 @@ USERS = [
         'created_at': '2020-01-01 00:00:00'
     },
 ]
-
 
 @app.route('/user/<int:user_id>', methods=['GET'])
 def get_user_by_id(user_id):
