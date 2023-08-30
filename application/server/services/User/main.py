@@ -1,3 +1,6 @@
+import datetime
+import uuid
+
 from flask import request, jsonify, Flask
 from flask_cors import CORS
 
@@ -18,6 +21,17 @@ app = Flask(__name__)
 
 CORS(allow_headers='Content-Type')
 CORS(app, resources={r"/*": {"origins": "*"}})
+
+
+def generate_auth_token(users):
+    # Generate auth token 32 characters long
+    token = uuid.uuid4().hex + uuid.uuid4().hex
+
+    # Check if token already exists
+    if any(user['auth_token'] == token for user in users):
+        generate_auth_token(users)
+
+    return token
 
 
 @app.route('/user/<int:user_id>', methods=['GET'])
@@ -62,6 +76,58 @@ def get_user_by_token():
     })
 
 
+@app.route('/create_user', methods=['POST'])
+def create_user():
+    collection = db['Users']
+
+    users = get_all_users_helper()
+
+    name = request.json.get('name')
+    email = request.json.get('email')
+    password = request.json.get('password')
+
+    # Check if name is not empty
+    if name is None:
+        return jsonify({'error': 'Name is empty.'})
+
+    # Check if email is not empty
+    if email is None:
+        return jsonify({'error': 'Email is empty.'})
+
+    # Check if password is not empty
+    if password is None:
+        return jsonify({'error': 'Password is empty.'})
+
+    user_document = {
+        'name': name,
+        'email': email,
+        'password': password,
+        'auth_token': generate_auth_token(users),
+        'email_verified_at': None,
+        'profile_photo_path': None,
+        'is_banned': False,
+        'is_warned': False,
+        'is_muted': False,
+        'is_verified': False,
+        'is_admin': False,
+        'updated_at': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'created_at': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    # Check if user with this name already exists
+    if any(user['name'] == name for user in users):
+        return jsonify({'error': 'The user with this name already exists.'})
+
+    # Check if user with this email already exists
+    if any(user['email'] == email for user in users):
+        return jsonify({'error': 'The user with this email already exists.'})
+
+    # Insert user into database
+    collection.insert_one(user_document)
+
+    return jsonify({'success': 'User created successfully.'})
+
+
 @app.route('/sign_in_by_username', methods=['POST'])
 def sign_in_by_username():
     username = request.json.get('username')
@@ -94,8 +160,7 @@ def sign_in_by_email():
     return jsonify({'username': user['name'], 'token': user['auth_token']})
 
 
-@app.route('/get_all_users', methods=['GET'])
-def get_all_users():
+def get_all_users_helper():
     collection = db['Users']
 
     users_cursor = collection.find({})
@@ -106,10 +171,17 @@ def get_all_users():
         user.pop('_id', None)  # Remove _id field from user
         users_list.append(user)
 
-    if not users_list:
+    return users_list
+
+
+@app.route('/get_all_users', methods=['GET'])
+def get_all_users():
+    users = get_all_users_helper()
+
+    if not users:
         return jsonify({'error': 'No users found.'})
 
-    return jsonify(users_list)
+    return jsonify(users)
 
 
 @app.route('/validate_token', methods=['POST'])
