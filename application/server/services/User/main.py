@@ -63,6 +63,51 @@ def get_user_by_id(user_id):
     })
 
 
+@app.route('/user/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    password = hash_password(request.json.get('password'))
+    updated_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    collection = db['Users']
+
+    # Find user by id
+    user = collection.find_one({'id': user_id})
+
+    if user is None:
+        return jsonify({'error': 'The user with this id does not exist.'})
+
+    # Update all fields if they are not empty
+    updated_info = {
+        'name': request.json.get('name') if request.json.get('name') is not None else user['name'],
+        'email': request.json.get('email') if request.json.get('email') is not None else user['email'],
+        'password': password if request.json.get('password') is not None else user['password'],
+        'email_verified_at': request.json.get('email_verified_at') if request.json.get(
+            'email_verified_at') is not None else user['email_verified_at'],
+        'profile_photo_path': request.json.get('profile_photo_path') if request.json.get(
+            'profile_photo_path') is not None else user['profile_photo_path'],
+        'is_banned': request.json.get('is_banned') if request.json.get('is_banned') is not None else user['is_banned'],
+        'is_warned': request.json.get('is_warned') if request.json.get('is_warned') is not None else user['is_warned'],
+        'is_muted': request.json.get('is_muted') if request.json.get('is_muted') is not None else user['is_muted'],
+        'is_verified': request.json.get('is_verified') if request.json.get('is_verified') is not None else user[
+            'is_verified'],
+        'is_admin': request.json.get('is_admin') if request.json.get('is_admin') is not None else user['is_admin'],
+        'updated_at': updated_at
+    }
+
+    # Check if user with this name but another id already exists
+    if any(user['name'] == updated_info['name'] and user['id'] != user_id for user in get_all_users_helper()):
+        return jsonify({'error': 'The user with this name already exists.'})
+
+    # Check if user with this email but another id already exists
+    if any(user['email'] == updated_info['email'] and user['id'] != user_id for user in get_all_users_helper()):
+        return jsonify({'error': 'The user with this email already exists.'})
+
+    # Update user
+    collection.update_one({'id': user_id}, {'$set': updated_info})
+
+    return jsonify({'success': 'User updated successfully.'})
+
+
 @app.route('/user', methods=['GET'])
 def get_user_by_token():
     collection = db['Users']
@@ -140,46 +185,6 @@ def create_user():
     return jsonify({'success': 'User created successfully.',
                     'user_id': user_document['id'],
                     'token': user_document['auth_token']})
-
-
-@app.route('/update_user', methods=['PUT'])
-def update_user():
-    # Prepare fields for update
-    id = int(request.json.get('id'))
-
-    password = hash_password(request.json.get('password'))
-    updated_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    collection = db['Users']
-
-    # Find user by id
-    user = collection.find_one({'id': id})
-
-    if user is None:
-        return jsonify({'error': 'The user with this id does not exist.'})
-
-    # Update all fields if they are not empty
-    updated_info = {
-        'name': request.json.get('name') if request.json.get('name') is not None else user['name'],
-        'email': request.json.get('email') if request.json.get('email') is not None else user['email'],
-        'password': password if request.json.get('password') is not None else user['password'],
-        'email_verified_at': request.json.get('email_verified_at') if request.json.get(
-            'email_verified_at') is not None else user['email_verified_at'],
-        'profile_photo_path': request.json.get('profile_photo_path') if request.json.get(
-            'profile_photo_path') is not None else user['profile_photo_path'],
-        'is_banned': request.json.get('is_banned') if request.json.get('is_banned') is not None else user['is_banned'],
-        'is_warned': request.json.get('is_warned') if request.json.get('is_warned') is not None else user['is_warned'],
-        'is_muted': request.json.get('is_muted') if request.json.get('is_muted') is not None else user['is_muted'],
-        'is_verified': request.json.get('is_verified') if request.json.get('is_verified') is not None else user[
-            'is_verified'],
-        'is_admin': request.json.get('is_admin') if request.json.get('is_admin') is not None else user['is_admin'],
-        'updated_at': updated_at
-    }
-
-    # Update user
-    collection.update_one({'id': id}, {'$set': updated_info})
-
-    return jsonify({'success': 'User updated successfully.'})
 
 
 @app.route('/sign_in_by_username', methods=['POST'])
