@@ -22,51 +22,61 @@ try:
 except Exception as e:
     print(e)
 
-
 app = Flask(__name__)
 
 CORS(allow_headers='Content-Type')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-USERS = [
-    {
-        'id': 1,
-        'name': 'Andrew Vozniak',
-        'email': 'a.vozniaks@gmail.com',
-        'password': '123456',
-        'email_verified_at': '2020-01-01 00:00:00',
-        'auth_token': 'vozniak',
-        'profile_photo_path': 'https://via.placeholder.com/150',
-        'is_banned': False,
-        'is_warned': False,
-        'is_muted': False,
-        'is_verified': True,
-        'is_admin': True,
-        'updated_at': '2020-01-01 00:00:00',
-        'created_at': '2020-01-01 00:00:00'
-    },
-    {
-        'id': 2,
-        'name': 'Yaroslav Protsyk',
-        'email': 'yaroslavprotsyk@gmail.com',
-        'password': '123456',
-        'email_verified_at': '2020-01-01 00:00:00',
-        'auth_token': 'protsyk',
-        'profile_photo_path': 'https://via.placeholder.com/150',
-        'is_banned': False,
-        'is_warned': False,
-        'is_muted': False,
-        'is_verified': True,
-        'is_admin': True,
-        'updated_at': '2020-01-01 00:00:00',
-        'created_at': '2020-01-01 00:00:00'
-    },
-]
+
+# USERS = [
+#     {
+#         'id': 1,
+#         'name': 'Andrew Vozniak',
+#         'email': 'a.vozniaks@gmail.com',
+#         'password': '123456',
+#         'email_verified_at': '2020-01-01 00:00:00',
+#         'auth_token': 'vozniak',
+#         'profile_photo_path': 'https://via.placeholder.com/150',
+#         'is_banned': False,
+#         'is_warned': False,
+#         'is_muted': False,
+#         'is_verified': True,
+#         'is_admin': True,
+#         'updated_at': '2020-01-01 00:00:00',
+#         'created_at': '2020-01-01 00:00:00'
+#     },
+#     {
+#         'id': 2,
+#         'name': 'Yaroslav Protsyk',
+#         'email': 'yaroslavprotsyk@gmail.com',
+#         'password': '123456',
+#         'email_verified_at': '2020-01-01 00:00:00',
+#         'auth_token': 'protsyk',
+#         'profile_photo_path': 'https://via.placeholder.com/150',
+#         'is_banned': False,
+#         'is_warned': False,
+#         'is_muted': False,
+#         'is_verified': True,
+#         'is_admin': True,
+#         'updated_at': '2020-01-01 00:00:00',
+#         'created_at': '2020-01-01 00:00:00'
+#     },
+# ]
 
 @app.route('/user/<int:user_id>', methods=['GET'])
 def get_user_by_id(user_id):
-    return jsonify(USERS[user_id - 1])
+    user = collection.find_one({'id': user_id})
 
+    if user is None:
+        return jsonify({'error': 'The user with this id does not exist.'})
+
+    return jsonify({
+        'id': user['id'],
+        'name': user['name'],
+        'email': user['email'],
+        'profile_photo_path': user['profile_photo_path'],
+        'is_admin': user['is_admin']
+    })
 
 @app.route('/user', methods=['GET'])
 def get_user_by_token():
