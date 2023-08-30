@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 import uuid
 
 from flask import request, jsonify, Flask
@@ -32,6 +33,13 @@ def generate_auth_token(users):
         generate_auth_token(users)
 
     return token
+
+
+def hash_password(password):
+    # Hash password
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
+    return hashed_password
 
 
 @app.route('/user/<int:user_id>', methods=['GET'])
@@ -84,7 +92,7 @@ def create_user():
 
     name = request.json.get('name')
     email = request.json.get('email')
-    password = request.json.get('password')
+    password = hash_password(request.json.get('password'))
 
     # Check if name is not empty
     if name is None:
@@ -99,6 +107,7 @@ def create_user():
         return jsonify({'error': 'Password is empty.'})
 
     user_document = {
+        'id': len(users) + 1,
         'name': name,
         'email': email,
         'password': password,
@@ -125,13 +134,15 @@ def create_user():
     # Insert user into database
     collection.insert_one(user_document)
 
-    return jsonify({'success': 'User created successfully.'})
+    return jsonify({'success': 'User created successfully.',
+                    'user_id': user_document['id'],
+                    'token': user_document['auth_token']})
 
 
 @app.route('/sign_in_by_username', methods=['POST'])
 def sign_in_by_username():
     username = request.json.get('username')
-    password = request.json.get('password')
+    password = hash_password(request.json.get('password'))
 
     collection = db['Users']
 
@@ -146,10 +157,10 @@ def sign_in_by_username():
 
 @app.route('/sign_in_by_email', methods=['POST'])
 def sign_in_by_email():
-    collection = db['Users']
-
     email = request.json.get('email')
-    password = request.json.get('password')
+    password = hash_password(request.json.get('password'))
+
+    collection = db['Users']
 
     # Find user by email and password
     user = collection.find_one({'email': email, 'password': password})
