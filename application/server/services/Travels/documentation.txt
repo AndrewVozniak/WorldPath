@@ -3,17 +3,24 @@ Add travel json body example:
     "title": "Travel 1",
     "description": "Some description",
     "type": "private",
-    "updated_at": "01.09.2023",
-    "created_at": "01.09.2023",
 
-    "places": {
-        "travel_id": 1,
-        "place_id": 1
-    },
+    "places": [
+        {
+            "place_id": 1
+        },
+        {
+            "place_id": 2
+        }
+    ],
 
-    "routes": {
-        "travel_id": 1,
-        "route_id": 3
-    }
+    "routes": [
+        {
+            "route_id": 1
+        },
+        {
+            "route_id": 1
+        }
+    ]
 }
+Header: Userid ( not required if type is public )
 URL: /travels | POST

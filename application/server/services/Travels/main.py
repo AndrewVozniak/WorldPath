@@ -1,3 +1,6 @@
+import datetime
+import time
+
 from flask import request, jsonify, Flask
 from flask_cors import CORS
 
@@ -21,130 +24,88 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/travels', methods=['GET'])
 def get_travels():
-    try:
-        travels_cursor = db['Travels'].find({})
-        travels = []
-        routes = []
+    travels_collection = db['Travels']
+    places_collection = db['Places']
+    routes_collection = db['Routes']
+
+    travels = []
+
+    for travel in travels_collection.find():
         places = []
+        routes = []
 
-        for travel in travels_cursor:
-            travel.pop('_id')
-            travels.append(travel)
+        for place in places_collection.find({"travel_id": travel['id']}):
+            places.append({
+                "place_id": place['place_id']
+            })
 
-            travel_id = travel['id']
-            place_cursor = db['Places'].find({'travel_id': travel_id})
+        for route in routes_collection.find({"travel_id": travel['id']}):
+            routes.append({
+                "route_id": route['route_id']
+            })
 
-            for place in place_cursor:
-                place.pop('_id')
-                places.append(place)
+        travels.append({
+            "id": travel['id'],
+            "title": travel['title'],
+            "description": travel['description'],
+            "type": travel['type'],
+            "places": places,
+            "routes": routes,
+            "updated_at": travel['updated_at'],
+            "created_at": travel['created_at']
+        })
 
-                place_id = place['place_id']
-                route_cursor = db['Routes'].find({'travel_place_id': place_id})
+    return jsonify(travels)
 
-                for route in route_cursor:
-                    route.pop('_id')
-                    routes.append(route)
-
-        if len(places) != 0:
-            travels.append({'places': places})
-
-        if len(routes) != 0:
-            travels.append({'routes': routes})
-
-        return jsonify(travels)
-
-    except Exception as e:
-        return str(e)
-
-
-# {
-#     "title": "Travel 1",
-#     "description": "Some description",
-#     "type": "private",
-#     "updated_at": "01.09.2023",
-#     "created_at": "01.09.2023",
-#
-#     "places": {
-#         "travel_id": 1,
-#         "place_id": 1,
-#         "updated_at": "01.09.2023",
-#         "created_at": "01.09.2023"
-#     },
-#
-#     "routes": {
-#         "travel_id": 1,
-#         "route_id": 3,
-#         "updated_at": "01.09.2023",
-#         "created_at": "01.09.2023"
-#     }
-# }
 
 @app.route('/travels', methods=['POST'])
 def add_travel():
-    try:
-        info = request.get_json()
+    travels_collection = db['Travels']
+    places_collection = db['Places']
+    routes_collection = db['Routes']
 
-        travels_collection = db['Travels']
-        places_collection = db['Places']
-        routes_collection = db['Routes']
+    data = request.get_json()
 
-        travel_info = {
-            'id': travels_collection.count_documents({}) + 1,
-            'title': info['title'],
-            'description': info['description'],
-            'type': info['type'],
-            'updated_at': info['updated_at'],
-            'created_at': info['created_at']
-        }
+    places = data['places']
+    routes = data['routes']
 
-        places_info = {
-            'id': places_collection.count_documents({}) + 1,
-            'travel_id': travel_info['id'],
-            'place_id': info['places']['place_id'],
-            'updated_at': info['updated_at'],
-            'created_at': info['created_at']
-        }
+    travel_id = travels_collection.count_documents({}) + 1
 
-        routes_info = {
-            'id': routes_collection.count_documents({}) + 1,
-            'travel_id': travel_info['id'],
-            'route_id': info['routes']['route_id'],
-            'updated_at': info['updated_at'],
-            'created_at': info['created_at']
-        }
+    travel_info = {
+        "id": travel_id,
+        "title": data['title'],
+        "description": data['description'],
+        "type": data['type'],
+        "user_id": request.headers.get('Userid'),
+        "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "created_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
 
-        if travels_collection.find_one({"title": travel_info['title']}):
-            return jsonify({'error': "Travel with this title already exists"})
+    if travel_info['title'] is None or travel_info['description'] is None or travel_info['type'] is None:
+        return jsonify({"message": "Title, description and type are required"}), 400
 
-        if travels_collection.find_one({"id": travel_info['id']}):
-            return jsonify({'error': "Travel with this id already exists"})
+    if travels_collection.find_one({"title": travel_info['title']}) is not None:
+        return jsonify({"message": "Title already exists"}), 400
 
-        if places_collection.find_one({"id": places_info['id']}):
-            return jsonify({'error': "Place with this id already exists"})
+    travels_collection.insert_one(travel_info)
 
-        if routes_collection.find_one({"id": routes_info['id']}):
-            return jsonify({'error': "Route with this id already exists"})
+    for place in places:
+        place['id'] = places_collection.count_documents({}) + 1
+        place['place_id'] = place['place_id']
+        place['travel_id'] = travel_id
+        place['updated_at'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        place['created_at'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        places_collection.insert_one(place)
 
-        routes_collection.insert_one(routes_info)
-        travels_collection.insert_one(travel_info)
-        places_collection.insert_one(places_info)
+    for route in routes:
+        route['id'] = routes_collection.count_documents({}) + 1
+        route['route_id'] = route['route_id']
+        route['travel_id'] = travel_id
+        route['updated_at'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        route['created_at'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        routes_collection.insert_one(route)
 
-        return jsonify({'message': 'Travel added successfully'})
-
-    except Exception as e:
-        print(e)
-        return jsonify({'error': str(e)})
-
-
-@app.route('/travel/<int:travel_id>', methods=['GET'])
-def get_travel(travel_id):
-    try:
-        travel_collection = db['Travels']
-
-        travel = travel_collection.find_one({'id': travel_id})
-        return jsonify(travel)
-    except Exception as e:
-        return str(e)
+    return jsonify({"message": "Travel added successfully"})
 
 
 if __name__ == '__main__':
