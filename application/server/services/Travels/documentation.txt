@@ -1,6 +1,5 @@
 Add travel json body example:
 {
-    "id": 1,
     "title": "Travel 1",
     "description": "Some description",
     "type": "private",
@@ -8,22 +7,13 @@ Add travel json body example:
     "created_at": "01.09.2023",
 
     "places": {
-        "id": 1,
         "travel_id": 1,
-        "place_id": 1,
+        "place_id": 1
+    },
 
-        "updated_at": "01.09.2023",
-        "created_at": "01.09.2023",
-
-        "routes": {
-            "id": 1,
-            "travel_place_id": 1,
-            "route_id": 3,
-
-            "updated_at": "01.09.2023",
-            "created_at": "01.09.2023"
-        }
+    "routes": {
+        "travel_id": 1,
+        "route_id": 3
     }
 }
-
 URL: /travels | POST
