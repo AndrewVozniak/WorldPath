@@ -69,10 +69,7 @@ def add_travel():
     places = data['places']
     routes = data['routes']
 
-    travel_id = travels_collection.count_documents({}) + 1
-
     travel_info = {
-        "id": travel_id,
         "title": data['title'],
         "description": data['description'],
         "type": data['type'],
@@ -87,10 +84,9 @@ def add_travel():
     if travels_collection.find_one({"title": travel_info['title']}) is not None:
         return jsonify({"message": "Title already exists"}), 400
 
-    travels_collection.insert_one(travel_info)
+    travel_id = travels_collection.insert_one(travel_info).inserted_id
 
     for place in places:
-        place['id'] = places_collection.count_documents({}) + 1
         place['place_id'] = place['place_id']
         place['travel_id'] = travel_id
         place['updated_at'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -98,7 +94,6 @@ def add_travel():
         places_collection.insert_one(place)
 
     for route in routes:
-        route['id'] = routes_collection.count_documents({}) + 1
         route['route_id'] = route['route_id']
         route['travel_id'] = travel_id
         route['updated_at'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
