@@ -1,7 +1,8 @@
 import datetime
 import hashlib
+import json
 import uuid
-
+from bson import ObjectId, json_util
 from flask import request, jsonify, Flask
 from flask_cors import CORS
 
@@ -61,7 +62,7 @@ def get_user_by_token():
         return jsonify({'error': 'The user with this token does not exist.'})
 
     return jsonify({
-        'id': user['id'],
+        'id': str(user['_id']),
         'name': user['name'],
         'email': user['email'],
         'profile_photo_path': user['profile_photo_path'],
@@ -69,17 +70,17 @@ def get_user_by_token():
     })
 
 
-@app.route('/user/<int:user_id>', methods=['GET'])
+@app.route('/user/<user_id>', methods=['GET'])
 def get_user_by_id(user_id):
     collection = db['Users']
 
-    user = collection.find_one({'id': user_id})
+    user = collection.find_one({'_id': ObjectId(user_id)})
 
     if user is None:
         return jsonify({'error': 'The user with this id does not exist.'})
 
     return jsonify({
-        'id': user['id'],
+        'id': str(user['_id']),
         'name': user['name'],
         'email': user['email'],
         'profile_photo_path': user['profile_photo_path'],
@@ -131,12 +132,13 @@ def update_user_by_token():
     return jsonify({'success': 'User updated successfully.'})
 
 
-@app.route('/user/<int:user_id>', methods=['PUT'])
+@app.route('/user/<user_id>', methods=['PUT'])
 def update_user_by_id(user_id):
     collection = db['Users']
 
     # Find user by id
-    user = collection.find_one({'id': user_id})
+    user_id = ObjectId(user_id)
+    user = collection.find_one({'_id': user_id})
 
     if user is None:
         return jsonify({'error': 'The user with this id does not exist.'})
@@ -157,15 +159,15 @@ def update_user_by_id(user_id):
     }
 
     # Check if user with this name but another id already exists
-    if any(user['name'] == updated_info['name'] and user['id'] != user_id for user in get_all_users_helper()):
+    if any(user['name'] == updated_info['name'] and user['_id'] != user_id for user in get_all_users_helper()):
         return jsonify({'error': 'The user with this name already exists.'})
 
     # Check if user with this email but another id already exists
-    if any(user['email'] == updated_info['email'] and user['id'] != user_id for user in get_all_users_helper()):
+    if any(user['email'] == updated_info['email'] and user['_id'] != user_id for user in get_all_users_helper()):
         return jsonify({'error': 'The user with this email already exists.'})
 
     # Update user
-    collection.update_one({'id': user_id}, {'$set': updated_info})
+    collection.update_one({'_id': user_id}, {'$set': updated_info})
 
     return jsonify({'success': 'User updated successfully.'})
 
@@ -193,7 +195,6 @@ def create_user():
         return jsonify({'error': 'Password is empty.'})
 
     user_document = {
-        'id': len(users) + 1,
         'name': name,
         'email': email,
         'password': password,
@@ -221,7 +222,7 @@ def create_user():
     collection.insert_one(user_document)
 
     return jsonify({'success': 'User created successfully.',
-                    'user_id': user_document['id'],
+                    'user_id': str(user_document['_id']),
                     'token': user_document['auth_token']})
 
 
@@ -280,7 +281,7 @@ def get_all_users_helper():
     users_list = []
 
     for user in users_cursor:
-        user.pop('_id', None)  # Remove _id field from user
+        user['_id'] = str(user['_id'])
         users_list.append(user)
 
     return users_list
@@ -307,7 +308,7 @@ def validate_token():
     if user is None:
         return jsonify({'error': 'The user with this token does not exist.'})
 
-    return jsonify({'user_id': user['id'], 'token_valid': True})
+    return jsonify({'user_id': str(user['_id']), 'token_valid': True})
 
 
 if __name__ == '__main__':
