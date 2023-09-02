@@ -106,25 +106,24 @@ namespace Places_Service.Controllers
             return Ok(placeLike);
         }
 
-        // [HttpPost]
-        // public async Task<IActionResult> Comment([FromBody] PlaceCommentDto commentDto)
-        // {
-        //     var placeExists = await _context.Places.AnyAsync(p => p.Id == commentDto.PlaceId);
-        //
-        //     if (!placeExists) return NotFound("The specified PlaceId does not exist.");
-        //     
-        //     var placeComment = new PlaceComment
-        //     {
-        //         PlaceId = commentDto.PlaceId,
-        //         UserId = commentDto.UserId,
-        //         Text = commentDto.Text,
-        //     };
-        //
-        //     await _context.PlaceComments.AddAsync(placeComment);
-        //     await _context.SaveChangesAsync();
-        //
-        //     return Ok(placeComment);
-        // }
+        [HttpPost]
+        public async Task<IActionResult> Comment([FromBody] PlaceCommentDto commentDto)
+        {
+            var placeExists = await _placeService.PlaceExistsAsync(commentDto.PlaceId);
+        
+            if (!placeExists) return NotFound("The specified PlaceId does not exist.");
+            
+            var placeComment = new PlaceComment
+            {
+                PlaceId = commentDto.PlaceId,
+                UserId = commentDto.UserId,
+                Text = commentDto.Text,
+            };
+
+            await _placeService.AddPlaceCommentAsync(placeComment);
+        
+            return Ok(placeComment);
+        }
     }
 }    
             

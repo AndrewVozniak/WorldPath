@@ -32,6 +32,11 @@ public class PlaceService
     {
         await _placeLikesCollection.InsertOneAsync(placeLike);
     }
+
+    public async Task AddPlaceCommentAsync(PlaceComment placeComment)
+    {
+        await _placeCommentCollection.InsertOneAsync(placeComment);
+    }
     
     public async Task<PlaceLike> FindPlaceLikeAsync(string? placeId, string? userId)
     {
