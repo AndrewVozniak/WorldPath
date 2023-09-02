@@ -112,4 +112,11 @@ public class PlaceService
         
         await _placeLikesCollection.DeleteOneAsync(filter);
     }
+
+    public async Task DeletePlaceAsync(string placeId)
+    {
+        var filter = Builders<Place>.Filter.Eq(p => p.Id, placeId);
+
+        await _placeCollection.DeleteOneAsync(filter);
+    }
 }

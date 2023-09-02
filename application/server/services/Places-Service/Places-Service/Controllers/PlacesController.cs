@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Places_Service.Dtos;
 using Places_Service.Models;
 using Places_Service.Services;
+using ZstdSharp.Unsafe;
 
 namespace Places_Service.Controllers
 {
@@ -147,6 +148,18 @@ namespace Places_Service.Controllers
             if (!success) return NotFound("Place not found");
             
             return Ok("Place updated successfully");
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeletePlace(string placeId)
+        {
+            var isExists = await _placeService.PlaceExistsAsync(placeId);
+
+            if (!isExists) return NotFound();
+
+            await _placeService.DeletePlaceAsync(placeId);
+
+            return Ok("Place deleted successfully");
         }
     }
 }    
