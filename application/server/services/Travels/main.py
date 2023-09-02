@@ -65,30 +65,33 @@ def add_travel():
 
     data = request.get_json()
 
-    places = data['places']
-    routes = data['routes']
+    places = data['places'] if 'places' in data else []
+    routes = data['routes'] if 'routes' in data else []
 
     user_id = request.headers.get('Userid')
 
-    if user_id is None:
-        data['type'] = 'shared'
-    else:
-        user_id = ObjectId(user_id)
+    # Basic validations
+    if data['title'] is None or data['description'] is None or data['type'] is None:
+        return jsonify({"message": "Title, description and type are required"}), 400
 
+    if travels_collection.find_one({"title": data['title']}) is not None:
+        return jsonify({"message": "Title already exists"}), 400
+
+    if user_id is None:
+        return jsonify({"message": "User id is required"}), 400
+
+    if data['type'] != 'public' and data['type'] != 'private':
+        return jsonify({"message": "Type must be public or private"}), 400
+
+    # Prepare data to insert
     travel_info = {
         "title": data['title'],
         "description": data['description'],
         "type": data['type'],
-        "user_id": user_id,
+        "user_id": ObjectId(user_id),
         "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "created_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
-
-    if travel_info['title'] is None or travel_info['description'] is None or travel_info['type'] is None:
-        return jsonify({"message": "Title, description and type are required"}), 400
-
-    if travels_collection.find_one({"title": travel_info['title']}) is not None:
-        return jsonify({"message": "Title already exists"}), 400
 
     travel_id = travels_collection.insert_one(travel_info).inserted_id
 
@@ -128,7 +131,7 @@ def edit_travel(travel_id):
     if founded_travel is not None and founded_travel['_id'] != ObjectId(travel_id):
         return jsonify({"message": "Title already exists"}), 400
 
-    if travel['user_id'] != ObjectId(request.headers.get('Userid')) and travel['type'] != 'shared':
+    if travel['user_id'] != ObjectId(request.headers.get('Userid')):
         return jsonify({"message": "You don't have permission to edit this travel"}), 403
 
     db['Travels'].update_one({"_id": ObjectId(travel_id)}, {"$set": travel_info})

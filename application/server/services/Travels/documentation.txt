@@ -1,8 +1,6 @@
 TYPES:
 Public - viewable by all, but editable only by owner
 Private - viewable and editable only by owner
-Shared - viewable and editable by all
-
 
 
 Add travel
@@ -30,7 +28,7 @@ JSON Body Example:
         }
     ]
 }
-Header: Userid ( not required if type is shared )
+Header: Userid
 URL: /travel | POST
 
 ------------------------------------
@@ -43,7 +41,7 @@ JSON Body Example:
     "type": "private",
 }
 
-Header: Userid ( not required if type is shared )
+Header: Userid
 URL: /travel/:id | PUT
 
 ------------------------------------
