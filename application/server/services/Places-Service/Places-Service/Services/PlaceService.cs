@@ -38,7 +38,11 @@ public class PlaceService
 
         return place;
     }
-    
+
+    public async Task AddOnePlaceAsync(Place place)
+    {
+        await _placeCollection.InsertOneAsync(place);
+    }
     
     public async Task AddManyPlacesAsync(IEnumerable<Place> places)
     {
@@ -63,6 +67,23 @@ public class PlaceService
         var placeLikeFromDb = await _placeLikesCollection.Find(filter).FirstOrDefaultAsync();
 
         return placeLikeFromDb;
+    }
+
+    public async Task<bool> UpdatePlaceAsync(string id, Place updatePlace)
+    {
+        var placeFromDb = await _placeCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
+
+        if (placeFromDb == null) return false;
+        
+        placeFromDb.Name = updatePlace.Name;
+        placeFromDb.Lat = updatePlace.Lat;
+        placeFromDb.Lon = updatePlace.Lon;
+        placeFromDb.PlaceType = updatePlace.PlaceType;
+        placeFromDb.UpdatedAt = DateTime.Now;
+        
+        var result = await _placeCollection.ReplaceOneAsync(p => p.Id == id, placeFromDb);
+        
+        return result.IsAcknowledged && result.ModifiedCount > 0;
     }
     
     public async Task<bool> PlaceExistsAsync(string? placeId)
@@ -90,5 +111,12 @@ public class PlaceService
                      Builders<PlaceLike>.Filter.Eq(pl => pl.UserId, userId);
         
         await _placeLikesCollection.DeleteOneAsync(filter);
+    }
+
+    public async Task DeletePlaceAsync(string placeId)
+    {
+        var filter = Builders<Place>.Filter.Eq(p => p.Id, placeId);
+
+        await _placeCollection.DeleteOneAsync(filter);
     }
 }

@@ -8,9 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="12.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.10" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" />
         <PackageReference Include="MongoDB.Bson" Version="2.21.0" />
         <PackageReference Include="MongoDB.Driver" Version="2.21.0" />
@@ -19,7 +19,6 @@
 
     <ItemGroup>
       <Folder Include="Controllers\" />
-      <Folder Include="Repository\Interfaces\" />
     </ItemGroup>
 
 </Project>
