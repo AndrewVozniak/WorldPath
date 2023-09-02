@@ -1,6 +1,5 @@
 import datetime
-import time
-
+from bson import ObjectId
 from flask import request, jsonify, Flask
 from flask_cors import CORS
 
@@ -58,7 +57,7 @@ def get_travels():
     return jsonify(travels)
 
 
-@app.route('/travels', methods=['POST'])
+@app.route('/travel', methods=['POST'])
 def add_travel():
     travels_collection = db['Travels']
     places_collection = db['Places']
@@ -73,7 +72,7 @@ def add_travel():
         "title": data['title'],
         "description": data['description'],
         "type": data['type'],
-        "user_id": request.headers.get('Userid'),
+        "user_id": ObjectId(request.headers.get('Userid')),
         "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "created_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
@@ -101,6 +100,33 @@ def add_travel():
         routes_collection.insert_one(route)
 
     return jsonify({"message": "Travel added successfully"})
+
+
+@app.route('/travel/<travel_id>', methods=['PUT'])
+def edit_travel(travel_id):
+    travel = db['Travels'].find_one({"_id": ObjectId(travel_id)})
+
+    if travel is None:
+        return jsonify({"message": "Travel not found"}), 404
+
+    travel_info = {
+        "title": request.json.get('title', travel['title']),
+        "description": request.json.get('description', travel['description']),
+        "type": request.json.get('type', travel['type']),
+        "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    }
+
+    founded_travel = db['Travels'].find_one({"title": travel_info['title']})
+
+    if founded_travel is not None and founded_travel['_id'] != ObjectId(travel_id):
+        return jsonify({"message": "Title already exists"}), 400
+
+    if travel['user_id'] != ObjectId(request.headers.get('Userid')) and travel['type'] != 'shared':
+        return jsonify({"message": "You don't have permission to edit this travel"}), 403
+
+    db['Travels'].update_one({"_id": ObjectId(travel_id)}, {"$set": travel_info})
+
+    return jsonify({"message": "Travel updated successfully"})
 
 
 if __name__ == '__main__':

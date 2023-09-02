@@ -1,3 +1,8 @@
+TYPES:
+Public - viewable by all, but editable only by owner
+Private - viewable and editable only by owner
+Shared - viewable and editable by all
+
 Add travel json body example:
 {
     "title": "Travel 1",
@@ -22,5 +27,16 @@ Add travel json body example:
         }
     ]
 }
-Header: Userid ( not required if type is public )
-URL: /travels | POST
+Header: Userid ( not required if type is shared )
+URL: /travel | POST
+
+Edit travel by ID
+JSON Body Example:
+{
+    "name": "Travel 1",
+    "description": "Some description",
+    "type": "private",
+}
+
+Header: Userid ( not required if type is shared )
+URL: /travel/:id | PUT
