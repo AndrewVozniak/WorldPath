@@ -23,6 +23,23 @@ public class PlaceService
         _placeCommentCollection = database.GetCollection<PlaceComment>(databaseSettings.Value.PlaceCommentsCollection);
     }
 
+    public async Task<Place> GetPlaceByName(string name)
+    {
+        var filter = Builders<Place>.Filter.Eq(p => p.Name, name);
+        var place = await _placeCollection.Find(filter).FirstOrDefaultAsync();
+
+        return place;
+    }
+
+    public async Task<Place> GetPlaceById(string id)
+    {
+        var filter =  Builders<Place>.Filter.Eq(p => p.Id, id);
+        var place = await _placeCollection.Find(filter).FirstOrDefaultAsync();
+
+        return place;
+    }
+    
+    
     public async Task AddManyPlacesAsync(IEnumerable<Place> places)
     {
         await _placeCollection.InsertManyAsync(places);

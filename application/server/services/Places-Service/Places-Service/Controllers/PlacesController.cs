@@ -21,25 +21,25 @@ namespace Places_Service.Controllers
             _placeService = placeService;
         }
         
-        // [HttpGet]
-        // public async Task<IActionResult> GetPlacesById([FromQuery] int id)
-        // {
-        //     //дістати місце
-        //
-        //     // if (place == null) return NotFound();
-        //     //
-        //     // return Ok(place);
-        // }
+        [HttpGet]
+        public async Task<IActionResult> GetPlacesById([FromQuery] string id)
+        {
+            var place = await _placeService.GetPlaceById(id);
+            
+            if (place == null) return NotFound();
 
-        // [HttpGet]
-        // public async Task<IActionResult> GetPlacesByName([FromQuery] string name)
-        // {
-        //     // var place = await _repository.GetPlaceByName(name);
-        //     //
-        //     // if (place == null) return NotFound();
-        //     //
-        //     // return Ok(place);
-        // }
+            return Ok(place);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPlacesByName([FromQuery] string name)
+        {
+            var place = await _placeService.GetPlaceById(name);
+            
+            if (place == null) return NotFound();
+            
+            return Ok(place);
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetPlacesByCoordinate([FromQuery] float lat, [FromQuery] float lon)
