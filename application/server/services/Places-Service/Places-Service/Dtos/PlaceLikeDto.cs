@@ -5,8 +5,6 @@ namespace Places_Service.Dtos;
 
 public class PlaceLikeDto
 {
-    [Required]
-    public int UserId { get; set; }
-    [Required]
-    public int PlaceId { get; set; }
+    [Required] public string UserId { get; set; } = null!;
+    [Required] public string PlaceId { get; set; } = null!;
 }

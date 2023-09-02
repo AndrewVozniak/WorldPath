@@ -4,10 +4,7 @@ namespace Places_Service.Dtos;
 
 public class PlaceCommentDto
 {
-    [Required] 
-    public int UserId { get; set; }
-    [Required]
-    public int PlaceId { get; set; }
-    [Required]
-    public string Text { get; set; }
+    [Required] public string UserId { get; set; } = null!;
+    [Required] public string PlaceId { get; set; } = null!;
+    [Required] public string Text { get; set; } = null!;
 }
