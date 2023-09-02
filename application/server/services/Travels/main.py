@@ -1,6 +1,5 @@
 import datetime
 
-import requests
 from bson import ObjectId
 from flask import request, jsonify, Flask
 from flask_cors import CORS
@@ -200,4 +199,4 @@ def delete_travel(travel_id):
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=3004, debug=True, threaded=False)
+    app.run(host='0.0.0.0', port=3004, debug=True, threaded=False)

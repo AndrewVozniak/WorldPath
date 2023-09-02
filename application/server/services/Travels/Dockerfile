@@ -4,7 +4,7 @@ WORKDIR .
 
 ENV FLASK_APP=main.py
 ENV FLASK_RUN_HOST=0.0.0.0
-ENV FLASK_RUN_PORT=3001
+ENV FLASK_RUN_PORT=3004
 
 
 COPY requirements.txt requirements.txt
@@ -12,6 +12,6 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
-EXPOSE 3001
+EXPOSE 3004
 
 CMD [ "flask", "run" ]

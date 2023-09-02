@@ -1,8 +1,7 @@
 import datetime
 import hashlib
-import json
 import uuid
-from bson import ObjectId, json_util
+from bson import ObjectId
 from flask import request, jsonify, Flask
 from flask_cors import CORS
 
@@ -312,4 +311,4 @@ def validate_token():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=3008, debug=True, threaded=False)
+    app.run(host='0.0.0.0', port=3008, debug=True, threaded=False)
