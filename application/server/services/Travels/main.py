@@ -1,4 +1,6 @@
 import datetime
+
+import requests
 from bson import ObjectId
 from flask import request, jsonify, Flask
 from flask_cors import CORS
@@ -21,7 +23,7 @@ CORS(allow_headers='Content-Type')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 
-@app.route('/travels', methods=['GET'])
+@app.route('/travels/', methods=['GET'])
 def get_travels():
     travels_collection = db['Travels']
     places_collection = db['Places']
@@ -29,22 +31,22 @@ def get_travels():
 
     travels = []
 
-    for travel in travels_collection.find():
+    for travel in travels_collection.find({}):
         places = []
         routes = []
 
-        for place in places_collection.find({"travel_id": travel['id']}):
+        for place in places_collection.find({"travel_id": travel['_id']}):
             places.append({
-                "place_id": place['place_id']
+                "place_id": str(place['place_id'])
             })
 
-        for route in routes_collection.find({"travel_id": travel['id']}):
+        for route in routes_collection.find({"travel_id": travel['_id']}):
             routes.append({
-                "route_id": route['route_id']
+                "route_id": str(route['route_id'])
             })
 
         travels.append({
-            "id": travel['id'],
+            "id": str(travel['_id']),
             "title": travel['title'],
             "description": travel['description'],
             "type": travel['type'],
@@ -60,6 +62,9 @@ def get_travels():
 @app.route('/user/travels/', methods=['GET'])
 def get_travels_by_user_id():
     user_id = request.headers.get('Userid')
+
+    if user_id is None:
+        return jsonify({"message": "User id is required"}), 400
 
     travels_collection = db['Travels']
     places_collection = db['Places']
