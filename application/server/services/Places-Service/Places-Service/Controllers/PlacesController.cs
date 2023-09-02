@@ -80,28 +80,24 @@ namespace Places_Service.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Like([FromBody] PlaceLikeDto like)
+        public async Task<IActionResult> Like([FromBody] PlaceLikeDto placeLikeDto)
         {
-            var placeExists = await _placeService.PlaceExistsAsync(like.PlaceId);
+            var placeExists = await _placeService.PlaceExistsAsync(placeLikeDto.PlaceId);
         
             if (!placeExists)
             {
                 return NotFound("The specified PlaceId does not exist.");
             }
 
-            var placeLikeFromDb = await _placeService.FindPlaceLikeAsync(like.PlaceId, like.UserId);
+            var placeLikeFromDb = await _placeService.FindPlaceLikeAsync(placeLikeDto.PlaceId, placeLikeDto.UserId);
         
             if (placeLikeFromDb is not null)
             {
-                await _placeService.DeletePlaceLikeAsync(like.PlaceId, like.UserId);
+                await _placeService.DeletePlaceLikeAsync(placeLikeDto.PlaceId, placeLikeDto.UserId);
                 return Ok("Dislike was Ok!");
             }
-        
-            var placeLike = new PlaceLike()
-            {
-                PlaceId = like.PlaceId,
-                UserId = like.UserId,
-            };
+
+            var placeLike = _mapper.Map<PlaceLike>(placeLikeDto);
 
             await _placeService.AddPlaceLikeAsync(placeLike);
             return Ok(placeLike);
