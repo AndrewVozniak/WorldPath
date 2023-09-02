@@ -68,11 +68,18 @@ def add_travel():
     places = data['places']
     routes = data['routes']
 
+    user_id = request.headers.get('Userid')
+
+    if user_id is None:
+        data['type'] = 'shared'
+    else:
+        user_id = ObjectId(user_id)
+
     travel_info = {
         "title": data['title'],
         "description": data['description'],
         "type": data['type'],
-        "user_id": ObjectId(request.headers.get('Userid')),
+        "user_id": user_id,
         "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "created_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
@@ -127,6 +134,23 @@ def edit_travel(travel_id):
     db['Travels'].update_one({"_id": ObjectId(travel_id)}, {"$set": travel_info})
 
     return jsonify({"message": "Travel updated successfully"})
+
+
+@app.route('/travel/<travel_id>', methods=['DELETE'])
+def delete_travel(travel_id):
+    travel = db['Travels'].find_one({"_id": ObjectId(travel_id)})
+
+    if travel is None:
+        return jsonify({"message": "Travel not found"}), 404
+
+    if travel['user_id'] != ObjectId(request.headers.get('Userid')):
+        return jsonify({"message": "You don't have permission to delete this travel"}), 403
+
+    db['Travels'].delete_one({"_id": ObjectId(travel_id)})
+    db['Places'].delete_many({"travel_id": ObjectId(travel_id)})
+    db['Routes'].delete_many({"travel_id": ObjectId(travel_id)})
+
+    return jsonify({"message": "Travel deleted successfully"})
 
 
 if __name__ == '__main__':

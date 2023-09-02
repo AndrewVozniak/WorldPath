@@ -3,7 +3,10 @@ Public - viewable by all, but editable only by owner
 Private - viewable and editable only by owner
 Shared - viewable and editable by all
 
-Add travel json body example:
+
+
+Add travel
+JSON Body Example:
 {
     "title": "Travel 1",
     "description": "Some description",
@@ -30,6 +33,8 @@ Add travel json body example:
 Header: Userid ( not required if type is shared )
 URL: /travel | POST
 
+------------------------------------
+
 Edit travel by ID
 JSON Body Example:
 {
@@ -40,3 +45,10 @@ JSON Body Example:
 
 Header: Userid ( not required if type is shared )
 URL: /travel/:id | PUT
+
+------------------------------------
+
+Delete travel by ID
+Header: Userid
+URL: /travel/:id | DELETE
+
