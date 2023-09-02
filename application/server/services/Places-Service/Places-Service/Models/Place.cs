@@ -3,6 +3,7 @@ using System.Data;
 using System.Text.Json.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver.GeoJsonObjectModel;
 
 namespace Places_Service.Models;
 
@@ -35,5 +36,19 @@ public class Place
     [BsonElement("CreatedAt")]
     [JsonPropertyName("CreatedAt")]
     public DateTime CreatedAt { get; set; }
+    
+    [BsonElement("Location")]
+    [JsonPropertyName("Location")]
+    public GeoJsonPoint<GeoJson2DGeographicCoordinates> Location
+    {
+        get => new GeoJsonPoint<GeoJson2DGeographicCoordinates>(
+            new GeoJson2DGeographicCoordinates(Lon, Lat)
+        );
+        set
+        {
+            Lon = value.Coordinates.Longitude;
+            Lat = value.Coordinates.Latitude;
+        }
+    }
     
 }

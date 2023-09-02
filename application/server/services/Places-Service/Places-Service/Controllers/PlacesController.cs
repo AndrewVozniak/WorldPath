@@ -43,9 +43,9 @@ namespace Places_Service.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPlacesByCoordinate([FromQuery] float lat, [FromQuery] float lon)
         {
-            // var place = await _repository.GetPlaceByCoordinate(lat, lon);
-            //
-            // if (place != null) return Ok(place);
+            var placesNearby = await _placeService.FindPlacesNearbyAsync(lat, lon);
+            
+            if (placesNearby != null && placesNearby.Any()) return Ok(placesNearby);
             
             var newPlaces = new List<Place>();
             
