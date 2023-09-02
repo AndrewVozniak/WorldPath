@@ -1,7 +1,5 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Core.Types;
-using Places_Service.Data;
 using Places_Service.Dtos;
 using Places_Service.Models;
 using Places_Service.Services;
@@ -14,11 +12,13 @@ namespace Places_Service.Controllers
     {
         private readonly IGooglePlaceService _googlePlaceService;
         private readonly PlaceService _placeService;
+        private readonly IMapper _mapper;
 
-        public PlacesController(IGooglePlaceService googlePlaceService, PlaceService placeService)
+        public PlacesController(IGooglePlaceService googlePlaceService, PlaceService placeService, IMapper mapper)
         {
             _googlePlaceService = googlePlaceService;
             _placeService = placeService;
+            _mapper = mapper;
         }
         
         [HttpGet]
@@ -123,6 +123,20 @@ namespace Places_Service.Controllers
             await _placeService.AddPlaceCommentAsync(placeComment);
         
             return Ok(placeComment);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPlace([FromBody] PlaceDto placeDto)
+        {
+            var placeFromDb = await _placeService.GetPlaceByName(placeDto.Name);
+
+            if (placeFromDb != null) return NotFound("Place already exists");
+
+            var place = _mapper.Map<Place>(placeDto);
+
+            await _placeService.AddOnePlaceAsync(place);
+
+            return Ok(place);
         }
     }
 }    

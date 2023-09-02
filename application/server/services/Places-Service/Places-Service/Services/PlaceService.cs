@@ -38,7 +38,11 @@ public class PlaceService
 
         return place;
     }
-    
+
+    public async Task AddOnePlaceAsync(Place place)
+    {
+        await _placeCollection.InsertOneAsync(place);
+    }
     
     public async Task AddManyPlacesAsync(IEnumerable<Place> places)
     {
