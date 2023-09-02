@@ -23,9 +23,31 @@ public class PlaceService
         _placeCommentCollection = database.GetCollection<PlaceComment>(databaseSettings.Value.PlaceCommentsCollection);
     }
 
-    public async Task CreateManyAsync(IEnumerable<Place> places)
+    public async Task AddManyPlacesAsync(IEnumerable<Place> places)
     {
         await _placeCollection.InsertManyAsync(places);
+    }
+    
+    public async Task AddPlaceLikeAsync(PlaceLike placeLike)
+    {
+        await _placeLikesCollection.InsertOneAsync(placeLike);
+    }
+    
+    public async Task<PlaceLike> FindPlaceLikeAsync(string? placeId, string? userId)
+    {
+        var filter = Builders<PlaceLike>.Filter.Eq(pl => pl.PlaceId, placeId) &
+                     Builders<PlaceLike>.Filter.Eq(pl => pl.UserId, userId);
+
+        var placeLikeFromDb = await _placeLikesCollection.Find(filter).FirstOrDefaultAsync();
+
+        return placeLikeFromDb;
+    }
+    
+    public async Task<bool> PlaceExistsAsync(string? placeId)
+    {
+        var filter = Builders<Place>.Filter.Eq(p => p.Id, placeId);
+        var placeExists = await _placeCollection.Find(filter).AnyAsync();
+        return placeExists;
     }
     
     public async Task<IEnumerable<Place>> FindPlacesNearbyAsync(double latitude, double longitude)
@@ -38,5 +60,13 @@ public class PlaceService
 
         var places = await _placeCollection.Find(filter).ToListAsync();
         return places;
+    }
+    
+    public async Task DeletePlaceLikeAsync(string placeId, string userId)
+    {
+        var filter = Builders<PlaceLike>.Filter.Eq(pl => pl.PlaceId, placeId) &
+                     Builders<PlaceLike>.Filter.Eq(pl => pl.UserId, userId);
+        
+        await _placeLikesCollection.DeleteOneAsync(filter);
     }
 }

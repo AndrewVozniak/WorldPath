@@ -1,18 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Places_Service.Models;
 
 public class PlaceLike
-{
-    [Key] public Guid Id { get; set; } = new Guid();
-    [Required]
-    public int UserId { get; set; }
-    [Required]
-    [ForeignKey("Place")]
-    public int PlaceId { get; set; }
-    public Place Place { get; set; }
+{   
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? Id { get; set; }
+    [BsonElement("UserId")]
+    [JsonPropertyName("UserId")]
+    public string? UserId { get; set; }
+    [BsonElement("PlaceId")]
+    [JsonPropertyName("PlaceId")]
+    public string? PlaceId { get; set; }
+    
+    [BsonElement("UpdatedAt")]
+    [JsonPropertyName("UpdatedAt")]
     public DateTime? UpdatedAt { get; set; }
-    [Required]
+    
+    [BsonElement("CreatedAt")]
+    [JsonPropertyName("CreatedAt")]
     public DateTime CreatedAt { get; set; }
 }

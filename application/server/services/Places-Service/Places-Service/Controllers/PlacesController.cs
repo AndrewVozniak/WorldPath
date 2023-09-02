@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 using Places_Service.Data;
 using Places_Service.Dtos;
 using Places_Service.Models;
@@ -68,7 +69,7 @@ namespace Places_Service.Controllers
                     newPlaces.Add(newPlace);
                 }
 
-                await _placeService.CreateManyAsync(newPlaces);
+                await _placeService.AddManyPlacesAsync(newPlaces);
                 return Ok(newPlaces);
             }
             else
@@ -77,37 +78,33 @@ namespace Places_Service.Controllers
             }
         }
 
-        // [HttpPost]
-        // public async Task<IActionResult> Like([FromBody] PlaceLikeDto like)
-        // {
-        //     var placeExists = await _context.Places.AnyAsync(p => p.Id == like.PlaceId);
-        //
-        //     if (!placeExists)
-        //     {
-        //         return NotFound("The specified PlaceId does not exist.");
-        //     }
-        //     
-        //     var placeLikeFromDb = await _context.PlaceLikes
-        //         .FirstOrDefaultAsync(pl => pl.PlaceId == like.PlaceId && pl.UserId == like.UserId);
-        //
-        //     if (placeLikeFromDb is not null)
-        //     {
-        //         _context.PlaceLikes.Remove(placeLikeFromDb);
-        //         await _context.SaveChangesAsync();
-        //         return Ok("Dislike was Ok!");
-        //     }
-        //
-        //     var placeLike = new PlaceLike()
-        //     {
-        //         PlaceId = like.PlaceId,
-        //         UserId = like.UserId,
-        //     };
-        //
-        //     await _context.PlaceLikes.AddAsync(placeLike);
-        //     await _context.SaveChangesAsync();
-        //
-        //     return Ok(placeLike);
-        // }
+        [HttpPost]
+        public async Task<IActionResult> Like([FromBody] PlaceLikeDto like)
+        {
+            var placeExists = await _placeService.PlaceExistsAsync(like.PlaceId);
+        
+            if (!placeExists)
+            {
+                return NotFound("The specified PlaceId does not exist.");
+            }
+
+            var placeLikeFromDb = await _placeService.FindPlaceLikeAsync(like.PlaceId, like.UserId);
+        
+            if (placeLikeFromDb is not null)
+            {
+                await _placeService.DeletePlaceLikeAsync(like.PlaceId, like.UserId);
+                return Ok("Dislike was Ok!");
+            }
+        
+            var placeLike = new PlaceLike()
+            {
+                PlaceId = like.PlaceId,
+                UserId = like.UserId,
+            };
+
+            await _placeService.AddPlaceLikeAsync(placeLike);
+            return Ok(placeLike);
+        }
 
         // [HttpPost]
         // public async Task<IActionResult> Comment([FromBody] PlaceCommentDto commentDto)
