@@ -138,6 +138,16 @@ namespace Places_Service.Controllers
 
             return Ok(place);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePlace(string id, [FromBody] PlaceDto updatePlaceDto)
+        {
+            var success = await _placeService.UpdatePlaceAsync(id, _mapper.Map<Place>(updatePlaceDto));
+            
+            if (!success) return NotFound("Place not found");
+            
+            return Ok("Place updated successfully");
+        }
     }
 }    
             

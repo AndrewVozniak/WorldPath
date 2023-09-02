@@ -68,6 +68,23 @@ public class PlaceService
 
         return placeLikeFromDb;
     }
+
+    public async Task<bool> UpdatePlaceAsync(string id, Place updatePlace)
+    {
+        var placeFromDb = await _placeCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
+
+        if (placeFromDb == null) return false;
+        
+        placeFromDb.Name = updatePlace.Name;
+        placeFromDb.Lat = updatePlace.Lat;
+        placeFromDb.Lon = updatePlace.Lon;
+        placeFromDb.PlaceType = updatePlace.PlaceType;
+        placeFromDb.UpdatedAt = DateTime.Now;
+        
+        var result = await _placeCollection.ReplaceOneAsync(p => p.Id == id, placeFromDb);
+        
+        return result.IsAcknowledged && result.ModifiedCount > 0;
+    }
     
     public async Task<bool> PlaceExistsAsync(string? placeId)
     {
