@@ -50,3 +50,10 @@ Delete travel by ID
 Header: Userid
 URL: /travel/:id | DELETE
 
+------------------------------------
+
+Get all user travels
+Header: Userid
+URL: /user/travels | GET
+
+

@@ -57,6 +57,44 @@ def get_travels():
     return jsonify(travels)
 
 
+@app.route('/user/travels/', methods=['GET'])
+def get_travels_by_user_id():
+    user_id = request.headers.get('Userid')
+
+    travels_collection = db['Travels']
+    places_collection = db['Places']
+    routes_collection = db['Routes']
+
+    travels = []
+
+    for travel in travels_collection.find({"user_id": ObjectId(user_id)}):
+        places = []
+        routes = []
+
+        for place in places_collection.find({"travel_id": travel['_id']}):
+            places.append({
+                "place_id": str(place['place_id'])
+            })
+
+        for route in routes_collection.find({"travel_id": travel['_id']}):
+            routes.append({
+                "route_id": str(route['route_id'])
+            })
+
+        travels.append({
+            "id": str(travel['_id']),
+            "title": travel['title'],
+            "description": travel['description'],
+            "type": travel['type'],
+            "places": places,
+            "routes": routes,
+            "updated_at": travel['updated_at'],
+            "created_at": travel['created_at']
+        })
+
+    return jsonify(travels)
+
+
 @app.route('/travel', methods=['POST'])
 def add_travel():
     travels_collection = db['Travels']
