@@ -267,5 +267,24 @@ def add_like():
     return jsonify({"message": "Like added successfully"})
 
 
+@app.route('/like/<like_id>', methods=['DELETE'])
+def delete_like(like_id):
+    likes_collection = db['Likes']
+
+    user_id = request.headers.get('Userid')
+
+    like = likes_collection.find_one({"_id": ObjectId(like_id)})
+
+    if like is None:
+        return jsonify({"message": "Like not found"}), 404
+
+    if like['user_id'] != ObjectId(user_id):
+        return jsonify({"message": "You don't have permission to delete this like"}), 403
+
+    likes_collection.delete_one({"_id": ObjectId(like_id)})
+
+    return jsonify({"message": "Like deleted successfully"})
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3004, debug=True, threaded=False)
