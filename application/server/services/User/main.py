@@ -16,7 +16,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.route('/user', methods=['GET'])
-def get_user_by_token():
+async def get_user_by_token():
     collection = db['Users']
 
     token = request.headers.get('Authorization')
@@ -40,7 +40,7 @@ def get_user_by_token():
 
 
 @app.route('/user/<user_id>', methods=['GET'])
-def get_user_by_id(user_id):
+async def get_user_by_id(user_id):
     collection = db['Users']
 
     user = collection.find_one({'_id': ObjectId(user_id)})
@@ -58,7 +58,7 @@ def get_user_by_id(user_id):
 
 
 @app.route('/user', methods=['PUT'])
-def update_user_by_token():
+async def update_user_by_token():
     token = request.headers.get('Authorization')
 
     if token is None:
@@ -102,7 +102,7 @@ def update_user_by_token():
 
 
 @app.route('/user/<user_id>', methods=['PUT'])
-def update_user_by_id(user_id):
+async def update_user_by_id(user_id):
     collection = db['Users']
 
     # Find user by id
@@ -142,7 +142,7 @@ def update_user_by_id(user_id):
 
 
 @app.route('/create_user', methods=['POST'])
-def create_user():
+async def create_user():
     collection = db['Users']
 
     users = get_all_users_helper()
@@ -196,7 +196,7 @@ def create_user():
 
 
 @app.route('/sign_in_by_username', methods=['POST'])
-def sign_in_by_username():
+async def sign_in_by_username():
     username = request.json.get('username')
     password = hash_password(request.json.get('password'))
 
@@ -212,7 +212,7 @@ def sign_in_by_username():
 
 
 @app.route('/sign_in_by_auth_token', methods=['POST'])
-def sign_in_by_auth_token():
+async def sign_in_by_auth_token():
     token = request.headers.get('Authorization')
 
     collection = db['Users']
@@ -227,7 +227,7 @@ def sign_in_by_auth_token():
 
 
 @app.route('/sign_in_by_email', methods=['POST'])
-def sign_in_by_email():
+async def sign_in_by_email():
     email = request.json.get('email')
     password = hash_password(request.json.get('password'))
 
@@ -242,7 +242,7 @@ def sign_in_by_email():
     return jsonify({'username': user['name'], 'token': user['auth_token']})
 
 
-def get_all_users_helper():
+async def get_all_users_helper():
     collection = db['Users']
 
     users_cursor = collection.find({})
@@ -257,7 +257,7 @@ def get_all_users_helper():
 
 
 @app.route('/get_all_users', methods=['GET'])
-def get_all_users():
+async def get_all_users():
     users = get_all_users_helper()
 
     if not users:
@@ -267,7 +267,7 @@ def get_all_users():
 
 
 @app.route('/validate_token', methods=['POST'])
-def validate_token():
+async def validate_token():
     collection = db['Users']
     token = request.headers.get('Authorization')
 
@@ -281,7 +281,7 @@ def validate_token():
 
 
 @app.route('/travel_history', methods=['POST'])
-def add_travel_to_history():
+async def add_travel_to_history():
     history_collection = db['Travel_Histories']
 
     data = request.get_json()
@@ -312,7 +312,7 @@ def add_travel_to_history():
 
 
 @app.route('/get_travel_history', methods=['GET'])
-def get_travel_history():
+async def get_travel_history():
     history_collection = db['Travel_Histories']
 
     user_id = request.headers.get('Userid')
@@ -334,7 +334,7 @@ def get_travel_history():
 
 
 @app.route('/liked_travels', methods=['GET'])
-def get_liked_travels():
+async def get_liked_travels():
     user_id = request.headers.get('Userid')
     response = rpc_client.call(user_id, queue='get_liked_travels')
 
