@@ -1,4 +1,6 @@
 import datetime
+import json
+
 from bson import ObjectId
 from flask import request, jsonify, Flask
 from flask_cors import CORS
@@ -333,11 +335,13 @@ def get_travel_history():
 
 @app.route('/liked_travels', methods=['GET'])
 def get_liked_travels():
-    message = 'get_liked_travels'
-    response = rpc_client.call(message, queue='hello_queue')
+    user_id = request.headers.get('Userid')
+    response = rpc_client.call(user_id, queue='get_liked_travels')
 
-    return jsonify(response.decode())
+    data = json.loads(response.decode())
+
+    return jsonify(data)
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3008, debug=True, threaded=False)
+    app.run(host='0.0.0.0', port=3008, debug=True, threaded=True)

@@ -274,5 +274,49 @@ def delete_like(like_id):
     return jsonify({"message": "Like deleted successfully"})
 
 
+@app.route('/travel_service/travels/liked', methods=['GET'])
+def get_liked_travels():
+    likes_collection = db['Likes']
+    travels_collection = db['Travels']
+    places_collection = db['Places']
+    routes_collection = db['Routes']
+
+    user_id = request.headers.get('Userid')
+
+    if user_id is None:
+        return jsonify({"message": "User id is required"}), 400
+
+    likes = []
+
+    for like in likes_collection.find({"user_id": ObjectId(user_id)}):
+        travel = travels_collection.find_one({"_id": like['travel_id']})
+
+        places = []
+        routes = []
+
+        for place in places_collection.find({"travel_id": travel['_id']}):
+            places.append({
+                "place_id": str(place['place_id'])
+            })
+
+        for route in routes_collection.find({"travel_id": travel['_id']}):
+            routes.append({
+                "route_id": str(route['route_id'])
+            })
+
+        likes.append({
+            "id": str(travel['_id']),
+            "title": travel['title'],
+            "description": travel['description'],
+            "type": travel['type'],
+            "places": places,
+            "routes": routes,
+            "updated_at": travel['updated_at'],
+            "created_at": travel['created_at']
+        })
+
+    return jsonify(likes)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3004, debug=True, threaded=False)
