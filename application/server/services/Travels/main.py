@@ -22,7 +22,7 @@ CORS(allow_headers='Content-Type')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 
-@app.route('/travels/', methods=['GET'])
+@app.route('/travel_service/travels/', methods=['GET'])
 def get_travels():
     travels_collection = db['Travels']
     places_collection = db['Places']
@@ -58,7 +58,7 @@ def get_travels():
     return jsonify(travels)
 
 
-@app.route('/user/travels/', methods=['GET'])
+@app.route('/travel_service/user/travels/', methods=['GET'])
 def get_travels_by_user_id():
     user_id = request.headers.get('Userid')
 
@@ -99,7 +99,7 @@ def get_travels_by_user_id():
     return jsonify(travels)
 
 
-@app.route('/travel', methods=['POST'])
+@app.route('/travel_service/travel', methods=['POST'])
 def add_travel():
     travels_collection = db['Travels']
     places_collection = db['Places']
@@ -154,7 +154,7 @@ def add_travel():
     return jsonify({"message": "Travel added successfully"})
 
 
-@app.route('/travel/<travel_id>', methods=['PUT'])
+@app.route('/travel_service/travel/<travel_id>', methods=['PUT'])
 def edit_travel(travel_id):
     travel = db['Travels'].find_one({"_id": ObjectId(travel_id)})
 
@@ -181,7 +181,7 @@ def edit_travel(travel_id):
     return jsonify({"message": "Travel updated successfully"})
 
 
-@app.route('/travel/<travel_id>', methods=['DELETE'])
+@app.route('/travel_service/travel/<travel_id>', methods=['DELETE'])
 def delete_travel(travel_id):
     travel = db['Travels'].find_one({"_id": ObjectId(travel_id)})
 
@@ -198,10 +198,8 @@ def delete_travel(travel_id):
     return jsonify({"message": "Travel deleted successfully"})
 
 
-@app.route('/comment', methods=['POST'])
-def add_comment():
-    comments_collection = db['Comments']
-
+@app.route('/travel_service/travel/<travel_id>/comments', methods=['POST'])
+def add_comment(travel_id):
     data = request.get_json()
 
     user_id = request.headers.get('Userid')
@@ -211,16 +209,14 @@ def add_comment():
 
     # Basic validations
     if not text:
-        return jsonify({"message": "Comment is required"}), 400
+        return jsonify({"message": "Text is required"}), 400
 
     if user_id is None:
         return jsonify({"message": "User id is required"}), 400
 
     # Get travel_id from data safely
-    travel_id = data.get('travel_id')
-
-    if not travel_id:
-        return jsonify({"message": "Travel id is required"}), 400
+    if db['Travels'].find_one({"_id": ObjectId(travel_id)}) is None:
+        return jsonify({"message": "Travel not found"}), 404
 
     # Prepare data to insert
     comment_info = {
@@ -231,12 +227,12 @@ def add_comment():
         "created_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
 
-    comments_collection.insert_one(comment_info)
+    db['Comments'].insert_one(comment_info)
 
     return jsonify({"message": "Comment added successfully"})
 
 
-@app.route('/like', methods=['POST'])
+@app.route('/travel_service/like', methods=['POST'])
 def add_like():
     likes_collection = db['Likes']
 
@@ -247,12 +243,15 @@ def add_like():
     # Get travel_id from data safely
     travel_id = data.get('travel_id')
 
+    # Basic validations
     if not travel_id:
         return jsonify({"message": "Travel id is required"}), 400
 
-    # Basic validations
     if user_id is None:
         return jsonify({"message": "User id is required"}), 400
+
+    if likes_collection.find_one({"user_id": ObjectId(user_id), "travel_id": ObjectId(travel_id)}) is not None:
+        return jsonify({"message": "You already liked this travel"}), 400
 
     # Prepare data to insert
     like_info = {
@@ -267,7 +266,7 @@ def add_like():
     return jsonify({"message": "Like added successfully"})
 
 
-@app.route('/like/<like_id>', methods=['DELETE'])
+@app.route('/travel_service/like/<like_id>', methods=['DELETE'])
 def delete_like(like_id):
     likes_collection = db['Likes']
 

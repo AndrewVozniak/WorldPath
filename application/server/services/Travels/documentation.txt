@@ -29,7 +29,7 @@ JSON Body Example:
     ]
 }
 Header: Userid
-URL: /travel | POST
+URL: /travel_service/travel | POST
 
 ------------------------------------
 
@@ -42,18 +42,31 @@ JSON Body Example:
 }
 
 Header: Userid
-URL: /travel/:id | PUT
+URL: /travel_service/travel/:id | PUT
 
 ------------------------------------
 
 Delete travel by ID
 Header: Userid
-URL: /travel/:id | DELETE
+URL: /travel_service/travel/:id | DELETE
 
 ------------------------------------
 
 Get all user travels
 Header: Userid
-URL: /user/travels | GET
+URL: /travel_service/user/travels | GET
 
+------------------------------------
+
+Add comment to travel
+Header: Userid
+JSON Body Example:
+{
+    "text": "Some comment text"
+}
+URL: /travel_service/travel/:id/comments | POST
+
+------------------------------------
+
+Edit comment by ID
 
