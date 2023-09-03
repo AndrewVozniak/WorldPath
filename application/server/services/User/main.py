@@ -331,5 +331,13 @@ def get_travel_history():
     return jsonify(history_list)
 
 
+@app.route('/liked_travels', methods=['GET'])
+def get_liked_travels():
+    message = 'get_liked_travels'
+    response = rpc_client.call(message, queue='hello_queue')
+
+    return jsonify(response.decode())
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3008, debug=True, threaded=False)
