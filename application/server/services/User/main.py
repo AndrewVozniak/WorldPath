@@ -341,5 +341,27 @@ def add_travel_to_history():
     return jsonify({"message": "Travel added to history successfully"})
 
 
+@app.route('/get_travel_history', methods=['GET'])
+def get_travel_history():
+    history_collection = db['Travel_Histories']
+
+    user_id = request.headers.get('Userid')
+
+    if user_id is None:
+        return jsonify({"message": "User id is required"}), 400
+
+    history_cursor = history_collection.find({"user_id": ObjectId(user_id)})
+
+    history_list = []
+
+    for history in history_cursor:
+        history['_id'] = str(history['_id'])
+        history['user_id'] = str(history['user_id'])
+        history['travel_id'] = str(history['travel_id'])
+        history_list.append(history)
+
+    return jsonify(history_list)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3008, debug=True, threaded=False)
