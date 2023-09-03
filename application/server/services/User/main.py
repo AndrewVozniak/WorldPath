@@ -1,48 +1,16 @@
 import datetime
-import hashlib
-import uuid
 from bson import ObjectId
 from flask import request, jsonify, Flask
 from flask_cors import CORS
-
-from pymongo.mongo_client import MongoClient
-
-uri = "mongodb+srv://worldpath:uoSwHCbCc86dcHX3@cluster0.dumeyxp.mongodb.net/?retryWrites=true&w=majority"
-client = MongoClient(uri)
-db = client['Users']
-
-try:
-    client.admin.command('ping')
-    print("Pinged your deployment. You successfully connected to MongoDB!")
-
-except Exception as e:
-    print(e)
+from database import db
+from actions.hash_password import hash_password
+from actions.generate_auth_token import generate_auth_token
+from rpcClient import rpc_client
 
 app = Flask(__name__)
 
 CORS(allow_headers='Content-Type')
 CORS(app, resources={r"/*": {"origins": "*"}})
-
-
-def generate_auth_token(users):
-    # Generate auth token 32 characters long
-    token = uuid.uuid4().hex + uuid.uuid4().hex
-
-    # Check if token already exists
-    if any(user['auth_token'] == token for user in users):
-        generate_auth_token(users)
-
-    return token
-
-
-def hash_password(password):
-    if password is None:
-        return None
-
-    # Hash password
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
-
-    return hashed_password
 
 
 @app.route('/user', methods=['GET'])
