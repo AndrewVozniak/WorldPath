@@ -236,5 +236,36 @@ def add_comment():
     return jsonify({"message": "Comment added successfully"})
 
 
+@app.route('/like', methods=['POST'])
+def add_like():
+    likes_collection = db['Likes']
+
+    data = request.get_json()
+
+    user_id = request.headers.get('Userid')
+
+    # Get travel_id from data safely
+    travel_id = data.get('travel_id')
+
+    if not travel_id:
+        return jsonify({"message": "Travel id is required"}), 400
+
+    # Basic validations
+    if user_id is None:
+        return jsonify({"message": "User id is required"}), 400
+
+    # Prepare data to insert
+    like_info = {
+        "user_id": ObjectId(user_id),
+        "travel_id": ObjectId(travel_id),
+        "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "created_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    likes_collection.insert_one(like_info)
+
+    return jsonify({"message": "Like added successfully"})
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3004, debug=True, threaded=False)
