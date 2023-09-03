@@ -12,7 +12,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.route('/travel_service/travels/', methods=['GET'])
-def get_travels():
+async def get_travels():
     travels_collection = db['Travels']
     places_collection = db['Places']
     routes_collection = db['Routes']
@@ -48,7 +48,7 @@ def get_travels():
 
 
 @app.route('/travel_service/user/travels/', methods=['GET'])
-def get_travels_by_user_id():
+async def get_travels_by_user_id():
     user_id = request.headers.get('Userid')
 
     if user_id is None:
@@ -89,7 +89,7 @@ def get_travels_by_user_id():
 
 
 @app.route('/travel_service/travel', methods=['POST'])
-def add_travel():
+async def add_travel():
     travels_collection = db['Travels']
     places_collection = db['Places']
     routes_collection = db['Routes']
@@ -144,7 +144,7 @@ def add_travel():
 
 
 @app.route('/travel_service/travel/<travel_id>', methods=['PUT'])
-def edit_travel(travel_id):
+async def edit_travel(travel_id):
     travel = db['Travels'].find_one({"_id": ObjectId(travel_id)})
 
     if travel is None:
@@ -171,7 +171,7 @@ def edit_travel(travel_id):
 
 
 @app.route('/travel_service/travel/<travel_id>', methods=['DELETE'])
-def delete_travel(travel_id):
+async def delete_travel(travel_id):
     travel = db['Travels'].find_one({"_id": ObjectId(travel_id)})
 
     if travel is None:
@@ -188,7 +188,7 @@ def delete_travel(travel_id):
 
 
 @app.route('/travel_service/travel/<travel_id>/comments', methods=['POST'])
-def add_comment(travel_id):
+async def add_comment(travel_id):
     data = request.get_json()
 
     user_id = request.headers.get('Userid')
@@ -222,7 +222,7 @@ def add_comment(travel_id):
 
 
 @app.route('/travel_service/like', methods=['POST'])
-def add_like():
+async def add_like():
     likes_collection = db['Likes']
 
     data = request.get_json()
@@ -256,7 +256,7 @@ def add_like():
 
 
 @app.route('/travel_service/like/<like_id>', methods=['DELETE'])
-def delete_like(like_id):
+async def delete_like(like_id):
     likes_collection = db['Likes']
 
     user_id = request.headers.get('Userid')
@@ -275,7 +275,7 @@ def delete_like(like_id):
 
 
 @app.route('/travel_service/travels/liked', methods=['GET'])
-def get_liked_travels():
+async def get_liked_travels():
     likes_collection = db['Likes']
     travels_collection = db['Travels']
     places_collection = db['Places']
