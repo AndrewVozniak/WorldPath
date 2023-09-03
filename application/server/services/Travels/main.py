@@ -198,5 +198,43 @@ def delete_travel(travel_id):
     return jsonify({"message": "Travel deleted successfully"})
 
 
+@app.route('/comment', methods=['POST'])
+def add_comment():
+    comments_collection = db['Comments']
+
+    data = request.get_json()
+
+    user_id = request.headers.get('Userid')
+
+    # Get text from data safely
+    text = data.get('text')
+
+    # Basic validations
+    if not text:
+        return jsonify({"message": "Comment is required"}), 400
+
+    if user_id is None:
+        return jsonify({"message": "User id is required"}), 400
+
+    # Get travel_id from data safely
+    travel_id = data.get('travel_id')
+
+    if not travel_id:
+        return jsonify({"message": "Travel id is required"}), 400
+
+    # Prepare data to insert
+    comment_info = {
+        "user_id": ObjectId(user_id),
+        "travel_id": ObjectId(travel_id),
+        "text": text,
+        "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "created_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    comments_collection.insert_one(comment_info)
+
+    return jsonify({"message": "Comment added successfully"})
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3004, debug=True, threaded=False)
