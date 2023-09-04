@@ -1,10 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Reviews.Data;
+using Reviews.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDatabase"));
+builder.Services.AddSingleton<MongoReviewService>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
