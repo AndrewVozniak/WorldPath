@@ -7,6 +7,11 @@ import { Component } from '@angular/core';
 })
 export class WeatherComponent {
   public hoursToDisplay?: number;
+  public currentPage?: number;
+
+  changePage($event: number) {
+    this.currentPage = $event;
+  }
 
   changeHoursToDisplay($event: number) {
     this.hoursToDisplay = $event;

@@ -25,6 +25,7 @@ import { AuthRegisterCardComponent } from './components/auth-register-card/auth-
 import { AuthLoginCardComponent } from './components/auth-login-card/auth-login-card.component';
 import { WeatherComponent } from './pages/weather/weather.component';
 import { WeatherSearchHeadingComponent } from './components/weather-search-heading/weather-search-heading.component';
+import { WeatherPaginationComponent } from './components/weather-pagination/weather-pagination.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { WeatherSearchHeadingComponent } from './components/weather-search-headi
     AuthRegisterCardComponent,
     AuthLoginCardComponent,
     WeatherComponent,
-    WeatherSearchHeadingComponent
+    WeatherSearchHeadingComponent,
+    WeatherPaginationComponent
   ],
   imports: [
     BrowserModule,

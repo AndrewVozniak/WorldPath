@@ -6,5 +6,10 @@
 
   <div class="page-content">
     <div class="content__title">{{ hoursToDisplay }} hours</div>
+
+    <app-weather-pagination
+      *ngIf="hoursToDisplay === 120"
+      (changePageEvent)="changePage($event)"
+    ></app-weather-pagination>
   </div>
 </div>
