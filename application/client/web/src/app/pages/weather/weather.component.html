@@ -1,0 +1,37 @@
+<div class="weather_page">
+  <div class="heading">
+    <div class="name-search">
+      <h2 class="mb-2 name-search__title">Search by name</h2>
+      <input type="text" class="search-input">
+    </div>
+
+    <div class="coordinates-search">
+      <h2 class="coordinates-search__title">or</h2>
+
+      <div class="fields-container">
+        <div class="input-field">
+          <label for="lat" class="input-field__title">Lat</label>
+          <input type="text" id="lat" class="search-input">
+        </div>
+
+        <div class="input-field">
+          <label for="lon" class="input-field__title">Lon</label>
+          <input type="text" id="lon" class="search-input">
+        </div>
+      </div>
+    </div>
+
+    <div class="time_format">
+      <div class="input-field">
+        <input type="radio" [name]="'time_format'" class="checkbox" id="24_hours">
+        <label for="24_hours">24 hours</label>
+      </div>
+
+      <div class="input-field">
+        <input checked type="radio" [name]="'time_format'" class="checkbox" id="120_hours">
+        <label for="120_hours">120 hours</label>
+      </div>
+    </div>
+  </div>
+
+</div>

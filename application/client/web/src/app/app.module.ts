@@ -22,7 +22,8 @@ import { PlacesSearchBarComponent } from './components/places-search-bar/places-
 import { PlacesCardComponent } from './components/places-card/places-card.component';
 import { FormsModule } from '@angular/forms';
 import { AuthRegisterCardComponent } from './components/auth-register-card/auth-register-card.component';
-import { AuthLoginCardComponent } from './components/auth-login-card/auth-login-card.component'; // Импортировать FormsModule
+import { AuthLoginCardComponent } from './components/auth-login-card/auth-login-card.component';
+import { WeatherComponent } from './pages/weather/weather.component'; // Импортировать FormsModule
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { AuthLoginCardComponent } from './components/auth-login-card/auth-login-
     PlacesCardComponent,
     AuthRegisterCardComponent,
     AuthLoginCardComponent,
+    WeatherComponent,
   ],
   imports: [
     BrowserModule,

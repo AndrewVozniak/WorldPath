@@ -343,5 +343,11 @@ async def get_liked_travels():
     return jsonify(data)
 
 
+@app.route('/update_password', methods=['PUT'])
+async def update_password():
+    users_collection = db['Users']
+
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3008, debug=True, threaded=True)

@@ -6,6 +6,7 @@ import { RegisterComponent } from "./pages/register/register.component";
 import { HomeComponent } from "./pages/home/home.component";
 import { RoutesComponent } from "./pages/routes/routes.component";
 import { PlacesComponent } from "./pages/places/places.component";
+import { WeatherComponent } from "./pages/weather/weather.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'routes', component: RoutesComponent },
   { path: 'places', component: PlacesComponent },
+  { path: 'weather', component: WeatherComponent },
 ];
 
 @NgModule({
