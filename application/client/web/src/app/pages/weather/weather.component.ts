@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./weather.component.scss']
 })
 export class WeatherComponent {
+  public hoursToDisplay?: number;
 
+  changeHoursToDisplay($event: number) {
+    this.hoursToDisplay = $event;
+  }
 }
