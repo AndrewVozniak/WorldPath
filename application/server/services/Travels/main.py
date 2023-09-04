@@ -318,5 +318,59 @@ async def get_liked_travels():
     return jsonify(likes)
 
 
+@app.route('/travel_service/travels/<travel_id>/photos', methods=['POST'])
+async def add_photo(travel_id):
+    collection = db['Photos']
+
+    data = request.get_json()
+    path = data.get('path')
+
+    if not path:
+        return jsonify({"message": "Path is required"}), 400
+
+    photo_info = {
+        "travel_id": ObjectId(travel_id),
+        "path": path,
+        "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "created_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    collection.insert_one(photo_info)
+
+    return jsonify({"message": "Photo added successfully"})
+
+
+@app.route('/travel_service/travels/<travel_id>/photos', methods=['GET'])
+async def get_photos(travel_id):
+    collection = db['Photos']
+
+    photos = []
+
+    for photo in collection.find({"travel_id": ObjectId(travel_id)}):
+        photos.append({
+            "id": str(photo['_id']),
+            "travel_id": str(photo['travel_id']),
+            "path": photo['path'],
+            "updated_at": photo['updated_at'],
+            "created_at": photo['created_at']
+        })
+
+    return jsonify(photos)
+
+
+@app.route('/travel_service/travels/photos/<photo_id>', methods=['DELETE'])
+async def delete_photo(photo_id):
+    collection = db['Photos']
+
+    photo = collection.find_one({"_id": ObjectId(photo_id)})
+
+    if photo is None:
+        return jsonify({"message": "Photo not found"}), 404
+
+    collection.delete_one({"_id": ObjectId(photo_id)})
+
+    return jsonify({"message": "Photo deleted successfully"})
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3004, debug=True, threaded=False)
