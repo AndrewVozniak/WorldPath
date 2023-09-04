@@ -9,7 +9,7 @@ export class WeatherComponent {
   public hoursToDisplay?: number;
   public currentPage?: number;
 
-  changePage($event: number) {
+  changedPage($event: number) {
     this.currentPage = $event;
   }
 

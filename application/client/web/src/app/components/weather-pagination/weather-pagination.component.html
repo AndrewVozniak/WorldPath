@@ -1,8 +1,9 @@
 <div class="pagination">
-
-  <div class="page" [class.active]="currentPage === 1" (click)="changePage(1)">1</div>
-  <div class="page" [class.active]="currentPage === 2" (click)="changePage(2)">2</div>
-  <div class="page" [class.active]="currentPage === 3" (click)="changePage(3)">3</div>
-  <div class="page" [class.active]="currentPage === 4" (click)="changePage(4)">4</div>
-  <div class="page" [class.active]="currentPage === 5" (click)="changePage(5)">5</div>
+  <div class="page"
+       *ngFor="let page of pages"
+       [class.active]="currentPage === page"
+       (click)="setPage(page)"
+  >
+    {{ page }}
+  </div>
 </div>

@@ -11,13 +11,16 @@ export class WeatherPaginationComponent {
   protected currentPage: number;
   protected pages: number[];
 
-  constructor() {
-    this.currentPage = 1;
-    this.pages = Array.from(Array(5).keys());
+  ngOnInit() {
+    this.setPage(1);
   }
 
+  constructor() {
+    this.currentPage = 1;
+    this.pages = [1, 2, 3, 4, 5];
+  }
 
-  changePage(number: number) {
+  setPage(number: number) {
     this.currentPage = number;
     this.changePageEvent.emit(number);
   }
