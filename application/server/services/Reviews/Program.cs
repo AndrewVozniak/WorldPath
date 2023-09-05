@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Reviews.Data;
 using Reviews.Services;
 
@@ -14,21 +13,6 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddDbContext<ReviewDbContext>(options =>
-    {
-        options.UseInMemoryDatabase("InMemory");
-    });
-}
-
-if (builder.Environment.IsProduction())
-{
-    builder.Services.AddDbContext<ReviewDbContext>(options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("ReviewMSSQL"));
-    });
-}
 
 var app = builder.Build();
 
