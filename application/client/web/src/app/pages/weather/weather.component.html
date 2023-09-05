@@ -12,8 +12,13 @@
       <div class="forecast_container" *ngFor="let container of filteredForecast">
         <div class="cells">
           <div class="container_cell">
-            <img src="assets/icons/weather.svg" alt="weather icon">
+            <img src="assets/icons/time.svg" alt="weather icon">
             <span>{{ formatDate(container.date) }}</span>
+          </div>
+
+          <div class="container_cell">
+            <img src="assets/icons/weather.svg" alt="weather icon">
+            <span>{{ container.weather }}</span>
           </div>
 
           <div class="container_cell">
