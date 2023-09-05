@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-home-weather',
@@ -27,7 +28,7 @@ export class HomeWeatherComponent {
   }
 
   getWeather(lat: any, lon: any) {
-    let url = `http://localhost:5000/weather/now/coordinates?lat=${lat}&lon=${lon}`;
+    let url = `${environment.apiURL}/weather/weather/now/coordinates?lat=${lat}&lon=${lon}`;
 
     fetch(url)
       .then(response => response.json())

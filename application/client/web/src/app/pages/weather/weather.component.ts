@@ -17,4 +17,8 @@ export class WeatherComponent {
   changeHoursToDisplay($event: number) {
     this.hoursToDisplay = $event;
   }
+
+  showForecast($event: any) {
+    console.log($event);
+  }
 }

@@ -15,7 +15,6 @@ from Resources.getWeekWeatherInPlaceByCoordinates import GetWeekWeatherInPlaceBy
 app = Flask(__name__)
 api = Api(app)
 
-CORS(allow_headers='Content-Type')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # ! Resources
