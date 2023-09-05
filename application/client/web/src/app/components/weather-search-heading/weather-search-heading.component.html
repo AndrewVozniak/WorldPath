@@ -1,7 +1,12 @@
 <div class="heading">
   <div class="name-search">
     <h2 class="mb-2 name-search__title">Search by name</h2>
-    <input type="text" class="search-input">
+    <h3 class="error">{{ error }}</h3>
+    <input type="text"
+           class="search-input"
+           (keyup)="onCityFieldChange($event)"
+           (keyup.enter)="searchByCity()"
+    >
   </div>
 
   <div class="coordinates-search">
@@ -9,13 +14,23 @@
 
     <div class="fields-container">
       <div class="input-field">
-        <label for="lat" class="input-field__title">Lat</label>
-        <input type="text" id="lat" class="search-input">
+        <label for="lat" class="input-field__title"
+        >Lat</label>
+        <input type="text"
+               id="lat"
+               class="search-input"
+               (keyup)="onLatFieldChange($event)"
+               (keyup.enter)="searchByCoordinates()">
       </div>
 
       <div class="input-field">
         <label for="lon" class="input-field__title">Lon</label>
-        <input type="text" id="lon" class="search-input">
+        <input type="text"
+               id="lon"
+               class="search-input"
+               (keyup)="onLonFieldChange($event)"
+               (keyup.enter)="searchByCoordinates()"
+        >
       </div>
     </div>
   </div>

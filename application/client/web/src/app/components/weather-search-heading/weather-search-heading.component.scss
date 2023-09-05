@@ -18,6 +18,18 @@
       }
     }
 
+    .error {
+      color: #b70808;
+      font-size: 14px;
+      font-weight: 700;
+
+      text-align: center;
+
+      @media screen and (min-width: 768px){
+        font-size: 16px;
+      }
+    }
+
     .search-input {
       width: 100%;
       margin-top: 10px;
