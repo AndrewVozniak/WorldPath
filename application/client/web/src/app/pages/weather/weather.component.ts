@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-weather',
@@ -11,9 +12,10 @@ export class WeatherComponent {
   public forecast?: any;
   public filteredForecast?: any;
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     this.currentPage = 1;
   }
+
 
   changeHoursToDisplay($event: number) {
     this.hoursToDisplay = $event;
@@ -29,57 +31,40 @@ export class WeatherComponent {
     this.currentPage = $event;
     this.filterForecast();
   }
-
   filterForecast() {
     if (!this.forecast) return;
 
-    if (this.hoursToDisplay === 24) {
-      const now = new Date();
-      const limitTime = new Date(now.getTime() + this.hoursToDisplay * 60 * 60 * 1000); // учитываем часы
+    const now = new Date();
+    const limitTime = new Date(now.getTime() + this.hoursToDisplay * 60 * 60 * 1000);
 
-      const initialFiltered = this.forecast.filter((entry: any) => {
-        const entryDate = new Date(entry.date);
-        return entryDate <= limitTime;
-      });
+    const initialFiltered = this.forecast.filter((entry: any) => {
+      const entryDate = new Date(entry.date);
+      return entryDate <= limitTime;
+    });
 
-      if (this.currentPage) {
-        const startDate = new Date();
-        startDate.setDate(startDate.getDate() + this.currentPage - 1);
-        const endDate = new Date(startDate);
-        endDate.setDate(endDate.getDate() + 1);
-
-        this.filteredForecast = initialFiltered.filter((entry: any) => {
-          const entryDate = new Date(entry.date);
-          return entryDate >= startDate && entryDate < endDate;
-        });
-      } else {
-        this.filteredForecast = initialFiltered;
+    if (this.currentPage !== undefined) {
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() + this.currentPage - 1);
+      // Set hours only when hoursToDisplay is not 24
+      if (this.hoursToDisplay !== 24) {
+        startDate.setHours(0, 0, 0, 0);
       }
-    } else {
-      const now = new Date();
-      const limitTime = new Date(now.getTime() + this.hoursToDisplay * 60 * 60 * 1000); // учитываем часы
 
-      const initialFiltered = this.forecast.filter((entry: any) => {
+      const endDate = new Date(startDate);
+      endDate.setDate(endDate.getDate() + 1);
+
+      this.filteredForecast = initialFiltered.filter((entry: any) => {
         const entryDate = new Date(entry.date);
-        return entryDate <= limitTime;
+        return entryDate >= startDate && entryDate < endDate;
       });
+      this.cdr.detectChanges();
+    } else {
+      this.filteredForecast = initialFiltered;
+      this.cdr.detectChanges();
 
-      if (this.currentPage !== undefined) { // Использую !== undefined для ясности
-        const startDate = new Date();
-        startDate.setDate(startDate.getDate() + this.currentPage - 1);
-        startDate.setHours(0, 0, 0, 0); // Устанавливаем начало дня
-
-        const endDate = new Date(startDate);
-        endDate.setDate(endDate.getDate() + 1);
-
-        this.filteredForecast = initialFiltered.filter((entry: any) => {
-          const entryDate = new Date(entry.date);
-          return entryDate >= startDate && entryDate < endDate;
-        });
-      } else {
-        this.filteredForecast = initialFiltered;
-      }    }
+    }
   }
+
 
   formatDate(dateString: string): string {
     const date = new Date(dateString);
