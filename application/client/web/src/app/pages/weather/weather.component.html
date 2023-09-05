@@ -8,96 +8,28 @@
   <div class="page-content">
     <div class="content__title">{{ hoursToDisplay }} hours</div>
 
-    <div class="forecast">
-      <div class="forecast_container" *ngIf="currentPage === 1">
-        <div class="container_cell">
-          <img src="assets/icons/weather.svg" alt="weather icon">
-          <span>Monday, 3.00</span>
-        </div>
+    <div class="forecast" *ngIf="filteredForecast">
+      <div class="forecast_container" *ngFor="let container of filteredForecast">
+        <div class="cells">
+          <div class="container_cell">
+            <img src="assets/icons/weather.svg" alt="weather icon">
+            <span>{{ formatDate(container.date) }}</span>
+          </div>
 
-        <div class="container_cell">
-          <img src="assets/icons/wind.svg" alt="wind icon">
-          <span>1.45 m/s</span>
-        </div>
+          <div class="container_cell">
+            <img src="assets/icons/wind.svg" alt="wind icon">
+            <span>{{ container.wind_speed }} m/s</span>
+          </div>
 
-        <div class="container_cell">
-          <img src="assets/icons/temperature.svg" alt="temperature icon">
-          <span>15.5 °C</span>
-        </div>
-      </div >
-
-      <div class="forecast_container" *ngIf="currentPage === 1">
-        <div class="container_cell">
-          <img src="assets/icons/weather.svg" alt="weather icon">
-          <span>Monday, 3.00</span>
-        </div>
-
-        <div class="container_cell">
-          <img src="assets/icons/wind.svg" alt="wind icon">
-          <span>1.45 m/s</span>
-        </div>
-
-        <div class="container_cell">
-          <img src="assets/icons/temperature.svg" alt="temperature icon">
-          <span>15.5 °C</span>
-        </div>
-      </div >
-
-      <div class="forecast_container" *ngIf="currentPage === 1">
-        <div class="container_cell">
-          <img src="assets/icons/weather.svg" alt="weather icon">
-          <span>Monday, 3.00</span>
-        </div>
-
-        <div class="container_cell">
-          <img src="assets/icons/wind.svg" alt="wind icon">
-          <span>1.45 m/s</span>
-        </div>
-
-        <div class="container_cell">
-          <img src="assets/icons/temperature.svg" alt="temperature icon">
-          <span>15.5 °C</span>
-        </div>
-      </div >
-
-      <div class="forecast_container" *ngIf="currentPage === 2">
-        <div class="container_cell">
-          <img src="assets/icons/weather.svg" alt="weather icon">
-          <span>Monday, 3.00</span>
-        </div>
-
-        <div class="container_cell">
-          <img src="assets/icons/wind.svg" alt="wind icon">
-          <span>1.45 m/s</span>
-        </div>
-
-        <div class="container_cell">
-          <img src="assets/icons/temperature.svg" alt="temperature icon">
-          <span>15.5 °C</span>
-        </div>
-      </div >
-
-      <div class="forecast_container" *ngIf="currentPage === 2">
-        <div class="container_cell">
-          <img src="assets/icons/weather.svg" alt="weather icon">
-          <span>Monday, 3.00</span>
-        </div>
-
-        <div class="container_cell">
-          <img src="assets/icons/wind.svg" alt="wind icon">
-          <span>1.45 m/s</span>
-        </div>
-
-        <div class="container_cell">
-          <img src="assets/icons/temperature.svg" alt="temperature icon">
-          <span>15.5 °C</span>
+          <div class="container_cell">
+            <img src="assets/icons/temperature.svg" alt="temperature icon">
+            <span>{{ container.temp }} °C</span>
+          </div>
         </div>
       </div >
     </div>
+    <div *ngIf="!forecast" class="font-bold text-xl">No any data now</div>
 
-    <app-weather-pagination
-      *ngIf="hoursToDisplay === 120"
-      (changePageEvent)="changedPage($event)"
-    ></app-weather-pagination>
+    <app-weather-pagination *ngIf="filteredForecast" [hoursToDisplay]="hoursToDisplay" (changePageEvent)="changedPage($event)"></app-weather-pagination>
   </div>
 </div>
