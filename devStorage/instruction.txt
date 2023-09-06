@@ -1,3 +1,26 @@
 Need to be in worldpath/application/server directory to run the following commands
 1. docker network create worldpath
+
 2. cd middlewares/auth
+3. docker build -t auth-middleware-image .
+4. docker run -d --name auth-middleware-container --network worldpath -p 3000:3000 auth-middleware-image
+
+5. cd ../../services/reviews
+6. docker build -t reviews-service-image .
+7. docker run -d --name reviews-service-container --network worldpath -p 3007:3007 reviews-service-image
+
+8. cd ../travels
+9. docker build -f Dockerfile.flask -t travels-service-image .
+10. docker run -d --name travels-service-container --network worldpath -p 3004:3004 travels-service-image
+
+11. docker run -d --name rabbitmq-travels --network worldpath -p 15672:15672 -p 5672:5672 rabbitmq:management
+12. docker build -f Dockerfile.rabbit -t rabbitmq-travels-image .
+13. docker run -d --name rabbitmq-travels-container --network worldpath rabbitmq-travels-image
+
+14. cd ../users
+15. docker build -t user-service-image .
+16. docker run -d --name user-service-container --network worldpath -p 3008:3008 user-service-image
+
+17. cd ../weather
+18. docker build -t weather-service-image .
+19. docker run -d --name weather-service-container --network worldpath -p 3001:3001 weather-service-image
