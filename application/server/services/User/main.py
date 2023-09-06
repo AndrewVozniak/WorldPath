@@ -172,7 +172,7 @@ async def create_user():
         'password': password,
         'auth_token': generate_auth_token(users),
         'email_verified_at': None,
-        'profile_photo_path': 'https://ui-avatars.com/api/?name=' + name + '&background=fff&color=253158&size=128'
+        'profile_photo_path': 'https://ui-avatars.com/api/?name=' + name + '&background=f4f4f4&color=253158&size=128'
                                                                            '&bold=true',
         'is_banned': False,
         'is_warned': False,
