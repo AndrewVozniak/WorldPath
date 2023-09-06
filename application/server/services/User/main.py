@@ -30,13 +30,17 @@ async def get_user_by_token():
     if user is None:
         return jsonify({'error': 'The user with this token does not exist.'})
 
-
     return jsonify({
         'id': str(user['_id']),
         'name': user['name'],
         'email': user['email'],
         'profile_photo_path': user['profile_photo_path'],
-        'is_admin': user['is_admin']
+        'is_banned': user['is_banned'],
+        'is_warned': user['is_warned'],
+        'is_muted': user['is_muted'],
+        'is_verified': user['is_verified'],
+        'is_admin': user['is_admin'],
+        'created_at': user['created_at']
     })
 
 
