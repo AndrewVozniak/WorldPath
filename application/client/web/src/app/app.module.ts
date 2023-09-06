@@ -27,6 +27,7 @@ import { WeatherComponent } from './pages/weather/weather.component';
 import { WeatherSearchHeadingComponent } from './components/weather-search-heading/weather-search-heading.component';
 import { WeatherPaginationComponent } from './components/weather-pagination/weather-pagination.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ProfileUserCardComponent } from './components/profile-user-card/profile-user-card.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     WeatherComponent,
     WeatherSearchHeadingComponent,
     WeatherPaginationComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProfileUserCardComponent
   ],
   imports: [
     BrowserModule,

@@ -330,13 +330,19 @@ async def get_travel_history():
 
     history_cursor = history_collection.find({"user_id": ObjectId(user_id)})
 
-    history_list = []
+    raw_history_list = []
 
     for history in history_cursor:
         history['_id'] = str(history['_id'])
+        history['id'] = history.pop('_id')
         history['user_id'] = str(history['user_id'])
         history['travel_id'] = str(history['travel_id'])
-        history_list.append(history)
+        raw_history_list.append(history)
+
+    response = rpc_client.call(json.dumps(raw_history_list), queue='get_travels_by_ids')
+
+    history_list = json.loads(response.decode())
+    print(history_list)
 
     return jsonify(history_list)
 

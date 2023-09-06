@@ -1,0 +1,97 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding: 30px 25px;
+
+  border-radius: 10px;
+
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+
+  margin-bottom: 50px;
+
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+  }
+
+  .card__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+
+    margin-bottom: 30px;
+
+    @media screen and (min-width: 768px) {
+      margin-bottom: 0;
+    }
+
+    @media screen and (max-width: 420px) {
+      flex-direction: column;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+
+      border-radius: 50%;
+      border: 2px solid #253158;
+
+      @media screen and (max-width: 420px) {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+      }
+    }
+
+    .heading__info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      font-size: 16px;
+      font-weight: 400;
+
+      @media screen and (max-width: 420px) {
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+        align-items: center;
+      }
+
+      .administration {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .username {
+        font-size: 24px;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .card__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+
+    @media screen and (max-width: 420px){
+      text-align: center;
+      align-items: center;
+    }
+
+    .location {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+  }
+}

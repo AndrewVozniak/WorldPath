@@ -1,33 +1,17 @@
 <div class="profile_page">
+  <app-profile-user-card></app-profile-user-card>
+
   <div class="card">
     <div class="card__heading">
-      <img [src]="user.profile_photo_path" [alt]="user.name + 'avatar'" class="avatar">
-
-      <div class="heading__info">
-        <h2 class="username">{{ user.name }}</h2>
-        <p class="administration" *ngIf="is_admin">{{ is_admin }}</p>
-        <p class="registered_at">Since {{ date }}</p>
-        <p class="verified">{{ verified }}</p>
-      </div>
+      <h2 class="card__title">Travel History</h2>
+      <p class="card__subtitle">Click to see details</p>
     </div>
 
-    <div class="card_body">
-      <h2 class="location">Location: {{ location }}</h2>
+    <div class="card__body">
+      <a [routerLink]="'/travel/'+travel.id" class="history_card" *ngFor="let travel of travel_histories">
+        <h2 class="title">{{ travel.title }}</h2>
+        <p class="difficulty">{{ travel.created_at }}</p>
+      </a>
     </div>
   </div>
-
-<!--  <div class="card">-->
-<!--    <div class="card__heading">-->
-<!--      <h2 class="heading">Travel History</h2>-->
-<!--    </div>-->
-
-<!--    <div class="card_body">-->
-<!--      <div class="history" *ngFor="let travel in travel_histories">-->
-<!--        <a [routerLink]="'/travel/'+travel.id" class="history_card">-->
-<!--          <h2 class="title">{{ travel.title }}</h2>-->
-<!--          <p class="difficulty">{{ travel.created_at }}</p>-->
-<!--        </a>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
 </div>
