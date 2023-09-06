@@ -42,7 +42,7 @@ export class HeaderComponent {
     this.mainMenuItems = [
       { name: 'Weather', link: '/weather' },
       { name: 'Hotels', link: '/hotels' },
-      { name: 'Trips', link: '/trips'},
+      { name: 'Travels', link: '/travels'},
       { name: 'Cars', link: '/cars' },
     ];
 

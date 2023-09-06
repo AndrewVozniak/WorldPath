@@ -13,6 +13,13 @@ app.use((req, res, next) => {
     next();
 });
 
+app.options('*', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE');
+    res.send();
+});
+
 async function validateToken(authToken) {
     const user_service = services.find((service) => {
         return service.name === 'user';

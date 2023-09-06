@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'routes', component: RoutesComponent },
   { path: 'places', component: PlacesComponent },
+  { path: 'travels', component: RoutesComponent },
   { path: 'weather', component: WeatherComponent },
   { path: 'profile', component: ProfileComponent },
 ];
