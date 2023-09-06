@@ -1,12 +1,11 @@
 import uuid
 import pika
 
-RABBITMQ_HOST: str = 'localhost'
-
 
 class RpcClient(object):
-    def __init__(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
+    def __init__(self, host):
+        self.response = None
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host))
         self.channel = self.connection.channel()
 
         result = self.channel.queue_declare(queue='', exclusive=True)
@@ -35,6 +34,3 @@ class RpcClient(object):
         while self.response is None:
             self.connection.process_data_events()
         return self.response
-
-
-rpc_client = RpcClient()

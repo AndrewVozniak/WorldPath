@@ -15,7 +15,7 @@ const pages = [
     link: '/community'
   },
   {
-    title: 'Reviews',
+    title: 'Review',
     link: '/reviews'
   },
   {

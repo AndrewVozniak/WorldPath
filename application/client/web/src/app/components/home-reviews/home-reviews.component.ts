@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-reviews.component.scss']
 })
 export class HomeReviewsComponent implements OnInit {
-  public title: string = 'Reviews';
+  public title: string = 'Review';
   public reviews: any[] = [
     {
       id: 1,

@@ -1,0 +1,2 @@
+1. docker network create worldpath
+2. docker run --network worldpath -d -p port:port container_name

@@ -1,5 +1,6 @@
 import datetime
 import json
+import rpcClient
 
 from bson import ObjectId
 from flask import request, jsonify, Flask
@@ -7,7 +8,6 @@ from flask_cors import CORS
 from database import db
 from actions.hash_password import hash_password
 from actions.generate_auth_token import generate_auth_token
-from rpcClient import rpc_client
 
 app = Flask(__name__)
 
@@ -339,7 +339,7 @@ async def get_travel_history():
         history['travel_id'] = str(history['travel_id'])
         raw_history_list.append(history)
 
-    response = rpc_client.call(json.dumps(raw_history_list), queue='get_travels_by_ids')
+    response = rpcClient.RpcClient('localhost').call(json.dumps(raw_history_list), queue='get_travels_by_ids')
 
     history_list = json.loads(response.decode())
     print(history_list)
@@ -350,7 +350,8 @@ async def get_travel_history():
 @app.route('/liked_travels', methods=['GET'])
 async def get_liked_travels():
     user_id = request.headers.get('Userid')
-    response = rpc_client.call(user_id, queue='get_liked_travels')
+
+    response = rpcClient.RpcClient('localhost').call(user_id, queue='get_liked_travels')
 
     data = json.loads(response.decode())
 

@@ -25,7 +25,7 @@ async function validateToken(authToken) {
         return service.name === 'user';
     });
 
-    const user_service_url = `${user_service.protocol}://${user_service.docker_host}:${user_service.port}`; // service.host if common host
+    const user_service_url = `${user_service.protocol}://${user_service.docker_dev_host}:${user_service.port}`; // service.host if common host
     const request_url = `${user_service_url}/validate_token`;
 
     try {
@@ -68,7 +68,7 @@ app.all('*', async (req, res) => {
     }
 
     const requestPath = urlParts.slice(1).join(servicePath);
-    const request_url = `${service.protocol}://${service.docker_host}:${service.port}${requestPath}`; // service.host if common host
+    const request_url = `${service.protocol}://${service.docker_dev_host}:${service.port}${requestPath}`; // service.host if common host
 
 
     // Check if the request has a token
