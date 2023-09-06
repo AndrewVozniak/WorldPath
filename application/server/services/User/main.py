@@ -88,11 +88,11 @@ async def update_user_by_token():
     }
 
     # Check if user with this name but another auth token already exists
-    if any(user['name'] == updated_info['name'] and user['auth_token'] != token for user in get_all_users_helper()):
+    if any(user['name'] == updated_info['name'] and user['auth_token'] != token for user in await get_all_users_helper()):
         return jsonify({'error': 'The user with this name already exists.'})
 
     # Check if user with this email but another auth token already exists
-    if any(user['email'] == updated_info['email'] and user['auth_token'] != token for user in get_all_users_helper()):
+    if any(user['email'] == updated_info['email'] and user['auth_token'] != token for user in await get_all_users_helper()):
         return jsonify({'error': 'The user with this email already exists.'})
 
     # Update user
@@ -128,11 +128,11 @@ async def update_user_by_id(user_id):
     }
 
     # Check if user with this name but another id already exists
-    if any(user['name'] == updated_info['name'] and user['_id'] != user_id for user in get_all_users_helper()):
+    if any(user['name'] == updated_info['name'] and user['_id'] != user_id for user in await get_all_users_helper()):
         return jsonify({'error': 'The user with this name already exists.'})
 
     # Check if user with this email but another id already exists
-    if any(user['email'] == updated_info['email'] and user['_id'] != user_id for user in get_all_users_helper()):
+    if any(user['email'] == updated_info['email'] and user['_id'] != user_id for user in await get_all_users_helper()):
         return jsonify({'error': 'The user with this email already exists.'})
 
     # Update user
@@ -145,7 +145,7 @@ async def update_user_by_id(user_id):
 async def create_user():
     collection = db['Users']
 
-    users = get_all_users_helper()
+    users = await get_all_users_helper()
 
     name = request.json.get('name')
     email = request.json.get('email')
@@ -258,7 +258,7 @@ async def get_all_users_helper():
 
 @app.route('/get_all_users', methods=['GET'])
 async def get_all_users():
-    users = get_all_users_helper()
+    users = await get_all_users_helper()
 
     if not users:
         return jsonify({'error': 'No users found.'})
@@ -346,7 +346,6 @@ async def get_liked_travels():
 @app.route('/update_password', methods=['PUT'])
 async def update_password():
     users_collection = db['Users']
-
 
 
 if __name__ == '__main__':

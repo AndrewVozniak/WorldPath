@@ -1,34 +1,67 @@
 <div class="card">
   <h1 class="card__title">{{ title }}</h1>
-
+  <p class="card__error">{{ error }}</p>
 
   <div class="card__fields">
     <div class="field_wrapper">
       <label for="email">Email: </label>
-      <input type="text" class="card__input" id="email" name="email" placeholder="email">
+      <input type="text"
+             class="card__input"
+             id="email"
+             name="email"
+             placeholder="email"
+             #email
+             (keyup)="emailChange(email.value)">
     </div>
 
     <div class="field_wrapper">
       <label for="name">Name: </label>
-      <input type="text" class="card__input" id="name" name="name" placeholder="name">
+      <input type="text"
+             class="card__input"
+             id="name"
+             name="name"
+             placeholder="name"
+             #name
+             (keyup)="nameChange(name.value)">
     </div>
 
     <div class="field_wrapper">
       <label for="password">Password: </label>
-      <input type="text" class="card__input" id="password" name="password" placeholder="password">
+      <input type="password"
+             class="card__input"
+             id="password"
+             name="password"
+             placeholder="password"
+             #password
+             (keyup)="passwordChange(password.value)"
+      >
     </div>
 
     <div class="field_wrapper">
-      <label for="password_confirm">Password: </label>
-      <input type="text" class="card__input" id="password_confirm" name="password_confirm" placeholder="password confirmation">
+      <label for="password_confirm" style="white-space: nowrap">Confirm Password:</label>
+      <input type="password"
+             class="card__input"
+             id="password_confirm"
+             name="password_confirm"
+             placeholder="password confirmation"
+             #password_confirmation
+             (keyup)="passwordConfirmationChange(password_confirmation.value)"
+      >
     </div>
 
 
     <div class="checkbox_wrapper mx-auto">
-      <label for="remember_me" class="cursor-pointer">
+      <label for="privacy_policy" class="cursor-pointer">
         I agree to <a routerLink="/privacy" class="underline">Privacy policy</a> and <a routerLink="/terms" class="underline">Terms of use</a>
       </label>
-      <input type="checkbox" class="checkbox" id="remember_me" name="remember_me" required>
+      <input type="checkbox"
+             class="checkbox"
+             id="privacy_policy"
+             name="privacy_policy"
+             required
+             #privacy_policy
+             (change)="privacyPolicyChange(privacy_policy.checked)"
+      >
     </div>
  </div>
 
@@ -38,5 +71,5 @@
     Already have an account?
   </a>
 
-  <button type="submit" class="btn btn-primary">Continue</button>
+  <button type="submit" class="btn btn-primary" (click)="register()">Continue</button>
 </div>

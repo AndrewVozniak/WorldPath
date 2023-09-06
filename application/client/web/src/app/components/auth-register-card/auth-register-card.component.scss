@@ -17,7 +17,17 @@
     font-size: 24px;
     font-weight: 700;
 
-    margin-bottom: 25px;
+    margin-bottom: 15px;
+  }
+
+  .card__error {
+    color: #a62222;
+    font-size: 16px;
+    font-weight: 600;
+
+    margin-bottom: 15px;
+
+    text-align: center;
   }
 
   .card__fields {
