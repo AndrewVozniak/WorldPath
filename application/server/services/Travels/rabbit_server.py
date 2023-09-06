@@ -4,9 +4,7 @@ import pika
 from database import db
 from bson import ObjectId
 
-RABBITMQ_HOST = 'localhost'
-DOCKER_RABBITMQ_HOST = 'localhost'
-
+RABBITMQ_HOST = 'rabbitmq-travels'
 
 def get_liked_travels(ch, method, props, body):
     user_id = body.decode()
@@ -91,7 +89,7 @@ def get_travels_by_ids(ch, method, props, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host=DOCKER_RABBITMQ_HOST))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
 channel = connection.channel()
 
 channel.queue_declare(queue='get_liked_travels')

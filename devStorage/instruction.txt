@@ -1,2 +1,3 @@
+Need to be in worldpath/application/server directory to run the following commands
 1. docker network create worldpath
-2. docker run --network worldpath -d -p port:port container_name
+2. cd middlewares/auth

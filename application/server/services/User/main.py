@@ -339,7 +339,7 @@ async def get_travel_history():
         history['travel_id'] = str(history['travel_id'])
         raw_history_list.append(history)
 
-    response = rpcClient.RpcClient('localhost').call(json.dumps(raw_history_list), queue='get_travels_by_ids')
+    response = rpcClient.RpcClient('rabbitmq-travels').call(json.dumps(raw_history_list), queue='get_travels_by_ids')
 
     history_list = json.loads(response.decode())
     print(history_list)
@@ -351,7 +351,7 @@ async def get_travel_history():
 async def get_liked_travels():
     user_id = request.headers.get('Userid')
 
-    response = rpcClient.RpcClient('localhost').call(user_id, queue='get_liked_travels')
+    response = rpcClient.RpcClient('rabbitmq-travels').call(user_id, queue='get_liked_travels')
 
     data = json.loads(response.decode())
 
