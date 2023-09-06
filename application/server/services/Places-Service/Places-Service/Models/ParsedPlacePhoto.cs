@@ -1,16 +1,29 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Places_Service.Models;
 
 public class ParsedPlacePhoto
 {
-    [Key]
-    public int Id { get; set; }
-    [Required]
-    public int PlaceId { get; set; }
-    [Required]
-    public string PhotoPath { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? Id { get; set; }
+    
+    [BsonElement("PlaceId")]
+    [JsonPropertyName("PlaceId")]
+    public string? PlaceId { get; set; }
+
+    [BsonElement("PhotoPath")]
+    [JsonPropertyName("PhotoPath")]
+    public byte[] PhotoData { get; set; } = null!;
+    
+    [BsonElement("UpdatedAt")]
+    [JsonPropertyName("UpdatedAt")]
     public DateTime? UpdatedAt { get; set; }
-    [Required]
+    
+    [BsonElement("CreatedAt")]
+    [JsonPropertyName("CreatedAt")]
     public DateTime CreatedAt { get; set; }
 }

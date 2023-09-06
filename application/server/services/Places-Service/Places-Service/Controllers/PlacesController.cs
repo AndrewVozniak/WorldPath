@@ -71,6 +71,27 @@ namespace Places_Service.Controllers
                 }
 
                 await _placeService.AddManyPlacesAsync(newPlaces);
+
+                foreach (var result in placeData.Results)
+                {
+                    var photoReferences = result.Photos?.Select(photo => photo.PhotoReference).ToList();
+                    var newPhotos = new List<ParsedPlacePhoto>();
+
+                    if (photoReferences != null && photoReferences.Any())
+                    {
+                        foreach (var photoReference in photoReferences)
+                        {
+                            var newPhoto = await _googlePlaceService.GetPhotoByReference(result.PlaceId, photoReference);
+                            if (newPhoto != null)
+                            {
+                                newPhotos.Add(newPhoto);
+                            }
+                        }
+                    }
+                }
+
+                await _placeService.AddParsedPhotoManyAsync(newPhotos);
+                
                 return Ok(newPlaces);
             }
             else

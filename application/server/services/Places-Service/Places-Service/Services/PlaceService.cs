@@ -13,6 +13,7 @@ public class PlaceService
     private readonly IMongoCollection<Place> _placeCollection;
     private readonly IMongoCollection<PlaceLike> _placeLikesCollection;
     private readonly IMongoCollection<PlaceComment> _placeCommentCollection;
+    private readonly IMongoCollection<ParsedPlacePhoto> _parsedPhotoCollection;
 
     public PlaceService(IOptions<MongoDatabaseSettings> databaseSettings)
     {
@@ -21,6 +22,8 @@ public class PlaceService
         _placeCollection = database.GetCollection<Place>(databaseSettings.Value.PlaceCollection);
         _placeLikesCollection = database.GetCollection<PlaceLike>(databaseSettings.Value.PlaceLikesCollection);
         _placeCommentCollection = database.GetCollection<PlaceComment>(databaseSettings.Value.PlaceCommentsCollection);
+        _parsedPhotoCollection =
+            database.GetCollection<ParsedPlacePhoto>(databaseSettings.Value.ParsedPlacePhotosCollection);
     }
 
     public async Task<Place> GetPlaceByName(string name)
@@ -33,7 +36,7 @@ public class PlaceService
 
     public async Task<Place> GetPlaceById(string id)
     {
-        var filter =  Builders<Place>.Filter.Eq(p => p.Id, id);
+        var filter = Builders<Place>.Filter.Eq(p => p.Id, id);
         var place = await _placeCollection.Find(filter).FirstOrDefaultAsync();
 
         return place;
@@ -43,12 +46,12 @@ public class PlaceService
     {
         await _placeCollection.InsertOneAsync(place);
     }
-    
+
     public async Task AddManyPlacesAsync(IEnumerable<Place> places)
     {
         await _placeCollection.InsertManyAsync(places);
     }
-    
+
     public async Task AddPlaceLikeAsync(PlaceLike placeLike)
     {
         await _placeLikesCollection.InsertOneAsync(placeLike);
@@ -58,8 +61,19 @@ public class PlaceService
     {
         await _placeCommentCollection.InsertOneAsync(placeComment);
     }
+
+    public async Task AddParsedPhotoOneAsync(ParsedPlacePhoto photo)
+    {
+        await _parsedPhotoCollection.InsertOneAsync(photo);
+    }
     
-    public async Task<PlaceLike> FindPlaceLikeAsync(string? placeId, string? userId)
+    public async Task AddParsedPhotoManyAsync(IEnumerable<ParsedPlacePhoto> photos)
+    {
+        await _parsedPhotoCollection.InsertManyAsync(photos);
+    }
+
+
+public async Task<PlaceLike> FindPlaceLikeAsync(string? placeId, string? userId)
     {
         var filter = Builders<PlaceLike>.Filter.Eq(pl => pl.PlaceId, placeId) &
                      Builders<PlaceLike>.Filter.Eq(pl => pl.UserId, userId);

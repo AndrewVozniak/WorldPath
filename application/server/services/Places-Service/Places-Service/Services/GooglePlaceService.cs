@@ -34,4 +34,30 @@ public class GooglePlaceService : IGooglePlaceService
 
         return null!;
     }
+
+    public async Task<ParsedPlacePhoto> GetPhotoByReference(string photoReference, string placeId, int maxWidth = 1080)
+    {   
+        var apiKey = "AIzaSyCmCZMRuxBtuJmFRJAuGKhobIExrksG4l0";
+        var culture = CultureInfo.InvariantCulture;
+        var maxWidthFormatted = maxWidth.ToString(culture);
+        
+        var url = $"https://maps.googleapis.com/maps/api/place/photo?" +
+            $"photoreference={photoReference}&maxwidth={maxWidthFormatted}&key={apiKey}";
+
+        var response = await _httpClient.GetAsync(url);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var photoBytes = await response.Content.ReadAsByteArrayAsync();
+
+            var photo = new ParsedPlacePhoto()
+            {
+                PlaceId = placeId,
+                PhotoData = photoBytes
+            };
+            return photo;
+        }
+
+        return null!;
+    }
 }
