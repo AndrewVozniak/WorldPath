@@ -7,6 +7,7 @@ import { HomeComponent } from "./pages/home/home.component";
 import { RoutesComponent } from "./pages/routes/routes.component";
 import { PlacesComponent } from "./pages/places/places.component";
 import { WeatherComponent } from "./pages/weather/weather.component";
+import { ProfileComponent } from "./pages/profile/profile.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'routes', component: RoutesComponent },
   { path: 'places', component: PlacesComponent },
   { path: 'weather', component: WeatherComponent },
+  { path: 'profile', component: ProfileComponent },
 ];
 
 @NgModule({

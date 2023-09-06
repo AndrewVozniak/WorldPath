@@ -30,6 +30,7 @@ async def get_user_by_token():
     if user is None:
         return jsonify({'error': 'The user with this token does not exist.'})
 
+
     return jsonify({
         'id': str(user['_id']),
         'name': user['name'],
@@ -88,11 +89,13 @@ async def update_user_by_token():
     }
 
     # Check if user with this name but another auth token already exists
-    if any(user['name'] == updated_info['name'] and user['auth_token'] != token for user in await get_all_users_helper()):
+    if any(user['name'] == updated_info['name'] and user['auth_token'] != token for user in
+           await get_all_users_helper()):
         return jsonify({'error': 'The user with this name already exists.'})
 
     # Check if user with this email but another auth token already exists
-    if any(user['email'] == updated_info['email'] and user['auth_token'] != token for user in await get_all_users_helper()):
+    if any(user['email'] == updated_info['email'] and user['auth_token'] != token for user in
+           await get_all_users_helper()):
         return jsonify({'error': 'The user with this email already exists.'})
 
     # Update user
@@ -169,7 +172,8 @@ async def create_user():
         'password': password,
         'auth_token': generate_auth_token(users),
         'email_verified_at': None,
-        'profile_photo_path': None,
+        'profile_photo_path': 'https://ui-avatars.com/api/?name=' + name + '&background=fff&color=253158&size=128'
+                                                                           '&bold=true',
         'is_banned': False,
         'is_warned': False,
         'is_muted': False,
