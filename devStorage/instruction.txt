@@ -1,13 +1,17 @@
 Need to be in worldpath/application/server directory to run the following commands
+
+CREATE NETWORK
 1. docker network create worldpath
 
+ADD MIDDLEWARE
 2. cd middlewares/auth
 3. docker build -t auth-middleware-image .
 4. docker run -d --name auth-middleware-container --network worldpath -p 3000:3000 auth-middleware-image
 
+ADD MICROSERVICES AND SERVICES
 5. cd ../../services/reviews
 6. docker build -t reviews-service-image .
-7. docker run -d --name reviews-service-container --network worldpath -p 3007:3007 reviews-service-image
+7. docker run -d --name reviews-service-container --network worldpath -p 3007:80 reviews-service-image
 
 8. cd ../travels
 9. docker build -f Dockerfile.flask -t travels-service-image .
@@ -24,3 +28,8 @@ Need to be in worldpath/application/server directory to run the following comman
 17. cd ../weather
 18. docker build -t weather-service-image .
 19. docker run -d --name weather-service-container --network worldpath -p 3001:3001 weather-service-image
+
+ADD FRONTEND
+20. cd ../../../client/web
+21. docker build -t application-web-client-image .
+22. docker run -d --name application-web-client-container --network worldpath -p 8000:8000 application-web-client-image

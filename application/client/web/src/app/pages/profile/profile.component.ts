@@ -10,8 +10,10 @@ import {environment} from "../../../environments/environment";
 export class ProfileComponent {
   public travel_histories?: any;
   public loading_travel_history?: boolean;
+  public show_travel_card?: boolean;
+  public travel_history_card_id?: any;
 
-  getTravelHistory() {
+  async getTravelHistory() {
     this.loading_travel_history = true;
 
     // send axios request to /user/get_travel_history with token in local storage
@@ -29,6 +31,14 @@ export class ProfileComponent {
   };
 
   constructor() {
-    this.getTravelHistory();
+    this.show_travel_card = false;
   };
+
+  async ngOnInit() {
+    await this.getTravelHistory();
+  }
+
+  showTravelCard(id: any) {
+    this.travel_history_card_id = id;
+  }
 }

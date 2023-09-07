@@ -29,6 +29,7 @@ import { WeatherPaginationComponent } from './components/weather-pagination/weat
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfileUserCardComponent } from './components/profile-user-card/profile-user-card.component';
 import { TravelsComponent } from './pages/travels/travels.component';
+import { TravelHistoryCardModalComponent } from './components/profile-travel-history-card-modal/profile-travel-history-card-modal.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { TravelsComponent } from './pages/travels/travels.component';
     WeatherPaginationComponent,
     ProfileComponent,
     ProfileUserCardComponent,
-    TravelsComponent
+    TravelsComponent,
+    TravelHistoryCardModalComponent
   ],
   imports: [
     BrowserModule,

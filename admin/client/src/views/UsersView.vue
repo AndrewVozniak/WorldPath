@@ -9,10 +9,11 @@ const searchQuery = ref('');
 const filteredUsers = computed(() => {
   if (!searchQuery.value) return users.value;
 
+  console.log(users);
+
   return users.value.filter(user => {
     return user.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-        user.id.toString().includes(searchQuery.value);  // преобразование id в строку
+        user.email.toLowerCase().includes(searchQuery.value.toLowerCase())
   });
 });
 
@@ -47,8 +48,6 @@ const getUsers = async () => {
       }
     });
     users.value = response.data;
-
-    console.log(users.value);
   } catch (error) {
     console.log(error);
   }
@@ -77,13 +76,13 @@ const paginatedUsers = computed(() => {
       <h1 class="title">{{ title }}</h1>
 
       <div class="search-box">
-        <input type="text" v-model="searchQuery" placeholder="Search by name, email or id..." />
+        <input type="text" v-model="searchQuery" placeholder="Search by name or email..." />
       </div>
 
       <table class="table">
         <thead class="table-head">
         <tr class="table-row">
-          <th @click="toggleSort('id')">ID</th>
+          <th @click="toggleSort('id')">Avatar</th>
           <th @click="toggleSort('name')">Name</th>
           <th @click="toggleSort('email')">Email</th>
           <th @click="toggleSort('is_banned')">Banned</th>
@@ -96,13 +95,12 @@ const paginatedUsers = computed(() => {
         </thead>
 
         <tbody class="table-body">
-          <tr class="table-row" v-for="user in paginatedUsers" :key="user.id">
-            <td>{{ user.id }}</td>
+        <tr class="table-row" v-for="(user, index) in paginatedUsers" :key="user.id">
             <td id="user_info">
               <img :src="user.profile_photo_path" :alt="user.name + 'avatar'">
-              <span class="username">{{ user.name }}</span>
             </td>
 
+            <td><span class="username">{{ user.name }}</span></td>
             <td>{{ user.email }}</td>
             <td>{{ user.is_banned ? 'Yes' : 'No' }}</td>
             <td>{{ user.is_warned ? 'Yes' : 'No' }}</td>
