@@ -11,23 +11,23 @@ public class Review
     public string? Id { get; set; }
     
     [BsonElement("UserId")]
-    [JsonPropertyName("UserId")]
+    [JsonPropertyName("userId")]
     public string? UserId { get; set; }
     
     [BsonElement("Rating")]
-    [JsonPropertyName("Rating")]
+    [JsonPropertyName("rating")]
     public float Rating { get; set; }
 
     [BsonElement("Text")]
-    [JsonPropertyName("Text")]
+    [JsonPropertyName("text")]
     public string Text { get; set; } = null!;
     
     [BsonElement("UpdatedAt")]
-    [JsonPropertyName("UpdatedAt")]
+    [JsonPropertyName("updatedAt")]
     public DateTime? UpdatedAt { get; set; }
     
     [BsonElement("CreatedAt")]
-    [JsonPropertyName("CreatedAt")]
+    [JsonPropertyName("createdAt")]
     public DateTime CreatedAt { get; set; }
 
 }   

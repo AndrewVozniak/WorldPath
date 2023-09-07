@@ -6,7 +6,7 @@ using Reviews.Services;
 
 namespace Reviews.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ReviewController : ControllerBase
     {
@@ -55,7 +55,7 @@ namespace Reviews.Controllers
 
             var place = _mapper.Map<Review>(reviewDto);
 
-            await _mongoReviewService.AddOneReviewAsync(place);
+            await _mongoReviewService.AddOneReviewAsync(place); 
 
             return Ok(place);
         }
