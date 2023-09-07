@@ -9,8 +9,11 @@ import {environment} from "../../../environments/environment";
 })
 export class ProfileComponent {
   public travel_histories?: any;
+  public loading_travel_history?: boolean;
 
   getTravelHistory() {
+    this.loading_travel_history = true;
+
     // send axios request to /user/get_travel_history with token in local storage
     axios.get(`${environment.apiURL}/user/get_travel_history`, {
       headers: {
@@ -18,9 +21,10 @@ export class ProfileComponent {
       }
     }).then((response) => {
       this.travel_histories = response.data;
-      console.log(this.travel_histories);
+      this.loading_travel_history = false;
     }).catch((error) => {
       console.log(error);
+      this.loading_travel_history = false;
     });
   };
 

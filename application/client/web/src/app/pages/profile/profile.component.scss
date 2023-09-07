@@ -38,41 +38,45 @@
       padding-left: 15px;
       padding-right: 15px;
 
-      .history_card {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-
+      .history {
         width: 100%;
 
-        padding: 15px 20px;
+        .history_card {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
 
-        margin-bottom: 30px;
-        border-radius: 5px;
+          width: 100%;
 
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+          padding: 15px 20px;
 
-        transition: all 0.3s ease-in-out;
+          margin-bottom: 30px;
+          border-radius: 5px;
 
-        &:hover {
-          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
-        }
+          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 
-        @media screen and (max-width: 420px) {
-          flex-direction: column;
-        }
+          transition: all 0.3s ease-in-out;
 
-        .title {
-          font-size: 18px;
-          font-weight: 700;
-          color: #253158;
-        }
+          &:hover {
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+          }
 
-        .difficulty {
-          font-size: 18px;
-          font-weight: 700;
-          color: #253158;
+          @media screen and (max-width: 420px) {
+            flex-direction: column;
+          }
+
+          .title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #253158;
+          }
+
+          .difficulty {
+            font-size: 18px;
+            font-weight: 700;
+            color: #253158;
+          }
         }
       }
     }

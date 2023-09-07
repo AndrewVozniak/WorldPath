@@ -5,7 +5,7 @@
     <div class="heading__info">
       <h2 class="username">{{ user?.name }}</h2>
       <p class="administration" *ngIf="is_admin">{{ is_admin }}</p>
-      <p class="registered_at">Since {{ date }}</p>
+      <p class="registered_at" *ngIf="date">Since {{ date }}</p>
       <p class="verified">{{ verified }}</p>
     </div>
   </div>

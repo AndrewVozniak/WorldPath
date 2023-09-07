@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import axios from "axios";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-home-reviews',
@@ -14,7 +16,6 @@ export class HomeReviewsComponent implements OnInit {
         img: 'https://unsplash.it/200/200',
         name: 'John Smith',
       },
-      rating: 5,
       text: 'Never thought I\'d find a service this intuitive! WorldPath made my road trip to Lapland so much smoother. The real-time weather updates were a lifesaver!',
     },
     {
@@ -23,7 +24,6 @@ export class HomeReviewsComponent implements OnInit {
         img: 'https://unsplash.it/200/200',
         name: 'Jane Doe',
       },
-      rating: 4,
       text: 'I\'ve been using WorldPath for a while now and I\'m very happy with it. I\'ve been recommending it to all my friends and family. Keep up the good work!',
     },
     {
@@ -32,11 +32,24 @@ export class HomeReviewsComponent implements OnInit {
         img: 'https://unsplash.it/200/200',
         name: 'John Doe',
       },
-      rating: 3,
       text: 'I\'ve been using WorldPath for a while now and I\'m very happy with it. I\'ve been recommending it to all my friends and family. Keep up the good work!',
     },
   ];
   public currentSlide: number = 2;
+
+  getReviews() {
+    axios.get(`${environment.apiURL}/reviews/api/Review`)
+      .then((response) => {
+        this.reviews = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  constructor() {
+    this.getReviews();
+  }
 
   ngOnInit() {
     this.startAutoSlide();
@@ -55,7 +68,6 @@ export class HomeReviewsComponent implements OnInit {
       this.currentSlide++;
     }
   }
-
 
   toggleReview(number: number) {
     this.currentSlide = number;

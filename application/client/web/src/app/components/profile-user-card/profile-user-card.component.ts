@@ -15,7 +15,18 @@ export class ProfileUserCardComponent {
   public is_admin?: any
   public location?: any
 
-  getUserLocation() {
+  constructor(private router: Router) {
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  async ngOnInit() {
+    await this.getUserInfo()
+    await this.getUserLocation()
+  }
+
+  async getUserLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${environment.googleMapsApiKey}&language=en`)
@@ -35,43 +46,40 @@ export class ProfileUserCardComponent {
     }
   }
 
-  getUserInfo() {
-    axios.get(`${environment.apiURL}/user/user`, {
-      headers: {
-        'Authorization': `${localStorage.getItem('token')}`
-      }
-    }).then((response) => {
-      this.user = response.data
+  async getUserInfo() {
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user') || '{}')
+      console.log(this.user)
+    }
+    else {
+      axios.get(`${environment.apiURL}/user/user`, {
+        headers: {
+          'Authorization': `${localStorage.getItem('token')}`
+        }}).then((response) => {
+        this.user = response.data
 
-      this.date = new Date(this.user.created_at.replace(" ", "T"));
-      this.date = this.date.toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      });
-
-      if(this.user.verified) {
-        this.verified = 'Verified'
-      }
-      else {
-        this.verified = 'Not Verified'
-      }
-
-      if(this.user.is_admin) {
-        this.is_admin = 'Administration Team'
-      }
-
-      this.getUserLocation()
-    }).catch((error) => {
-      console.log(error)
-    })
-  }
-
-  constructor(private router: Router) {
-    if(!localStorage.getItem('token')) {
-      this.router.navigate(['/login']);
+        localStorage.setItem('user', JSON.stringify(this.user))
+      }).catch((error) => {
+        console.log(error)
+      })
     }
 
-    this.getUserInfo()
+    this.date = new Date(this.user.created_at.replace(" ", "T"));
+    this.date = this.date.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+
+    if(this.user.verified) {
+      this.verified = 'Verified'
+    }
+    else {
+      this.verified = 'Not Verified'
+    }
+
+    if(this.user.is_admin) {
+      this.is_admin = 'Administration Team'
+    }
   }
 }
