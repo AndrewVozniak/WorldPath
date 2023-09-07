@@ -47,39 +47,45 @@ export class ProfileUserCardComponent {
   }
 
   async getUserInfo() {
-    if (localStorage.getItem('user')) {
-      this.user = JSON.parse(localStorage.getItem('user') || '{}')
-      console.log(this.user)
-    }
-    else {
-      axios.get(`${environment.apiURL}/user/user`, {
-        headers: {
-          'Authorization': `${localStorage.getItem('token')}`
-        }}).then((response) => {
-        this.user = response.data
+    let user = JSON.parse(localStorage.getItem('user') || '{}');
 
-        localStorage.setItem('user', JSON.stringify(this.user))
-      }).catch((error) => {
-        console.log(error)
-      })
-    }
+    if (user.full_info) {
+      this.user = user;
+    } else {
+      try {
+        this.user = user;
 
-    this.date = new Date(this.user.created_at.replace(" ", "T"));
-    this.date = this.date.toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    });
-
-    if(this.user.verified) {
-      this.verified = 'Verified'
-    }
-    else {
-      this.verified = 'Not Verified'
+        const response = await axios.get(`${environment.apiURL}/user/user`, {
+          headers: {
+            'Authorization': `${localStorage.getItem('token')}`
+          }
+        });
+        this.user = response.data;
+        this.user.full_info = true;
+        localStorage.setItem('user', JSON.stringify(this.user));
+      } catch (error) {
+        console.log(error);
+        return;
+      }
     }
 
-    if(this.user.is_admin) {
-      this.is_admin = 'Administration Team'
+    if (this.user && this.user.created_at) {
+      this.date = new Date(this.user.created_at.replace(" ", "T"));
+      this.date = this.date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    }
+
+    if (this.user && this.user.verified) {
+      this.verified = 'Verified';
+    } else {
+      this.verified = 'Not Verified';
+    }
+
+    if (this.user && this.user.is_admin) {
+      this.is_admin = 'Administration Team';
     }
   }
 }

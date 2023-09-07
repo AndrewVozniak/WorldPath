@@ -26,13 +26,13 @@ export class HeaderComponent {
   currentYear: number;
 
   auth: boolean = false;
-  username: any = localStorage.getItem('username');
+  username: any;
 
   constructor(private authService: AuthService) {
     this.authService.auth$.subscribe(isAuth => {
       this.auth = isAuth;
       if (isAuth) {
-        this.username = localStorage.getItem('username');
+        this.username = JSON.parse(localStorage.getItem('user') || '{}').name;
       } else {
         this.username = null;
       }

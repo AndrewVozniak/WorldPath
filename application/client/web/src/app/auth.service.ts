@@ -10,13 +10,13 @@ export class AuthService {
 
   login(token: string, username: string) {
     localStorage.setItem('token', token);
-    localStorage.setItem('username', username);
+    localStorage.setItem('user', JSON.stringify({name: username, full_info: false}));
     this.authSubject.next(true);
   }
 
   logout() {
     localStorage.removeItem('token');
-    localStorage.removeItem('username');
+    localStorage.removeItem('user');
     this.authSubject.next(false);
   }
 }
