@@ -53,6 +53,7 @@ export class ProfileUserCardComponent {
       this.user = user;
     } else {
       try {
+        // set default user data from local storage to avoid big flickering when updating user data ( data comes when user login )
         this.user = user;
 
         const response = await axios.get(`${environment.apiURL}/user/user`, {

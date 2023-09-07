@@ -9,11 +9,16 @@
 
     <div class="card__body">
       <div class="history" *ngIf="travel_histories">
-        <a [routerLink]="'/travel/'+travel.id" class="history_card" *ngFor="let travel of travel_histories">
+        <div (click)="showTravelCard(travel.id)" class="history_card" *ngFor="let travel of travel_histories">
           <h2 class="title">{{ travel.title }}</h2>
           <p class="difficulty">{{ travel.created_at }}</p>
-        </a>
+        </div>
       </div>
+
+      <div *ngIf="travel_history_card_id">
+        <app-profile-travel-history-card-modal [travel_id]="travel_history_card_id"></app-profile-travel-history-card-modal>
+      </div>
+
       <div *ngIf="loading_travel_history">
         <div class="text-center text-xl font-bold">Loading...</div>
       </div>

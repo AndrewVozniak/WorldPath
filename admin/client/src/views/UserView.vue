@@ -12,6 +12,10 @@ const getUser = async () => {
   const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/user/user/${user_id}`);
 
   user.value = response.data;
+
+  if(user.value.email_verified_at == null) {
+    user.value.email_verified_at = 'Not verified';
+  }
 }
 
 getUser();
@@ -28,9 +32,9 @@ getUser();
         <img :src="user.profile_photo_path" :alt="user.name" class="user-photo">
 
         <div class="user__info__data">
-          <span>Email verified at: {{ user.email_verified_at }}</span>
-          <span>Updated at: {{ user.updated_at }}</span>
-          <span>Created at: {{ user.created_at }}</span>
+          <span><b>Email verified at:</b> {{ user.email_verified_at }}</span>
+          <span><b>Updated at:</b> {{ user.updated_at }}</span>
+          <span><b>Created at:</b> {{ user.created_at }}</span>
         </div>
       </div>
     </div>
@@ -45,13 +49,13 @@ getUser();
   margin-right: auto;
 
   .page_link {
-    color: #4b3e3e;
+    color: #ec971f;
     margin-bottom: 20px;
 
     transition: all 0.3s;
 
     &:hover {
-      color: #4d8d28;
+      color: #f8ad43;
     }
   }
 
@@ -71,9 +75,12 @@ getUser();
     .user__info__data {
       display: flex;
       flex-direction: column;
-      font-weight: 600;
 
       text-align: end;
+
+      b {
+        font-weight: 600;
+      }
 
       span {
         margin-bottom: 10px;

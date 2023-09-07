@@ -40,6 +40,7 @@ async def get_user_by_token():
         'is_muted': user['is_muted'],
         'is_verified': user['is_verified'],
         'is_admin': user['is_admin'],
+        'updated_at': user['updated_at'],
         'created_at': user['created_at']
     })
 
@@ -58,7 +59,13 @@ async def get_user_by_id(user_id):
         'name': user['name'],
         'email': user['email'],
         'profile_photo_path': user['profile_photo_path'],
-        'is_admin': user['is_admin']
+        'is_banned': user['is_banned'],
+        'is_warned': user['is_warned'],
+        'is_muted': user['is_muted'],
+        'is_verified': user['is_verified'],
+        'is_admin': user['is_admin'],
+        'updated_at': user['updated_at'],
+        'created_at': user['created_at']
     })
 
 
@@ -259,6 +266,9 @@ async def get_all_users_helper():
 
     for user in users_cursor:
         user['_id'] = str(user['_id'])
+        user['id'] = user.pop('_id')
+        user.pop('auth_token')
+        user.pop('password')
         users_list.append(user)
 
     return users_list
