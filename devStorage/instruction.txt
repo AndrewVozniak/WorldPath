@@ -33,3 +33,7 @@ ADD FRONTEND
 20. cd ../../../client/web
 21. docker build -t application-web-client-image .
 22. docker run -d --name application-web-client-container --network worldpath -p 8000:8000 application-web-client-image
+
+23. cd ../../../admin/client
+24. docker build -t admin-web-client-image .
+25. docker run -d --name admin-web-client-container --network worldpath -p 8001:8001 admin-web-client-image
