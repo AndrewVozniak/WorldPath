@@ -19,4 +19,4 @@ COPY . .
 RUN npm run build
 
 EXPOSE 8001
-CMD [ "http-server", "dist", "-p", "8001" ]
+CMD [ "http-server", "dist", "-p", "8001", "-P", "http://localhost:8001?/" ]
