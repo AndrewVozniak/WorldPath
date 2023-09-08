@@ -1,5 +1,6 @@
+using Microsoft.AspNetCore.WebSockets;
 using Places_Service.Data;
-using AutoMapper;
+using Places_Service.Hubs;
 using Places_Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,13 @@ builder.Services.AddCors(options =>
     });  
 });
 
+builder.Services.AddSignalR(options =>
+{
+    options.HandshakeTimeout = TimeSpan.FromSeconds(10);
+    options.KeepAliveInterval = TimeSpan.FromSeconds(15);
+    options.EnableDetailedErrors = true;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,6 +39,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -38,6 +47,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.UseCors("AllowAll");
+
+app.MapHub<PlaceHub>("/place-hub");
 
 app.MapControllers();
 
