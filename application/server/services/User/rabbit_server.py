@@ -12,7 +12,7 @@ def get_user_base_info(ch, method, props, body):
 
     users_collection = db['Users']
 
-    user = users_collection.find_one({"_id": ObjectId(user_id)})
+    user = users_collection.find_one({"_id": ObjectId(user_id)}, {"name": 1, "email": 1, "profile_photo_path": 1, "created_at": 1, "updated_at": 1})
 
     if user is None:
         response = json.dumps({"error": "User not found"})
@@ -39,8 +39,7 @@ def get_user_base_info_for_reviews(ch, method, props, body):
     user_id = body.decode()
     users_collection = db['Users']
 
-    user = users_collection.find_one({"_id": ObjectId(user_id)})
-    print(user)
+    user = users_collection.find_one({"_id": ObjectId(user_id)}, {"name": 1, "profile_photo_path": 1})
 
     if user is None:
         response = json.dumps({"error": "User not found"})
