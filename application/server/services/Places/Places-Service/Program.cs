@@ -14,6 +14,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddHttpClient<IGooglePlaceService, GooglePlaceService>();
+builder.Services.AddCors(options =>  
+{  
+    options.AddPolicy("AllowAll", policy =>  
+    {  
+        policy.AllowAnyHeader();  
+        policy.AllowAnyMethod();  
+        policy.AllowAnyOrigin();  
+    });  
+});
 
 var app = builder.Build();
 
@@ -27,6 +36,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("AllowAll");
 
 app.MapControllers();
 
