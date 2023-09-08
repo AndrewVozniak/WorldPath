@@ -42,16 +42,14 @@ async def get_latest_reviews(count):
         review['id'] = str(review['_id'])
 
         # send request to user service to get user info by id through rabbitmq
-        user = rpcClient.RpcClient('rabbitmq-user').call(str(review['user_id']), queue='get_user_base_info')
-        user = json.loads(user)
+        user = rpcClient.RpcClient('rabbitmq-user').call(str(review['user_id']), queue='get_user_base_info_for_reviews')
+        if user:
+            user = json.loads(user)
 
-        # change user id to _id
-        user['id'] = str(user['id'])
+            review['user'] = user
 
         review.pop('_id')
         review.pop('user_id')
-
-        review['user'] = user
         reviews.append(review)
 
     return jsonify(reviews)
