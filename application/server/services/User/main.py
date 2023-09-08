@@ -120,6 +120,9 @@ async def update_user_by_id(user_id):
     collection = db['Users']
 
     # Find user by id
+    if user_id is None:
+        return jsonify({'error': 'No user id provided.'})
+
     user_id = ObjectId(user_id)
     user = collection.find_one({'_id': user_id})
 
