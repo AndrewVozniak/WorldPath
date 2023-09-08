@@ -129,7 +129,7 @@ async def update_review(id):
 
     collection.update_one({'_id': ObjectId(id)}, {'$set': updated_info})
 
-    return jsonify({'message': 'Review updated'})
+    return jsonify({'message': 'Review updated successfully'})
 
 
 if __name__ == '__main__':
