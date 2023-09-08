@@ -1,9 +1,12 @@
 import datetime
+import json
 
 from bson import ObjectId
 from flask import jsonify, Flask, request
 from flask_cors import CORS
 from database import db
+
+import rpcClient
 
 app = Flask(__name__)
 
@@ -37,8 +40,18 @@ async def get_latest_reviews(count):
 
     for review in reviews_cursor:
         review['id'] = str(review['_id'])
-        review['user_id'] = str(review['user_id'])
+
+        # send request to user service to get user info by id through rabbitmq
+        user = rpcClient.RpcClient('rabbitmq-user').call(str(review['user_id']), queue='get_user_base_info')
+        user = json.loads(user)
+
+        # change user id to _id
+        user['id'] = str(user['id'])
+
         review.pop('_id')
+        review.pop('user_id')
+
+        review['user'] = user
         reviews.append(review)
 
     return jsonify(reviews)

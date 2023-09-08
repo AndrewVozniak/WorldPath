@@ -1,39 +1,43 @@
 Need to be in worldpath/application/server directory to run the following commands
 
 CREATE NETWORK
-1. docker network create worldpath
+- docker network create worldpath
 
 ADD MIDDLEWARE
-2. cd middlewares/auth
-3. docker build -t auth-middleware-image .
-4. docker run -d --name auth-middleware-container --network worldpath -p 3000:3000 auth-middleware-image
+- cd middlewares/auth
+- docker build -t auth-middleware-image .
+- docker run -d --name auth-middleware-container --network worldpath -p 3000:3000 auth-middleware-image
 
 ADD MICROSERVICES AND SERVICES
-5. cd ../../services/reviews
-6. docker build -t reviews-service-image .
-7. docker run -d --name reviews-service-container --network worldpath -p 3007:80 reviews-service-image
+- cd ../../services/reviews
+- docker build -t reviews-service-image .
+- docker run -d --name reviews-service-container --network worldpath -p 3007:3007 reviews-service-image
 
-8. cd ../travels
-9. docker build -f Dockerfile.flask -t travels-service-image .
-10. docker run -d --name travels-service-container --network worldpath -p 3004:3004 travels-service-image
+- cd ../travels
+- docker build -f Dockerfile.flask -t travels-service-image .
+- docker run -d --name travels-service-container --network worldpath -p 3004:3004 travels-service-image
 
-11. docker run -d --name rabbitmq-travels --network worldpath -p 15672:15672 -p 5672:5672 rabbitmq:management
-12. docker build -f Dockerfile.rabbit -t rabbitmq-travels-image .
-13. docker run -d --name rabbitmq-travels-container --network worldpath rabbitmq-travels-image
+- docker run -d --name rabbitmq-travels --network worldpath -p 15672:15672 -p 5672:5672 rabbitmq:management
+- docker build -f Dockerfile.rabbit -t rabbitmq-travels-image .
+- docker run -d --name rabbitmq-travels-container --network worldpath rabbitmq-travels-image
 
-14. cd ../users
-15. docker build -t user-service-image .
-16. docker run -d --name user-service-container --network worldpath -p 3008:3008 user-service-image
+- cd ../user
+- docker build -f Dockerfile.flask -t user-service-image .
+- docker run -d --name user-service-container --network worldpath -p 3008:3008 user-service-image
 
-17. cd ../weather
-18. docker build -t weather-service-image .
-19. docker run -d --name weather-service-container --network worldpath -p 3001:3001 weather-service-image
+- docker run -d --name rabbitmq-user --network worldpath -p 15673:15673 -p 5673:5673 rabbitmq:management
+- docker build -f Dockerfile.rabbit -t rabbitmq-user-image .
+- docker run -d --name rabbitmq-user-container --network worldpath rabbitmq-user-image
+
+- cd ../weather
+- docker build -t weather-service-image .
+- docker run -d --name weather-service-container --network worldpath -p 3001:3001 weather-service-image
 
 ADD FRONTEND
-20. cd ../../../client/web
-21. docker build -t application-web-client-image .
-22. docker run -d --name application-web-client-container --network worldpath -p 8000:8000 application-web-client-image
+- cd ../../../client/web
+- docker build -t application-web-client-image .
+- docker run -d --name application-web-client-container --network worldpath -p 8000:8000 application-web-client-image
 
-23. cd ../../../admin/client
-24. docker build -t admin-web-client-image .
-25. docker run -d --name admin-web-client-container --network worldpath -p 8001:8001 admin-web-client-image
+- cd ../../../admin/client
+- docker build -t admin-web-client-image .
+- docker run -d --name admin-web-client-container --network worldpath -p 8001:8001 admin-web-client-image
