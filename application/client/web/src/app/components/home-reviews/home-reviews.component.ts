@@ -8,39 +8,16 @@ import {environment} from "../../../environments/environment";
   styleUrls: ['./home-reviews.component.scss']
 })
 export class HomeReviewsComponent implements OnInit {
-  public title: string = 'Review';
-  public reviews: any[] = [
-    {
-      id: 1,
-      author: {
-        img: 'https://unsplash.it/200/200',
-        name: 'John Smith',
-      },
-      text: 'Never thought I\'d find a service this intuitive! WorldPath made my road trip to Lapland so much smoother. The real-time weather updates were a lifesaver!',
-    },
-    {
-      id: 2,
-      author: {
-        img: 'https://unsplash.it/200/200',
-        name: 'Jane Doe',
-      },
-      text: 'I\'ve been using WorldPath for a while now and I\'m very happy with it. I\'ve been recommending it to all my friends and family. Keep up the good work!',
-    },
-    {
-      id: 3,
-      author: {
-        img: 'https://unsplash.it/200/200',
-        name: 'John Doe',
-      },
-      text: 'I\'ve been using WorldPath for a while now and I\'m very happy with it. I\'ve been recommending it to all my friends and family. Keep up the good work!',
-    },
-  ];
-  public currentSlide: number = 2;
+  public title: string = 'Reviews';
+  public reviews?: any[];
+  public currentSlide: number = 1;
 
   getReviews() {
-    axios.get(`${environment.apiURL}/reviews/api/Review/GetAllReviews`)
+    axios.get(`${environment.apiURL}/reviews/reviews/3`)
       .then((response) => {
         this.reviews = response.data;
+
+        console.log(this.reviews);
       })
       .catch((error) => {
         console.log(error);
@@ -62,10 +39,12 @@ export class HomeReviewsComponent implements OnInit {
   }
 
   nextSlide() {
-    if (this.currentSlide === this.reviews.length) {
-      this.currentSlide = 1;
-    } else {
-      this.currentSlide++;
+    if (this.reviews) {
+      if (this.currentSlide === this.reviews.length - 1) {
+        this.currentSlide = 0;
+      } else {
+        this.currentSlide++;
+      }
     }
   }
 
