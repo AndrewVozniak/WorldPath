@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iLjaKXdbC5VRiHMxCYfxShn5pyEKvJhcr0zomP+rYyAULfzQ5yjEm9vcMCpv/V2vgHW4x8Xjp3IbyhmHFK9LmA==",
+  "dgSpecHash": "ey5LJS9jPAOKHZPVozg1vs1jW2p9rSjYNHfzn586QsS3N3p5MFSIthy3ioHwELMY/ICveCjCYGGrnSp3DR18sg==",
   "success": true,
-  "projectFilePath": "D:\\WorldPath\\application\\server\\services\\Places-Service\\Places-Service\\Places-Service.csproj",
+  "projectFilePath": "D:\\WorldPath\\application\\server\\services\\Places\\Places-Service\\Places-Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\prozy\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
