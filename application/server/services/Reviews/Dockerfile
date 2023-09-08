@@ -1,20 +1,17 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
-WORKDIR /app
-EXPOSE 3007
-EXPOSE 3007
+FROM python
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src
-COPY ["Reviews.csproj", "./"]
-RUN dotnet restore "Reviews.csproj"
+WORKDIR .
+
+ENV FLASK_APP=main.py
+ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_RUN_PORT=3007
+
+
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
 COPY . .
-WORKDIR "/src/"
-RUN dotnet build "Reviews.csproj" -c Release -o /app/build
 
-FROM build AS publish
-RUN dotnet publish "Reviews.csproj" -c Release -o /app/publish /p:UseAppHost=false
+EXPOSE 3007
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Reviews.dll"]
+CMD [ "flask", "run" ]
