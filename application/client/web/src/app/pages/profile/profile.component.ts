@@ -11,7 +11,6 @@ export class ProfileComponent {
   public travel_histories?: any;
   public loading_travel_history?: boolean;
   public show_travel_card?: boolean;
-  public travel_history_card_id?: any;
 
   async getTravelHistory() {
     this.loading_travel_history = true;
@@ -38,7 +37,5 @@ export class ProfileComponent {
     await this.getTravelHistory();
   }
 
-  showTravelCard(id: any) {
-    this.travel_history_card_id = id;
-  }
+  protected readonly alert = alert;
 }
