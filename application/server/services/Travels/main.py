@@ -318,6 +318,42 @@ async def get_liked_travels():
     return jsonify(likes)
 
 
+@app.route('/travel_service/travel/<travel_id>', methods=['GET'])
+async def get_travel(travel_id):
+    travels_collection = db['Travels']
+    places_collection = db['Places']
+    routes_collection = db['Routes']
+
+    travel = travels_collection.find_one({"_id": ObjectId(travel_id)})
+
+    if travel is None:
+        return jsonify({"message": "Travel not found"}), 404
+
+    places = []
+    routes = []
+
+    for place in places_collection.find({"travel_id": travel['_id']}, {"place_id": 1}):
+        places.append({
+            "place_id": str(place['place_id'])
+        })
+
+    for route in routes_collection.find({"travel_id": travel['_id']}, {"route_id": 1}):
+        routes.append({
+            "route_id": str(route['route_id'])
+        })
+
+    return jsonify({
+        "id": str(travel['_id']),
+        "title": travel['title'],
+        "description": travel['description'],
+        "type": travel['type'],
+        "places": places,
+        "routes": routes,
+        "updated_at": travel['updated_at'],
+        "created_at": travel['created_at']
+    })
+
+
 @app.route('/travel_service/travels/<travel_id>/photos', methods=['POST'])
 async def add_photo(travel_id):
     collection = db['Photos']

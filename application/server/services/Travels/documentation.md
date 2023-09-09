@@ -8,6 +8,7 @@ This document provides an overview of the Travel Service API, which allows users
 - [API Endpoints](#api-endpoints)
   - [Get Travels](#get-travels)
   - [Get Travels by User ID](#get-travels-by-user-id)
+  - [Get Travel by Travel ID](#get-travel-by-travel-id)
   - [Add Travel](#add-travel)
   - [Edit Travel](#edit-travel)
   - [Delete Travel](#delete-travel)
@@ -78,6 +79,47 @@ Retrieve a list of travels belonging to a specific user.
   ...
 ]
 ```
+
+#### Get Travel by Travel ID
+Get Travel by Travel ID (with places and routes).
+
+- **URL:** `/travel_service/travel/<travel_id>`
+- **Method:** `GET`
+- **URL Parameters:**
+  - `travel_id`: ID of the travel to retrieve
+- **Headers:**
+  - `None`: not required
+- **Request Body:**
+  - `None`: not required
+
+##### Response
+```json 
+{
+    "created_at": "2023-09-02 22:59:35",
+    "description": "Some description",
+    "id": "64f3942757dd4a6c552f4515",
+    "places": [
+        {
+            "place_id": "1"
+        },
+        {
+            "place_id": "2"
+        }
+    ],
+    "routes": [
+        {
+            "route_id": "1"
+        },
+        {
+            "route_id": "1"
+        }
+    ],
+    "title": "Travel 3",
+    "type": "private",
+    "updated_at": "2023-09-02 22:59:35"
+}
+```
+
 
 #### Add Travel
 

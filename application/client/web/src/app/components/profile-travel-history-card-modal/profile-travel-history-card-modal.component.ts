@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import axios from "axios";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-profile-travel-history-card-modal',
@@ -11,9 +12,12 @@ export class TravelHistoryCardModalComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['travel_id'] && changes['travel_id'].currentValue) {
-      axios
-
+      axios.get(`${environment.apiURL}/travelS/${this.travel_id}`).then((res) => {
+        console.log(res.data);
+      }
+      ).catch((err) => {
+        console.log(err);
+      });
     }
   }
-
 }
