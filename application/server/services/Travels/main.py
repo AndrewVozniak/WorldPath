@@ -223,6 +223,28 @@ async def delete_travel(travel_id):
     return jsonify({"message": "Travel deleted successfully"})
 
 
+@app.route('/travel_service/travel/<travel_id>/comments', methods=['GET'])
+async def get_comments(travel_id):
+    comments_collection = db['Comments']
+    users_collection = db['Users']
+
+    comments = []
+
+    for comment in comments_collection.find({"travel_id": ObjectId(travel_id)}):
+        user = users_collection.find_one({"_id": comment['user_id']})
+
+        comments.append({
+            "id": str(comment['_id']),
+            "user_id": str(comment['user_id']),
+            "user_name": user['name'],
+            "text": comment['text'],
+            "updated_at": comment['updated_at'],
+            "created_at": comment['created_at']
+        })
+
+    return jsonify(comments)
+
+
 @app.route('/travel_service/travel/<travel_id>/comments', methods=['POST'])
 async def add_comment(travel_id):
     data = request.get_json()
