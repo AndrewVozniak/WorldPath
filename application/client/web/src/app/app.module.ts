@@ -30,6 +30,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfileUserCardComponent } from './components/profile-user-card/profile-user-card.component';
 import { TravelsComponent } from './pages/travels/travels.component';
 import { TravelComponent } from './pages/travel/travel.component';
+import { ImageSliderHiddenComponent } from './components/image-slider-hidden/image-slider-hidden.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { TravelComponent } from './pages/travel/travel.component';
     ProfileComponent,
     ProfileUserCardComponent,
     TravelsComponent,
-    TravelComponent
+    TravelComponent,
+    ImageSliderHiddenComponent
   ],
   imports: [
     BrowserModule,

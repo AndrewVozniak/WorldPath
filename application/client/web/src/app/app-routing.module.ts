@@ -8,6 +8,7 @@ import { RoutesComponent } from "./pages/routes/routes.component";
 import { PlacesComponent } from "./pages/places/places.component";
 import { WeatherComponent } from "./pages/weather/weather.component";
 import { ProfileComponent } from "./pages/profile/profile.component";
+import {TravelComponent} from "./pages/travel/travel.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,6 +19,8 @@ const routes: Routes = [
   { path: 'travels', component: RoutesComponent },
   { path: 'weather', component: WeatherComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'travel/:id', component: TravelComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

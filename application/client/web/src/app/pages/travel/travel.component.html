@@ -1,0 +1,55 @@
+<div class="page">
+  <app-image-slider-hidden [images]="travel?.photos"></app-image-slider-hidden>
+  <div class="travel_info">
+    <div class="info__container my-3">
+      <div class="label title">{{ travel?.title }}</div>
+    </div>
+
+    <div class="info__container mb-5">
+      <div class="label">Description</div>
+      <div class="content">{{ travel?.description }}</div>
+    </div>
+
+    <div class="info__container">
+      <div class="label">Waypoints</div>
+      <div class="waypoint">
+        <div class="location"></div>
+        <div class="date"></div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="info__container">
+      <div class="flex flex-row justify-between">
+        <div class="label">Comments</div>
+        <div class="see_all">see all</div>
+      </div>
+
+      <div class="comment">
+        <div class="author"></div>
+        <div class="text"></div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="info__container mb-5">
+      <div class="label">Transport</div>
+      <div class="content">Coming soon...</div>
+    </div>
+
+    <div class="info__container mb-5">
+      <div class="label">Places</div>
+
+      <div class="flex flex-col">
+        <div class="place"></div>
+      </div>
+    </div>
+
+    <div class="info__container mb-5">
+      <div class="label">Dwelling</div>
+      <div class="content">Coming soon...</div>
+    </div>
+  </div>
+</div>
