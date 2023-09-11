@@ -50,6 +50,10 @@ export class TravelComponent {
       });
   }
 
+  getTravelComments(travel: Travel) {
+    
+  }
+
   getId(travel: Travel) {
     const id = this.route.snapshot.paramMap.get('id');
 
