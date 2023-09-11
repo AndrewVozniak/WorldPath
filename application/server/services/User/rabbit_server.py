@@ -8,54 +8,66 @@ RABBITMQ_HOST = 'rabbitmq-user'
 
 
 def get_user_base_info(ch, method, props, body):
-    user_id = body.decode()
+    try:
+        user_id = body.decode()
 
-    users_collection = db['Users']
+        users_collection = db['Users']
 
-    user = users_collection.find_one({"_id": ObjectId(user_id)}, {"name": 1, "email": 1, "profile_photo_path": 1, "created_at": 1, "updated_at": 1})
+        user = users_collection.find_one({"_id": ObjectId(user_id)}, {"name": 1, "email": 1, "profile_photo_path": 1, "created_at": 1, "updated_at": 1})
 
-    if user is None:
-        response = json.dumps({"error": "User not found"})
-    else:
-        response = json.dumps({
-            "id": str(user['_id']),
-            "name": user['name'],
-            "email": user['email'],
-            "profile_photo_path": user['profile_photo_path'],
-            "created_at": user['created_at'],
-            "updated_at": user['updated_at']
-        })
+        if user is None:
+            response = json.dumps({"error": "User not found"})
+        else:
+            response = json.dumps({
+                "id": str(user['_id']),
+                "name": user['name'],
+                "email": user['email'],
+                "profile_photo_path": user['profile_photo_path'],
+                "created_at": user['created_at'],
+                "updated_at": user['updated_at']
+            })
 
-    ch.basic_publish(
-        exchange='',
-        routing_key=props.reply_to,
-        properties=pika.BasicProperties(
-            correlation_id=props.correlation_id
-        ),
-        body=response)
+        ch.basic_publish(
+            exchange='',
+            routing_key=props.reply_to,
+            properties=pika.BasicProperties(
+                correlation_id=props.correlation_id
+            ),
+            body=response)
+
+    except Exception as e:
+        print(f"Error processing message: {e}")
+    finally:
+        ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
 def get_user_base_info_for_reviews(ch, method, props, body):
-    user_id = body.decode()
-    users_collection = db['Users']
+    try:
+        user_id = body.decode()
+        users_collection = db['Users']
 
-    user = users_collection.find_one({"_id": ObjectId(user_id)}, {"name": 1, "profile_photo_path": 1})
+        user = users_collection.find_one({"_id": ObjectId(user_id)}, {"name": 1, "profile_photo_path": 1})
 
-    if user is None:
-        response = json.dumps({"error": "User not found"})
-    else:
-        response = json.dumps({
-            "name": user['name'],
-            "profile_photo_path": user['profile_photo_path'],
-        })
+        if user is None:
+            response = json.dumps({"error": "User not found"})
+        else:
+            response = json.dumps({
+                "name": user['name'],
+                "profile_photo_path": user['profile_photo_path'],
+            })
 
-    ch.basic_publish(
-        exchange='',
-        routing_key=props.reply_to,
-        properties=pika.BasicProperties(
-            correlation_id=props.correlation_id
-        ),
-        body=response)
+        ch.basic_publish(
+            exchange='',
+            routing_key=props.reply_to,
+            properties=pika.BasicProperties(
+                correlation_id=props.correlation_id
+            ),
+            body=response)
+
+    except Exception as e:
+        print(f"Error processing message: {e}")
+    finally:
+        ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))

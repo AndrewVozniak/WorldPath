@@ -13,6 +13,8 @@ app = Flask(__name__)
 CORS(allow_headers='Content-Type')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
+user_rpc_client = rpcClient.RpcClient('rabbitmq-user')
+
 
 @app.route('/reviews/', methods=['GET'])
 async def get_all_reviews():
@@ -42,7 +44,7 @@ async def get_latest_reviews(count):
         review['id'] = str(review['_id'])
 
         # send request to user service to get user info by id through rabbitmq
-        user = rpcClient.RpcClient('rabbitmq-user').call(str(review['user_id']), queue='get_user_base_info_for_reviews')
+        user = user_rpc_client.call(str(review['user_id']), queue='get_user_base_info_for_reviews')
         if user:
             user = json.loads(user)
 

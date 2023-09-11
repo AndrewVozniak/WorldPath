@@ -6,6 +6,7 @@ from bson import ObjectId
 
 RABBITMQ_HOST = 'rabbitmq-travels'
 
+
 def get_liked_travels(ch, method, props, body):
     user_id = body.decode()
 
