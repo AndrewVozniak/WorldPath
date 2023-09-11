@@ -18,18 +18,18 @@ def get_liked_travels(ch, method, props, body):
 
         likes = []
 
-        for like in likes_collection.find({"user_id": ObjectId(user_id)}):
-            travel = travels_collection.find_one({"_id": like['travel_id']})
+        for like in likes_collection.find({"user_id": ObjectId(user_id)}, {"travel_id": 1}):
+            travel = travels_collection.find_one({"_id": like['travel_id']}, {"_id": 1, "title": 1, "description": 1, "type": 1, "updated_at": 1, "created_at": 1})
 
             places = []
             routes = []
 
-            for place in places_collection.find({"travel_id": travel['_id']}):
+            for place in places_collection.find({"travel_id": travel['_id']}, {"place_id": 1}):
                 places.append({
                     "place_id": str(place['place_id'])
                 })
 
-            for route in routes_collection.find({"travel_id": travel['_id']}):
+            for route in routes_collection.find({"travel_id": travel['_id']}, {"route_id": 1}):
                 routes.append({
                     "route_id": str(route['route_id'])
                 })
@@ -54,7 +54,6 @@ def get_liked_travels(ch, method, props, body):
                 correlation_id=props.correlation_id
             ),
             body=response)
-        ch.basic_ack(delivery_tag=method.delivery_tag)
     except Exception as e:
         print(f"Error processing message: {e}")
     finally:
@@ -73,7 +72,7 @@ def get_travels_by_ids(ch, method, props, body):
         # Assuming travels_to_prepare is a list of dictionaries, each with a "travel_id" key:
         for travel_dict in travels_to_prepare:
             travel_id = travel_dict["travel_id"]
-            travel = travels_collection.find_one({"_id": ObjectId(travel_id)})
+            travel = travels_collection.find_one({"_id": ObjectId(travel_id)}, {"_id": 1, "title": 1, "description": 1, "type": 1, "updated_at": 1, "created_at": 1})
 
             travels.append({
                 "id": str(travel['_id']),
@@ -93,7 +92,6 @@ def get_travels_by_ids(ch, method, props, body):
                 correlation_id=props.correlation_id
             ),
             body=response)
-        ch.basic_ack(delivery_tag=method.delivery_tag)
     except Exception as e:
         print(f"Error processing message: {e}")
     finally:
