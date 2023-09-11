@@ -8,86 +8,96 @@ RABBITMQ_HOST = 'rabbitmq-travels'
 
 
 def get_liked_travels(ch, method, props, body):
-    user_id = body.decode()
+    try:
+        user_id = body.decode()
 
-    likes_collection = db['Likes']
-    travels_collection = db['Travels']
-    places_collection = db['Places']
-    routes_collection = db['Routes']
+        likes_collection = db['Likes']
+        travels_collection = db['Travels']
+        places_collection = db['Places']
+        routes_collection = db['Routes']
 
-    likes = []
+        likes = []
 
-    for like in likes_collection.find({"user_id": ObjectId(user_id)}):
-        travel = travels_collection.find_one({"_id": like['travel_id']})
+        for like in likes_collection.find({"user_id": ObjectId(user_id)}):
+            travel = travels_collection.find_one({"_id": like['travel_id']})
 
-        places = []
-        routes = []
+            places = []
+            routes = []
 
-        for place in places_collection.find({"travel_id": travel['_id']}):
-            places.append({
-                "place_id": str(place['place_id'])
+            for place in places_collection.find({"travel_id": travel['_id']}):
+                places.append({
+                    "place_id": str(place['place_id'])
+                })
+
+            for route in routes_collection.find({"travel_id": travel['_id']}):
+                routes.append({
+                    "route_id": str(route['route_id'])
+                })
+
+            likes.append({
+                "id": str(travel['_id']),
+                "title": travel['title'],
+                "description": travel['description'],
+                "type": travel['type'],
+                "places": places,
+                "routes": routes,
+                "updated_at": travel['updated_at'],
+                "created_at": travel['created_at']
             })
 
-        for route in routes_collection.find({"travel_id": travel['_id']}):
-            routes.append({
-                "route_id": str(route['route_id'])
-            })
+        response = json.dumps(likes)
 
-        likes.append({
-            "id": str(travel['_id']),
-            "title": travel['title'],
-            "description": travel['description'],
-            "type": travel['type'],
-            "places": places,
-            "routes": routes,
-            "updated_at": travel['updated_at'],
-            "created_at": travel['created_at']
-        })
-
-    response = json.dumps(likes)
-
-    ch.basic_publish(
-        exchange='',
-        routing_key=props.reply_to,
-        properties=pika.BasicProperties(
-            correlation_id=props.correlation_id
-        ),
-        body=response)
-    ch.basic_ack(delivery_tag=method.delivery_tag)
+        ch.basic_publish(
+            exchange='',
+            routing_key=props.reply_to,
+            properties=pika.BasicProperties(
+                correlation_id=props.correlation_id
+            ),
+            body=response)
+        ch.basic_ack(delivery_tag=method.delivery_tag)
+    except Exception as e:
+        print(f"Error processing message: {e}")
+    finally:
+        ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
 def get_travels_by_ids(ch, method, props, body):
-    travels_to_prepare = json.loads(body.decode())  # parse JSON string to Python list or dict
-    print(travels_to_prepare)
+    try:
+        travels_to_prepare = json.loads(body.decode())  # parse JSON string to Python list or dict
+        print(travels_to_prepare)
 
-    travels_collection = db['Travels']
+        travels_collection = db['Travels']
 
-    travels = []
+        travels = []
 
-    # Assuming travels_to_prepare is a list of dictionaries, each with a "travel_id" key:
-    for travel_dict in travels_to_prepare:
-        travel_id = travel_dict["travel_id"]
-        travel = travels_collection.find_one({"_id": ObjectId(travel_id)})
+        # Assuming travels_to_prepare is a list of dictionaries, each with a "travel_id" key:
+        for travel_dict in travels_to_prepare:
+            travel_id = travel_dict["travel_id"]
+            travel = travels_collection.find_one({"_id": ObjectId(travel_id)})
 
-        travels.append({
-            "id": str(travel['_id']),
-            "title": travel['title'],
-            "description": travel['description'],
-            "type": travel['type'],
-            "updated_at": travel['updated_at'],
-            "created_at": travel['created_at']
-        })
+            travels.append({
+                "id": str(travel['_id']),
+                "title": travel['title'],
+                "description": travel['description'],
+                "type": travel['type'],
+                "updated_at": travel['updated_at'],
+                "created_at": travel['created_at']
+            })
 
-    response = json.dumps(travels)
+        response = json.dumps(travels)
 
-    ch.basic_publish(
-        exchange='',
-        routing_key=props.reply_to,
-        properties=pika.BasicProperties(
-            correlation_id=props.correlation_id
-        ),
-        body=response)
-    ch.basic_ack(delivery_tag=method.delivery_tag)
+        ch.basic_publish(
+            exchange='',
+            routing_key=props.reply_to,
+            properties=pika.BasicProperties(
+                correlation_id=props.correlation_id
+            ),
+            body=response)
+        ch.basic_ack(delivery_tag=method.delivery_tag)
+    except Exception as e:
+        print(f"Error processing message: {e}")
+    finally:
+        ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))

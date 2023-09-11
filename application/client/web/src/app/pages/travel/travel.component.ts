@@ -51,7 +51,14 @@ export class TravelComponent {
   }
 
   getTravelComments(travel: Travel) {
-    
+    axios.get(`${environment.apiURL}/travels/travel_service/travel/${travel.id}/comments`)
+      .then((response) => {
+        console.log(response.data);
+        travel.comments = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   getId(travel: Travel) {

@@ -13,7 +13,7 @@ export class HomeReviewsComponent implements OnInit {
   public currentSlide: number = 1;
 
   getReviews() {
-    axios.get(`${environment.apiURL}/reviews/reviews/3`)
+    axios.get(`${environment.apiURL}/reviews/reviews/3/`)
       .then((response) => {
         this.reviews = response.data;
 
