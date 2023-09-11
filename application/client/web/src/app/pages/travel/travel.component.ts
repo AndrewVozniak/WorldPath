@@ -31,6 +31,7 @@ export class TravelComponent {
     this.travel = new Travel();
     this.getId(this.travel);
     this.getTravelBaseInfo(this.travel);
+    this.getTravelComments(this.travel)
   }
 
 
