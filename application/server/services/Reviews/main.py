@@ -44,7 +44,12 @@ async def get_latest_reviews(count):
         review['id'] = str(review['_id'])
 
         # send request to user service to get user info by id through rabbitmq
-        user = user_rpc_client.call(str(review['user_id']), queue='get_user_base_info_for_reviews')
+        try:
+            user = user_rpc_client.call(str(review['user_id']), queue='get_user_base_info_for_reviews')
+        except Exception as e:
+            print(f"Error processing message: {e}")
+            user = None
+
         if user:
             user = json.loads(user)
 
