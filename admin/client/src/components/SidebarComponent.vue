@@ -8,6 +8,7 @@ const username = ref(localStorage.getItem('username'));
 <template>
   <div style="height: 100vh" class="flex flex-col w-1/5 bg-gray-900 px-10 pt-5">
     <h1 class="text-center text-white text-2xl font-semibold">Hi {{ username }}!</h1>
+    <h2 class="text-center text-white font-semibold">Welcome to the admin panel</h2>
 
     <div class="flex flex-col mt-10">
       <RouterLink to="/"><Button variant="secondary" class="w-full mb-5">Dashboard</Button></RouterLink>
