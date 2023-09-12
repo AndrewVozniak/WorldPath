@@ -9,10 +9,10 @@ provide('isLogged', isLogged);
 </script>
 
 <template>
-  <div class="flex justify-between" v-if="isLogged">
-    <SidebarComponent></SidebarComponent>
+  <div class="bg-gray-800 flex justify-between" v-if="isLogged">
+    <SidebarComponent class="mr-5"></SidebarComponent>
 
-    <div class="flex w-full justify-start">
+    <div class="flex w-full justify-start pt-5">
       <RouterView />
     </div>
   </div>
@@ -23,4 +23,5 @@ provide('isLogged', isLogged);
 </template>
 
 <style scoped>
+
 </style>
