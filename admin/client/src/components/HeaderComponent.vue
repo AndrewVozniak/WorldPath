@@ -5,7 +5,7 @@ import { useRoute } from 'vue-router';
 import SearchComponent from "@/components/SearchComponent.vue";
 
 const links = [
-  { name: 'Dashboard', path: '/' },
+  { name: 'Overview', path: '/' },
   { name: 'Users', path: '/users' },
   { name: 'Community', path: '/community' },
   { name: 'Reviews', path: '/reviews' },

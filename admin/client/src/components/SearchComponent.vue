@@ -10,7 +10,7 @@ const searchQuery = ref('');
     <Input
         type="text"
         placeholder="Search..."
-        class="w-full bg-black border border-zinc-800 outline-0"
+        class="w-full outline-0"
         @keydown.enter="console.log(searchQuery)"
         v-model="searchQuery"
     />

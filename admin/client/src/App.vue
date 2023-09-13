@@ -6,10 +6,13 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
 
 const isLogged = ref(!!localStorage.getItem('token'));
 provide('isLogged', isLogged);
+
+const themeStyles = ref('bg-black text-white dark-theme');
 </script>
 
 <template>
-  <div class="bg-black text-white flex flex-col min-h-screen" v-if="isLogged">
+  <div :class="themeStyles"
+       class="flex flex-col min-h-screen" v-if="isLogged">
     <HeaderComponent></HeaderComponent>
 
     <div class="flex w-full justify-start pt-10">
