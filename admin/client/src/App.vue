@@ -12,7 +12,7 @@ provide('isLogged', isLogged);
   <div class="bg-black text-white flex flex-col min-h-screen" v-if="isLogged">
     <HeaderComponent></HeaderComponent>
 
-    <div class="flex w-full justify-start pt-5">
+    <div class="flex w-full justify-start pt-10">
       <RouterView/>
     </div>
   </div>

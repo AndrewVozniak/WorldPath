@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { Input} from "@/components/ui/input";
+import {ref} from "vue";
+
+const searchQuery = ref('');
 </script>
 
 <template>
   <div>
     <Input
-        type="search"
+        type="text"
         placeholder="Search..."
-        class="md:w-[100px] lg:w-[300px] bg-black border border-zinc-800 outline-0"
+        class="w-full bg-black border border-zinc-800 outline-0"
+        @keydown.enter="console.log(searchQuery)"
+        v-model="searchQuery"
     />
   </div>
 </template>

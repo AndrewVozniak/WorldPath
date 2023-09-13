@@ -21,12 +21,19 @@ const currentPath = computed(() => route.path);
 </script>
 
 <template>
-  <nav :class="cn('flex flex-col md:flex-row md:items-center md:space-x-4 lg:space-x-8 pt-4 pl-5 pb-2 border-b border-zinc-800', $attrs.class ?? '')">
-    <RouterLink :to="link.path" v-for="link in links" :key="link.name">
-      <span :class="{'text-muted-foreground': currentPath != link.path}"
-              class="text-md font-medium transition-colors hover:text-white">{{ link.name }}</span>
-    </RouterLink>
+  <nav :class="cn('flex flex-col md:flex-row md:items-center md:space-x-4 lg:space-x-6 xl:space-x-8 px-5 pt-4 pb-3 border-b border-zinc-800', $attrs.class ?? '')">
+    <div class="flex flex-col md:flex-row md:items-center md:space-x-4 lg:space-x-6 xl:space-x-8 order-1 md:order-none">
+      <RouterLink :to="link.path" v-for="link in links" :key="link.name" class="mb-2 md:mb-0">
+        <span :class="{
+                     'underline underline-offset-4': currentPath === link.path,
+                     'text-muted-foreground': currentPath != link.path
+                   }"
+              class="text-lg md:text-sm font-medium transition-colors hover:text-white">
+          {{ link.name }}
+        </span>
+      </RouterLink>
+    </div>
 
-    <SearchComponent></SearchComponent>
+    <SearchComponent class="w-full mb-7 md:mb-0"></SearchComponent>
   </nav>
 </template>

@@ -10,9 +10,9 @@ async function logout() {
 </script>
 
 <template>
-    <div class="flex flex-col items-center text-white">
+    <div class="flex flex-col items-center text-white mx-auto">
     <h1 class="text-4xl font-semibold mb-5">Welcome to the admin panel</h1>
-    <h2 class="text-2xl font-semibold mb-5">Please login to continue</h2>
+    <h2 class="text-2xl font-semibold mb-5">Travel with no confidence</h2>
 
     <Button variant="destructive" @click="logout">LOGOUT</Button>
   </div>
