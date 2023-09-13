@@ -10,5 +10,10 @@ async function logout() {
 </script>
 
 <template>
-  <Button variant="destructive" @click="logout">LOGOUT</Button>
+    <div class="flex flex-col items-center text-white">
+    <h1 class="text-4xl font-semibold mb-5">Welcome to the admin panel</h1>
+    <h2 class="text-2xl font-semibold mb-5">Please login to continue</h2>
+
+    <Button variant="destructive" @click="logout">LOGOUT</Button>
+  </div>
 </template>

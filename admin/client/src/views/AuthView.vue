@@ -12,7 +12,7 @@ async function login() {
 </script>
 
 <template>
-  <div style="height: 100vh" class="container relative flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+  <div class="container h-screen relative flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
     <a
         href="/login"
         :class="cn(

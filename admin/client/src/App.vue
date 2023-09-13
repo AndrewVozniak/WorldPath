@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import {provide, ref} from "vue";
-import SidebarComponent from "@/components/SidebarComponent.vue";
 import AuthView from "@/views/AuthView.vue";
+import HeaderComponent from "@/components/HeaderComponent.vue";
 
 const isLogged = ref(!!localStorage.getItem('token'));
 provide('isLogged', isLogged);
 </script>
 
 <template>
-  <div class="bg-gray-800 flex justify-between" v-if="isLogged">
-    <SidebarComponent class="mr-5"></SidebarComponent>
+  <div class="bg-black text-white flex flex-col min-h-screen" v-if="isLogged">
+    <HeaderComponent></HeaderComponent>
 
     <div class="flex w-full justify-start pt-5">
-      <RouterView />
+      <RouterView/>
     </div>
   </div>
 
