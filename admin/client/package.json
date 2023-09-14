@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@tanstack/vue-table": "^8.9.9",
     "@vueuse/core": "^10.4.1",
     "axios": "^1.5.0",
     "class-variance-authority": "^0.7.0",

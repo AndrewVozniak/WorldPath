@@ -15,7 +15,7 @@ const themeStyles = ref('bg-black text-white dark-theme');
        class="flex flex-col min-h-screen" v-if="isLogged">
     <HeaderComponent></HeaderComponent>
 
-    <div class="flex w-full justify-start pt-10">
+    <div class="flex mx-auto w-11/12 justify-start pt-10">
       <RouterView/>
     </div>
   </div>
