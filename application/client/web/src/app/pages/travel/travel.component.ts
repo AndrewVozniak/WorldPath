@@ -97,4 +97,6 @@ export class TravelComponent {
       console.log('No id was passed to the route');
     }
   }
+
+    protected readonly Travel = Travel;
 }

@@ -29,21 +29,72 @@
         font-size: 22px;
       }
 
-      .comment {
+      .comments {
         display: flex;
         flex-direction: column;
         align-items: start;
+        width: 100%;
 
-        margin-bottom: 10px;
-
-        .heading {
+        .comment {
           display: flex;
           flex-direction: row;
-          justify-content: space-between;
+          align-items: center;
 
           width: 100%;
 
-          font-weight: 700;
+          margin-top: 15px;
+
+          @media screen and (max-width: 325px) {
+            flex-direction: column;
+            align-items: start;
+          }
+
+          .avatar {
+            width: 50px;
+            height: 50px;
+
+            margin-right: 10px;
+
+            @media screen and (max-width: 325px) {
+              width: 65px;
+              height: 65px;
+
+              margin-right: 0px;
+              margin-bottom: 10px;
+            }
+
+            .image {
+              width: 100%;
+              height: 100%;
+
+              border-radius: 50%;
+              border: 1px solid #253158;
+
+              object-fit: cover;
+            }
+          }
+
+          .content {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            width: 100%;
+
+            .heading {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+
+              width: 100%;
+
+              font-weight: 700;
+
+              @media screen and (max-width: 325px) {
+                flex-direction: column;
+                align-items: start;
+              }
+            }
+          }
         }
       }
     }

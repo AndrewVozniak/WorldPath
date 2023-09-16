@@ -2,12 +2,14 @@
   <app-image-slider-hidden [images]="travel?.photos"></app-image-slider-hidden>
   <div class="travel_info">
     <div class="info__container my-3">
-      <div class="label title">{{ travel?.title }}</div>
+      <div class="label title" *ngIf="travel?.title">{{ travel?.title }}</div>
+        <div class="label title" *ngIf="!travel?.title">Loading...</div>
     </div>
 
     <div class="info__container mb-5">
       <div class="label">Description</div>
-      <div class="content">{{ travel?.description }}</div>
+        <div class="content" *ngIf="travel?.description">{{ travel?.description }}</div>
+        <div class="content" *ngIf="!travel?.description">Loading...</div>
     </div>
 
     <div class="info__container">
@@ -25,15 +27,28 @@
         <div class="label">Comments</div>
       </div>
 
-      <div class="comment" *ngFor="let comment of travel?.comments">
-        <div class="heading">
-          <div class="author" *ngIf="comment.user">{{ comment.user?.name }}</div>
-          <div class="author" *ngIf="!comment.user">Anonymous</div>
+      <div class="comments" *ngIf="travel?.comments">
+        <div class="comment" *ngFor="let comment of travel?.comments">
+          <div class="avatar">
+            <img class="image"  [src]="comment.user?.profile_photo_path" alt="avatar" *ngIf="comment.user?.profile_photo_path"/>
+            <img class="image"  src="https://www.gravatar.com/avatar/" alt="avatar" *ngIf="!comment.user?.profile_photo_path"/>
+          </div>
 
-          <div class="date">{{ comment.created_at }}</div>
+          <div class="content">
+            <div class="heading">
+              <div class="author" *ngIf="comment.user">{{ comment.user.name }}</div>
+              <div class="author" *ngIf="!comment.user">Anonymous</div>
+
+              <div class="date">{{ comment.created_at }}</div>
+            </div>
+
+            <div class="text">{{ comment.text }}</div>
+          </div>
         </div>
+      </div>
 
-        <div class="text">{{ comment.text }}</div>
+      <div class="comments" *ngIf="!(travel?.comments?.length)">
+        No comments...
       </div>
     </div>
 
