@@ -1,14 +1,22 @@
 import datetime
+import json
 
 from bson import ObjectId
 from flask import request, jsonify, Flask
 from flask_cors import CORS
 from database import db
+import rpcClient
 
 app = Flask(__name__)
 
 CORS(allow_headers='Content-Type')
 CORS(app, resources={r"/*": {"origins": "*"}})
+
+try:
+    user_rpc_client = rpcClient.RpcClient('rabbitmq-user')
+except Exception as e:
+    print(f"Error connecting to rabbitmq-user: {e}")
+    exit(1)
 
 
 @app.route('/travel_service/travels/', methods=['GET'])
@@ -226,21 +234,37 @@ async def delete_travel(travel_id):
 @app.route('/travel_service/travel/<travel_id>/comments', methods=['GET'])
 async def get_comments(travel_id):
     comments_collection = db['Comments']
-    users_collection = db['Users']
 
     comments = []
 
     for comment in comments_collection.find({"travel_id": ObjectId(travel_id)}):
-        user = users_collection.find_one({"_id": comment['user_id']})
-
         comments.append({
             "id": str(comment['_id']),
             "user_id": str(comment['user_id']),
-            "user_name": user['name'],
             "text": comment['text'],
             "updated_at": comment['updated_at'],
             "created_at": comment['created_at']
         })
+
+    # get all ids from comments and prepare to send to user service through rpc ( rabbitmq )
+    comments_ids = []
+
+    for comment in comments:
+        comments_ids.append(comment['user_id'])
+
+    # get all users from user service
+    users = user_rpc_client.call(json.dumps(comments_ids), queue='get_users_base_info')
+
+    users = json.loads(users.decode())
+
+    # add user info to comments
+    for comment in comments:
+        print(comment)
+
+        for user in users:
+            if comment['user_id'] == user['id']:
+                comment.pop('user_id', None)
+                comment['user'] = user
 
     return jsonify(comments)
 

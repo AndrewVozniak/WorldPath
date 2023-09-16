@@ -38,7 +38,6 @@ export class TravelComponent {
   getTravelBaseInfo(travel: Travel) {
     axios.get(`${environment.apiURL}/travels/travel_service/travel/${travel.id}`)
       .then((response) => {
-        console.log(response.data);
         travel.title = response.data.title;
         travel.description = response.data.description;
 
@@ -53,8 +52,8 @@ export class TravelComponent {
   getTravelComments(travel: Travel) {
     axios.get(`${environment.apiURL}/travels/travel_service/travel/${travel.id}/comments`)
       .then((response) => {
-        console.log(response.data);
         travel.comments = response.data;
+        console.log(travel.comments);
       })
       .catch((error) => {
         console.log(error);
@@ -62,7 +61,7 @@ export class TravelComponent {
   }
 
   getId(travel: Travel) {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id')
 
     if (id) {
       travel.id = id;

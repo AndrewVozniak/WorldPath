@@ -13,8 +13,12 @@ app = Flask(__name__)
 CORS(allow_headers='Content-Type')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-user_rpc_client = rpcClient.RpcClient('rabbitmq-user')
 
+try:
+    user_rpc_client = rpcClient.RpcClient('rabbitmq-user')
+except Exception as e:
+    print(f"Error connecting to rabbitmq-user: {e}")
+    user_rpc_client = None
 
 @app.route('/reviews/', methods=['GET'])
 async def get_all_reviews():
