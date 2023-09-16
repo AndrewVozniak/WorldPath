@@ -2,6 +2,27 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import axios from "axios";
 import {environment} from "../../../environments/environment";
+// id
+// text
+// updated_at
+// created_at
+// user
+//     id
+//     name
+//     profile_photo_path
+interface User {
+    id?: string;
+    name?: string;
+    profile_photo_path?: string;
+}
+
+interface Comment {
+    id?: string;
+    text?: string;
+    updated_at?: string;
+    created_at?: string;
+    user?: User;
+}
 
 class Travel {
   id?: string;
@@ -9,11 +30,11 @@ class Travel {
   description?: string;
   photos?: string[];
   waypoints?: string[];
-  comments?: string[];
+  comments?: Comment[];
   places?: string[];
   routes?: string[];
-  updatedAt?: string;
-  createdAt?: string;
+  updated_at?: string;
+  created_at?: string;
 }
 
 @Component({
@@ -53,7 +74,14 @@ export class TravelComponent {
     axios.get(`${environment.apiURL}/travels/travel_service/travel/${travel.id}/comments`)
       .then((response) => {
         travel.comments = response.data;
-        console.log(travel.comments);
+
+        if (travel.comments) {
+            travel.comments.forEach((comment) => {
+                if (comment.created_at) {
+                    comment.created_at = comment.created_at.split(' ')[0].split('-').reverse().join('.');
+                }
+            });
+        }
       })
       .catch((error) => {
         console.log(error);
