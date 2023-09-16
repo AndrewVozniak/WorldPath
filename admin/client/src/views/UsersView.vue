@@ -68,6 +68,26 @@ export default defineComponent({
         cell: ({ row }) => h('div', row.getValue('admin')),
       },
       {
+        accessorKey: 'updated_at',
+        header: ({ column }) => {
+          return h(Button, {
+            variant: 'ghost',
+            onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+          }, () => ['Updated', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+        },
+        cell: ({ row }) => h('div', row.getValue('updated_at')),
+      },
+      {
+        accessorKey: 'created_at',
+        header: ({ column }) => {
+          return h(Button, {
+            variant: 'ghost',
+            onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+          }, () => ['Created', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+        },
+        cell: ({ row }) => h('div', row.getValue('created_at')),
+      },
+      {
         accessorKey: 'action',
         header: 'Action',
         cell: ({ row }) => h(RouterLink, { to: `/users/${row.getValue('id')}`, class: 'manage-button' }, row.getValue('action')),
@@ -92,6 +112,8 @@ export default defineComponent({
           muted: user.is_muted,
           verified: user.is_verified,
           admin: user.is_admin,
+          updated_at: user.updated_at,
+          created_at: user.created_at,
           action: "Manage"
         }));
 
