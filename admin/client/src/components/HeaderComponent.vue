@@ -7,13 +7,13 @@ import SearchComponent from "@/components/SearchComponent.vue";
 const links = [
   { name: 'Overview', path: '/' },
   { name: 'Users', path: '/users' },
-  { name: 'Community', path: '/community' },
   { name: 'Reviews', path: '/reviews' },
   { name: 'Places', path: '/places' },
   { name: 'Trips', path: '/trips' },
   { name: 'Routes', path: '/routes' },
   { name: 'Weather', path: '/weather' },
   { name: 'Support', path: '/support' },
+  { name: 'Community', path: '/community' },
 ];
 
 const route = useRoute();

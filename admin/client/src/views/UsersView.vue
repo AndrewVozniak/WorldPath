@@ -1,12 +1,3 @@
-<template>
-  <div class="w-full">
-    <h1 class="text-2xl font-black mb-5">Users</h1>
-
-    <TableComponent  :columns="columns" :data="tableData" :search-by="'email'" v-if="tableData[0]"/>
-    <TableComponent :columns="columns" :data="tableData" v-else/>
-  </div>
-</template>
-
 <script lang="ts">
 import { h, ref, defineComponent } from 'vue';
 import { ArrowUpDown } from 'lucide-vue-next'
@@ -116,3 +107,12 @@ export default defineComponent({
   }
 });
 </script>
+
+<template>
+  <div class="w-full">
+    <h1 class="text-2xl font-black mb-5">Users</h1>
+
+    <TableComponent  :columns="columns" :data="tableData" :search-by="'email'" v-if="tableData[0]"/>
+    <TableComponent :columns="columns" :data="tableData" :search-by="'email'" v-else/>
+  </div>
+</template>

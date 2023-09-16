@@ -53,9 +53,6 @@ table.value = useVueTable({
     get rowSelection() { return rowSelection.value },
   },
 })
-
-console.log(props.data)
-console.log(props.columns)
 </script>
 
 <template>
