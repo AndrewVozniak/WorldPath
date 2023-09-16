@@ -25,8 +25,11 @@ import { defineProps } from 'vue'
 const props = defineProps({
   data: Array,
   columns: Array,
+  isLoading: Boolean,
   searchBy: String
 })
+
+console.log(props)
 
 const table = ref(null);
 
@@ -105,6 +108,15 @@ table.value = useVueTable({
               </TableCell>
             </TableRow>
           </template>
+
+          <TableRow v-else-if="isLoading">
+            <TableCell
+                col-span="{{ table.getAllColumns().length }}"
+                class="h-24 text-center"
+            >
+              Loading...
+            </TableCell>
+          </TableRow>
 
           <TableRow v-else>
             <TableCell

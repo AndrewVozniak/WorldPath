@@ -20,19 +20,14 @@ export default defineComponent({
         cell: ({ row }) => h('div', row.getValue('id')),
       },
       {
-        accessorKey: 'rating',
-        header: ({ column }) => {
-          return h(Button, {
-            variant: 'ghost',
-            onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-          }, () => ['Rating', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
-        },
-        cell: ({ row }) => h('div', row.getValue('rating')),
+        accessorKey: 'title',
+        header: 'Title',
+        cell: ({ row }) => h('div', row.getValue('title')),
       },
       {
-        accessorKey: 'text',
-        header: 'Text',
-        cell: ({ row }) => h('div', row.getValue('text')),
+        accessorKey: 'description',
+        header: 'Description',
+        cell: ({ row }) => h('div', row.getValue('description')),
       },
       {
         accessorKey: 'updated_at',
@@ -57,7 +52,7 @@ export default defineComponent({
       {
         accessorKey: 'action',
         header: 'Action',
-        cell: ({ row }) => h(RouterLink, { to: `/reviews/${row.getValue('id')}`, class: 'manage-button' }, row.getValue('action')),
+        cell: ({ row }) => h(RouterLink, { to: `/travels/${row.getValue('id')}`, class: 'manage-button' }, row.getValue('action')),
       }
     ];
 
@@ -65,22 +60,24 @@ export default defineComponent({
       isLoading.value = true;
 
       try {
-        const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/reviews/reviews`, {
+        const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/travels/travel_service/travels`, {
           headers: {
             'Authorization': localStorage.getItem('token')
           }
         });
         isLoading.value = false;
 
-        tableData.value = response.data.map((review: any) => ({
-          id: review.id,
-          text: review.text,
-          rating: review.rating,
-          updated_at: review.updated_at,
-          created_at: review.created_at,
+        tableData.value = response.data.map((travel: any) => ({
+          id: travel.id,
+          title: travel.title,
+          description: travel.description,
+          type: travel.type,
+          updated_at: travel.updated_at,
+          created_at: travel.created_at,
           action: "Manage"
         }));
       } catch (error) {
+        isLoading.value = false;
         console.log(error);
       }
     };
@@ -94,9 +91,9 @@ export default defineComponent({
 
 <template>
   <div class="w-full">
-    <h1 class="text-2xl font-black mb-5">Reviews</h1>
+    <h1 class="text-2xl font-black mb-5">Travels</h1>
 
-    <TableComponent :columns="columns" :data="tableData" :search-by="'id'" v-if="tableData[0]"/>
-    <TableComponent :columns="columns" :data="tableData" :search-by="'id'" :is-loading="isLoading" v-else/>
+    <TableComponent :columns="columns" :data="tableData" :search-by="'title'" v-if="tableData[0]"/>
+    <TableComponent :columns="columns" :data="tableData" :search-by="'title'" :is-loading="isLoading" v-else/>
   </div>
 </template>

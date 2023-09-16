@@ -1,7 +1,7 @@
 <script lang="ts">
-import { h, ref, defineComponent } from 'vue';
-import { ArrowUpDown } from 'lucide-vue-next'
-import { RouterLink } from 'vue-router';
+import {defineComponent, h, ref} from 'vue';
+import {ArrowUpDown} from 'lucide-vue-next'
+import {RouterLink} from 'vue-router';
 
 import TableComponent from '@/components/TableComponent.vue';
 import axios from "axios";
@@ -11,6 +11,8 @@ export default defineComponent({
   components: { TableComponent },
   setup() {
     const tableData = ref([]);
+    let isLoading = ref(false);
+
     const columns = [
       {
         accessorKey: 'id',
@@ -95,6 +97,8 @@ export default defineComponent({
     ];
 
     const fetchData = async () => {
+      isLoading.value = true;
+
       try {
         const response = await axios.get(`${import.meta.env.VITE_DOMAIN}/user/get_all_users`, {
           headers: {
@@ -102,7 +106,9 @@ export default defineComponent({
           }
         });
 
-        const users = response.data.map((user: any) => ({
+        isLoading.value = false;
+
+        tableData.value = response.data.map((user: any) => ({
           id: user.id,
           avatar: user.profile_photo_path,
           name: user.name,
@@ -116,8 +122,6 @@ export default defineComponent({
           created_at: user.created_at,
           action: "Manage"
         }));
-
-        tableData.value = users;
       } catch (error) {
         console.log(error);
       }
@@ -125,7 +129,7 @@ export default defineComponent({
 
     fetchData();
 
-    return { tableData, columns };
+    return { tableData, columns, isLoading };
   }
 });
 </script>
@@ -135,6 +139,6 @@ export default defineComponent({
     <h1 class="text-2xl font-black mb-5">Users</h1>
 
     <TableComponent  :columns="columns" :data="tableData" :search-by="'email'" v-if="tableData[0]"/>
-    <TableComponent :columns="columns" :data="tableData" :search-by="'email'" v-else/>
+    <TableComponent :columns="columns" :data="tableData" :search-by="'email'" :is-loading="isLoading" v-else/>
   </div>
 </template>
