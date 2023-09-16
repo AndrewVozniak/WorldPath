@@ -13,12 +13,12 @@ app = Flask(__name__)
 CORS(allow_headers='Content-Type')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-
 try:
     user_rpc_client = rpcClient.RpcClient('rabbitmq-user')
 except Exception as e:
     print(f"Error connecting to rabbitmq-user: {e}")
     user_rpc_client = None
+
 
 @app.route('/reviews/', methods=['GET'])
 async def get_all_reviews():
@@ -46,22 +46,26 @@ async def get_latest_reviews(count):
 
     for review in reviews_cursor:
         review['id'] = str(review['_id'])
-
-        # send request to user service to get user info by id through rabbitmq
-        try:
-            user = user_rpc_client.call(str(review['user_id']), queue='get_user_base_info_for_reviews')
-        except Exception as e:
-            print(f"Error processing message: {e}")
-            user = None
-
-        if user:
-            user = json.loads(user)
-
-            review['user'] = user
-
+        review['user_id'] = str(review['user_id'])
         review.pop('_id')
-        review.pop('user_id')
+
         reviews.append(review)
+
+    # get all users ids
+    users_ids = []
+
+    for review in reviews:
+        users_ids.append(review['user_id'])
+
+    # get all users from user service
+    users = user_rpc_client.call(json.dumps(users_ids), queue='get_users_base_info')
+
+    users = json.loads(users.decode())
+
+    for review in reviews:
+        for user in users:
+            if review['user_id'] == user['id']:
+                review['user'] = user
 
     return jsonify(reviews)
 

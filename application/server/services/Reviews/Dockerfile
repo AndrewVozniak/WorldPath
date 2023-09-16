@@ -5,6 +5,7 @@ WORKDIR .
 ENV FLASK_APP=main.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=3007
+ENV PYTHONUNBUFFERED=1
 
 
 COPY requirements.txt requirements.txt

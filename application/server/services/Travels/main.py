@@ -247,13 +247,13 @@ async def get_comments(travel_id):
         })
 
     # get all ids from comments and prepare to send to user service through rpc ( rabbitmq )
-    comments_ids = []
+    users_ids = []
 
     for comment in comments:
-        comments_ids.append(comment['user_id'])
+        users_ids.append(comment['user_id'])
 
     # get all users from user service
-    users = user_rpc_client.call(json.dumps(comments_ids), queue='get_users_base_info')
+    users = user_rpc_client.call(json.dumps(users_ids), queue='get_users_base_info')
 
     users = json.loads(users.decode())
 
