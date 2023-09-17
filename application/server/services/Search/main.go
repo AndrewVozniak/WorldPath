@@ -1,14 +1,13 @@
 package main
 
 import (
-	rpc "Search/rabbit"
-	"log"
+	router "Search/api/routes"
+	conf "Search/config"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	client := rpc.NewClient("amqp://guest:guest@localhost:5672/")
-	defer client.Close()
-
-	response := client.SendRequest("hello_queue", "Hello World!")
-	log.Printf("Received response: %s", response)
+	r := gin.Default()
+	router.InitRoutes(r)
+	r.Run(conf.ServiceHost + ":" + conf.ServicePort)
 }

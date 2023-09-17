@@ -18,10 +18,17 @@ type RPCClient struct {
 	ch   *amqp.Channel
 }
 
-func NewClient(host string) *RPCClient {
-	conn, err := amqp.Dial(host)
+func NewClient(user string, password string, host string, port string) *RPCClient {
+	conn, err := amqp.Dial("amqp://" +
+		user + ":" +
+		password + "@" +
+		host + ":" +
+		port + "/")
+
 	failOnError(err, "Failed to connect to RabbitMQ")
+
 	ch, err := conn.Channel()
+
 	failOnError(err, "Failed to open a channel")
 	return &RPCClient{conn: conn, ch: ch}
 }
