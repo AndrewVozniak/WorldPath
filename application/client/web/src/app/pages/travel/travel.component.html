@@ -1,5 +1,6 @@
 <div class="page">
   <app-image-slider-hidden [images]="travel?.photos"></app-image-slider-hidden>
+
   <div class="travel_info">
     <div class="info__container my-3">
       <div class="label title" *ngIf="travel?.title">{{ travel?.title }}</div>
@@ -47,7 +48,11 @@
         </div>
       </div>
 
-      <div class="comments" *ngIf="!(travel?.comments?.length)">
+      <div class="comments" *ngIf="comments_is_loading">
+          Loading...
+      </div>
+
+      <div class="comments" *ngIf="!(travel?.comments?.length) && !comments_is_loading">
         No comments...
       </div>
     </div>

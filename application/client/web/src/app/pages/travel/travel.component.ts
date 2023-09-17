@@ -2,14 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import axios from "axios";
 import {environment} from "../../../environments/environment";
-// id
-// text
-// updated_at
-// created_at
-// user
-//     id
-//     name
-//     profile_photo_path
+
 interface User {
     id?: string;
     name?: string;
@@ -22,6 +15,13 @@ interface Comment {
     updated_at?: string;
     created_at?: string;
     user?: User;
+}
+
+interface Photo {
+    id?: string;
+    path?: string;
+    updated_at?: string;
+    created_at?: string;
 }
 
 class Travel {
@@ -45,16 +45,31 @@ class Travel {
 
 export class TravelComponent {
   public travel?: Travel;
+  public comments_is_loading?: boolean = true;
+
   private routes_id?: string[];
   private places_id?: string[];
 
   constructor(private readonly route: ActivatedRoute) {
-    this.travel = new Travel();
-    this.getId(this.travel);
-    this.getTravelBaseInfo(this.travel);
-    this.getTravelComments(this.travel)
+    this.travel = new Travel()
+    this.getTravelInfo(this.travel);
   }
 
+  getTravelInfo(travel: Travel) {
+    this.getId(travel);
+    this.getTravelBaseInfo(travel);
+    this.getTravelComments(travel);
+  }
+
+  getId(travel: Travel) {
+    const id = this.route.snapshot.paramMap.get('id')
+
+    if (id) {
+      travel.id = id;
+    } else {
+      console.log('No id was passed to the route');
+    }
+  }
 
   getTravelBaseInfo(travel: Travel) {
     axios.get(`${environment.apiURL}/travels/travel_service/travel/${travel.id}`)
@@ -71,6 +86,7 @@ export class TravelComponent {
   }
 
   getTravelComments(travel: Travel) {
+    this.comments_is_loading = true;
     axios.get(`${environment.apiURL}/travels/travel_service/travel/${travel.id}/comments`)
       .then((response) => {
         travel.comments = response.data;
@@ -82,21 +98,15 @@ export class TravelComponent {
                 }
             });
         }
+        this.comments_is_loading = false;
       })
       .catch((error) => {
         console.log(error);
+        this.comments_is_loading = false;
       });
+
   }
 
-  getId(travel: Travel) {
-    const id = this.route.snapshot.paramMap.get('id')
 
-    if (id) {
-      travel.id = id;
-    } else {
-      console.log('No id was passed to the route');
-    }
-  }
-
-    protected readonly Travel = Travel;
+  protected readonly Travel = Travel;
 }
