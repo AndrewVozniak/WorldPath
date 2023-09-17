@@ -259,8 +259,6 @@ async def get_comments(travel_id):
 
     # add user info to comments
     for comment in comments:
-        print(comment)
-
         for user in users:
             if comment['user_id'] == user['id']:
                 comment.pop('user_id', None)

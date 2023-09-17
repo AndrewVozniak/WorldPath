@@ -28,7 +28,7 @@ class Travel {
   id?: string;
   title?: string;
   description?: string;
-  photos?: string[];
+  photos?: Photo[];
   waypoints?: string[];
   comments?: Comment[];
   places?: string[];
@@ -58,6 +58,7 @@ export class TravelComponent {
   getTravelInfo(travel: Travel) {
     this.getId(travel);
     this.getTravelBaseInfo(travel);
+    this.getTravelPhotos(travel);
     this.getTravelComments(travel);
   }
 
@@ -79,6 +80,24 @@ export class TravelComponent {
 
         this.routes_id = response.data.routes;
         this.places_id = response.data.places;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  getTravelPhotos(travel: Travel) {
+    axios.get(`${environment.apiURL}/travels/travel_service/travels/${travel.id}/photos`)
+      .then((response) => {
+        travel.photos = response.data;
+
+        if (travel.photos) {
+            travel.photos.forEach((photo) => {
+                if (photo.created_at) {
+                    photo.created_at = photo.created_at.split(' ')[0].split('-').reverse().join('.');
+                }
+            });
+        }
       })
       .catch((error) => {
         console.log(error);

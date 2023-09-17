@@ -1,3 +1,17 @@
-<div class="slider">
-  <div class="img" *ngFor="let image of images">{{ image }}</div>
+<div class="slider" [ngClass]="{'overlay': isFullScreen}">
+  <div class="slider__close" [ngClass]="{'hidden': !isFullScreen}" (click)="fullScreenView()">x</div>
+
+  <div class="slide"
+       *ngFor="let image of images; let i = index"
+       [attr.data-index]="i"
+       [ngClass]="{ 'hidden': currentSlide !== i, 'relative': !isFullScreen }"
+  >
+
+    <img [src]="image.path" alt="" class="image" [ngClass]="{'full_size': isFullScreen}" (click)="fullScreenView()">
+
+    <div class="controls">
+      <div class="slider_control prev" (click)="prevSlide()"><</div>
+      <div class="slider_control next" (click)="nextSlide()">></div>
+    </div>
+  </div>
 </div>
