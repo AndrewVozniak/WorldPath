@@ -7,7 +7,12 @@ def hello_queue(ch, method, props, body):
     message = body.decode()
     print(f"Received request: {message}")
 
+    if props.reply_to is None:
+        print("Reply to is None. Not sending a response.")
+        return
+
     response = f"Hello, {message}!"
+    print(f"reply_to type: {type(props.reply_to)}, value: {props.reply_to}")
 
     ch.basic_publish(
         exchange='',
@@ -17,7 +22,6 @@ def hello_queue(ch, method, props, body):
         ),
         body=response)
     ch.basic_ack(delivery_tag=method.delivery_tag)
-
 
 def bye_queue(ch, method, props, body):
     message = body.decode()
