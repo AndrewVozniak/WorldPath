@@ -33,6 +33,10 @@ ADD MICROSERVICES AND SERVICES
 - docker build -t weather-service-image .
 - docker run -d --name weather-service-container --network worldpath -p 3001:3001 weather-service-image
 
+- cd ../search
+- docker build -t search-service-image .
+- docker run -d --name search-service-container --network worldpath -p 3010:3010 search-service-image
+
 ADD REDIS
 - docker run -d --name redis --network worldpath -p 6379:6379 redis
 
