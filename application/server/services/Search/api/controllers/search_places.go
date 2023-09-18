@@ -5,8 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Home(c *gin.Context) {
-	response := services.Main()
+func SearchPlaces(c *gin.Context) {
+	response := services.SearchPlaces(c.Param("query"))
 
 	c.JSON(200, gin.H{
 		"message": response,
