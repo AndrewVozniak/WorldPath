@@ -1,6 +1,6 @@
-package config
+package travels
 
 const RabbitUser = "guest"
 const RabbitPass = "guest"
-const RabbitHost = "localhost"
+const RabbitHost = "rabbitmq-travels"
 const RabbitPort = "5672"

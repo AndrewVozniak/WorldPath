@@ -1,14 +1,15 @@
 package services
 
-func SearchTravels(req string) string {
-	//client := rpc.NewClient(conf.RabbitUser, conf.RabbitPass, conf.RabbitHost, conf.RabbitPort)
-	//defer client.Close()
-	//
-	//response := client.SendRequest("hello_queue", "Hello World!")
-	//
-	//log.Printf("Received response: %s", response)
+import (
+	rpc "Search/services/rabbit"
+	travels "Search/services/rabbit/conf"
+)
 
-	response := "Travels" + req
+func SearchTravels(req string) string {
+	client := rpc.NewClient(travels.RabbitUser, travels.RabbitPass, travels.RabbitHost, travels.RabbitPort)
+	defer client.Close()
+
+	response := client.SendRequest("search", req)
 
 	return response
 }
