@@ -98,6 +98,42 @@ def get_travels_by_ids(ch, method, props, body):
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
+def search_travel_by_name(ch, method, props, body):
+    try:
+        travel_name = body.decode()
+        print(travel_name)
+
+        travels_collection = db['Travels']
+
+        travels = []
+
+        for travel in travels_collection.find({"title": {"$regex": travel_name, "$options": "i"}},
+                                              {"_id": 1, "title": 1, "description": 1, "type": 1, "updated_at": 1,
+                                               "created_at": 1}):
+            travels.append({
+                "id": str(travel['_id']),
+                "title": travel['title'],
+                "description": travel['description'],
+                "type": travel['type'],
+                "updated_at": travel['updated_at'],
+                "created_at": travel['created_at']
+            })
+
+        response = json.dumps(travels)
+
+        ch.basic_publish(
+            exchange='',
+            routing_key=props.reply_to,
+            properties=pika.BasicProperties(
+                correlation_id=props.correlation_id
+            ),
+            body=response)
+    except Exception as e:
+        print(f"Error processing message: {e}")
+    finally:
+        ch.basic_ack(delivery_tag=method.delivery_tag)
+
+
 connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
 channel = connection.channel()
 
@@ -106,6 +142,9 @@ channel.basic_consume(queue='get_liked_travels', on_message_callback=get_liked_t
 
 channel.queue_declare(queue='get_travels_by_ids')
 channel.basic_consume(queue='get_travels_by_ids', on_message_callback=get_travels_by_ids)
+
+channel.queue_declare(queue='search_travel_by_name')
+channel.basic_consume(queue='search_travel_by_name', on_message_callback=search_travel_by_name)
 
 print("RPC Server is waiting for requests...")
 channel.start_consuming()

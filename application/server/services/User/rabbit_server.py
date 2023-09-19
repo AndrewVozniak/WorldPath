@@ -7,54 +7,23 @@ from bson import ObjectId
 RABBITMQ_HOST = 'rabbitmq-user'
 
 
-def get_user_base_info(ch, method, props, body):
+def get_users_base_info(ch, method, props, body):
     try:
-        user_id = body.decode()
+        users_ids = json.loads(body.decode())
 
         users_collection = db['Users']
 
-        user = users_collection.find_one({"_id": ObjectId(user_id)}, {"name": 1, "email": 1, "profile_photo_path": 1, "created_at": 1, "updated_at": 1})
+        users = users_collection.find({"_id": {"$in": [ObjectId(user_id) for user_id in users_ids]}},
+                                      {"name": 1, "profile_photo_path": 1})
 
-        if user is None:
-            response = json.dumps({"error": "User not found"})
+        if users is None:
+            response = json.dumps({"error": "Users not found"})
         else:
-            response = json.dumps({
+            response = json.dumps([{
                 "id": str(user['_id']),
                 "name": user['name'],
-                "email": user['email'],
                 "profile_photo_path": user['profile_photo_path'],
-                "created_at": user['created_at'],
-                "updated_at": user['updated_at']
-            })
-
-        ch.basic_publish(
-            exchange='',
-            routing_key=props.reply_to,
-            properties=pika.BasicProperties(
-                correlation_id=props.correlation_id
-            ),
-            body=response)
-
-    except Exception as e:
-        print(f"Error processing message: {e}")
-    finally:
-        ch.basic_ack(delivery_tag=method.delivery_tag)
-
-
-def get_user_base_info_for_reviews(ch, method, props, body):
-    try:
-        user_id = body.decode()
-        users_collection = db['Users']
-
-        user = users_collection.find_one({"_id": ObjectId(user_id)}, {"name": 1, "profile_photo_path": 1})
-
-        if user is None:
-            response = json.dumps({"error": "User not found"})
-        else:
-            response = json.dumps({
-                "name": user['name'],
-                "profile_photo_path": user['profile_photo_path'],
-            })
+            } for user in users])
 
         ch.basic_publish(
             exchange='',
@@ -73,11 +42,8 @@ def get_user_base_info_for_reviews(ch, method, props, body):
 connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
 channel = connection.channel()
 
-channel.queue_declare(queue='get_user_base_info_for_reviews')
-channel.basic_consume(queue='get_user_base_info_for_reviews', on_message_callback=get_user_base_info_for_reviews)
-
-channel.queue_declare(queue='get_user_base_info')
-channel.basic_consume(queue='get_user_base_info', on_message_callback=get_user_base_info)
+channel.queue_declare(queue='get_users_base_info')
+channel.basic_consume(queue='get_users_base_info', on_message_callback=get_users_base_info)
 
 print("RPC Server is waiting for requests...")
 channel.start_consuming()
