@@ -45,10 +45,6 @@ namespace Places_Service.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPlacesByCoordinate([FromQuery] float lat, [FromQuery] float lon)
         {
-            // console log
-            Console.WriteLine(lat);
-            Console.WriteLine(lon);
-            
             var placesNearby = await _placeService.FindPlacesNearbyAsync(lat, lon, 1000);
             
             // If places founded
