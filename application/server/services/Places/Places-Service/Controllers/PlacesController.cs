@@ -82,7 +82,7 @@ namespace Places_Service.Controllers
                         PhotoReference = "nothing there"
                     };
                     
-                    if (result.Photos != new List<Photo>() && i < result.Photos.Count)
+                    if (result.Photos != null && i < result.Photos.Count)
                     {
                         newPlace.PhotoReference = result.Photos[i].PhotoReference; // Встановлюємо PhotoReference, якщо фотографія доступна
                     }
