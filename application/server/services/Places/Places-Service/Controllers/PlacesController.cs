@@ -46,6 +46,11 @@ namespace Places_Service.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPlacesByCoordinate([FromQuery] float lat, [FromQuery] float lon)
         {
+            // console log
+            Console.WriteLine(lat);
+            Console.WriteLine(lon);
+
+            
             var placesNearby = await _placeService.FindPlacesNearbyAsync(lat, lon);
             
             if (placesNearby != null && placesNearby.Any()) return Ok(placesNearby);
@@ -54,6 +59,9 @@ namespace Places_Service.Controllers
             var parsedPhotos = new List<ParsedPlacePhoto>();
             
             var placeData = await _googlePlaceService.GetPlaceByCoordinate(lat, lon);
+            
+            // console log
+            Console.WriteLine(placeData);
             
             if (placeData != null)
             {

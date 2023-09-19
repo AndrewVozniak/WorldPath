@@ -1,28 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WorldPath\\application\\server\\services\\Places\\Places-Service\\Places-Service.csproj": {}
+    "C:\\laragon\\www\\WorldPath\\application\\server\\services\\Places\\Places-Service\\Places-Service.csproj": {}
   },
   "projects": {
-    "D:\\WorldPath\\application\\server\\services\\Places\\Places-Service\\Places-Service.csproj": {
+    "C:\\laragon\\www\\WorldPath\\application\\server\\services\\Places\\Places-Service\\Places-Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WorldPath\\application\\server\\services\\Places\\Places-Service\\Places-Service.csproj",
+        "projectUniqueName": "C:\\laragon\\www\\WorldPath\\application\\server\\services\\Places\\Places-Service\\Places-Service.csproj",
         "projectName": "Places-Service",
-        "projectPath": "D:\\WorldPath\\application\\server\\services\\Places\\Places-Service\\Places-Service.csproj",
-        "packagesPath": "C:\\Users\\prozy\\.nuget\\packages\\",
-        "outputPath": "D:\\WorldPath\\application\\server\\services\\Places\\Places-Service\\obj\\",
+        "projectPath": "C:\\laragon\\www\\WorldPath\\application\\server\\services\\Places\\Places-Service\\Places-Service.csproj",
+        "packagesPath": "C:\\Users\\Dzonke\\.nuget\\packages\\",
+        "outputPath": "C:\\laragon\\www\\WorldPath\\application\\server\\services\\Places\\Places-Service\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\prozy\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Dzonke\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+          "C:\\Users\\Dzonke\\.dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -89,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\Dzonke\\.dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     }
