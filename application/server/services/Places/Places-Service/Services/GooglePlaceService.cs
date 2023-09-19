@@ -28,7 +28,9 @@ public class GooglePlaceService : IGooglePlaceService
         if (response.IsSuccessStatusCode)
         {
             var jsonResponse = await response.Content.ReadAsStringAsync();
+
             var placesData = JsonConvert.DeserializeObject<PlacesApiResponse>(jsonResponse);
+            
             if (placesData != null) return placesData;
         }
 

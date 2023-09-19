@@ -101,16 +101,24 @@ public class PlaceService
         return placeExists;
     }
     
-    public async Task<IEnumerable<Place>> FindPlacesNearbyAsync(double latitude, double longitude)
+    public async Task<IEnumerable<Place>?> FindPlacesNearbyAsync(double latitude, double longitude, int radius)
     {
-        var point = new GeoJsonPoint<GeoJson2DGeographicCoordinates>(
-            new GeoJson2DGeographicCoordinates(longitude, latitude)
-        );
+        try
+        {
+            var point = new GeoJsonPoint<GeoJson2DGeographicCoordinates>(
+                new GeoJson2DGeographicCoordinates(longitude, latitude)
+            );
 
-        var filter = Builders<Place>.Filter.Near(x => x.Location, point, 1000);
+            var filter = Builders<Place>.Filter.Near(x => x.Location, point, radius);
 
-        var places = await _placeCollection.Find(filter).ToListAsync();
-        return places;
+            var places = await _placeCollection.Find(filter).ToListAsync();
+            return places;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
     }
     
     public async Task DeletePlaceLikeAsync(string placeId, string userId)

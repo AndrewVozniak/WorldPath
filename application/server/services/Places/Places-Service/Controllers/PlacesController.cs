@@ -4,7 +4,6 @@ using MongoDB.Bson;
 using Places_Service.Dtos;
 using Places_Service.Models;
 using Places_Service.Services;
-using ZstdSharp.Unsafe;
 
 namespace Places_Service.Controllers
 {
@@ -49,48 +48,50 @@ namespace Places_Service.Controllers
             // console log
             Console.WriteLine(lat);
             Console.WriteLine(lon);
-
             
-            var placesNearby = await _placeService.FindPlacesNearbyAsync(lat, lon);
+            var placesNearby = await _placeService.FindPlacesNearbyAsync(lat, lon, 1000);
             
+            // If places founded
             if (placesNearby != null && placesNearby.Any()) return Ok(placesNearby);
             
+            // Else
             var newPlaces = new List<Place>();
             var parsedPhotos = new List<ParsedPlacePhoto>();
             
             var placeData = await _googlePlaceService.GetPlaceByCoordinate(lat, lon);
-            
-            // console log
-            Console.WriteLine(placeData);
-            
-            if (placeData != null)
+
+            try
             {
+                // For each place in placeData we create new Place object and add it to newPlaces list
                 for (var i = 0; i < placeData.Results.Count; i++)
                 {
+                    // Get place from placeData
                     var result = placeData.Results[i];
-    
+                    
                     var placeType = string.Join(",", result.Types);
                     
                     var newPlace = new Place
-                    { 
+                    {
                         Id = ObjectId.GenerateNewId().ToString(),
                         Name = result.Name,
                         Lat = result.Geometry.Location.Lat,
                         Lon = result.Geometry.Location.Lng,
                         PlaceType = placeType,
                         CreatedAt = DateTime.Now,
-                        PhotoReference = "nothing there"
+                        PhotoReference = null
                     };
                     
-                    if (result.Photos != null && i < result.Photos.Count)
-                    {
-                        newPlace.PhotoReference = result.Photos[i].PhotoReference; // Встановлюємо PhotoReference, якщо фотографія доступна
-                    }
-
-                    newPlaces.Add(newPlace);
 
                     if (result.Photos != null && result.Photos.Count > 0)
                     {
+                        if (i < result.Photos.Count)
+                        {
+                            newPlace.PhotoReference =
+                                result.Photos[i].PhotoReference; // Set photoReference if it exists
+                        }
+
+                        newPlaces.Add(newPlace);
+                        
                         for (var j = 0; j < result.Photos.Count; j++)
                         {
                             var photo = result.Photos[j];
@@ -108,14 +109,15 @@ namespace Places_Service.Controllers
 
 
                 await _placeService.AddManyPlacesAsync(newPlaces);
-                if (parsedPhotos.Count > 0 && parsedPhotos != null)
+                if (parsedPhotos.Count > 0)
                     await _placeService.AddManyParsedPlacePhotos(parsedPhotos);
-    
+
                 return Ok(newPlaces);
             }
-            else
+            catch (Exception e)
             {
-                return BadRequest("Error fetching data from Google Places API.");
+                Console.WriteLine(e);
+                return BadRequest(e.Message); 
             }
         }
 
