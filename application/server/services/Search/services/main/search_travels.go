@@ -7,10 +7,6 @@ import (
 	"log"
 )
 
-type Message struct {
-	Message []Travel `json:"message"`
-}
-
 type Travel struct {
 	ID          string `json:"id"`
 	Title       string `json:"title"`
@@ -25,7 +21,6 @@ func SearchTravels(req string) ([]Travel, error) {
 	defer client.Close()
 
 	responseStr := client.SendRequest("search_travel_by_name", req)
-	log.Default().Println("Received response: ", responseStr)
 
 	var travelsList []Travel
 	err := json.Unmarshal([]byte(responseStr), &travelsList)
