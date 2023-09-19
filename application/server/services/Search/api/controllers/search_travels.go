@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	services "Search/services/main"
+	searchengine "Search/services/main/search_engine"
 	"github.com/gin-gonic/gin"
 )
 
 func SearchTravels(c *gin.Context) {
-	response, err := services.SearchTravels(c.Param("query"))
+	response, err := searchengine.SearchTravels(c.Param("query"))
 
 	if err != nil {
 		c.JSON(500, gin.H{

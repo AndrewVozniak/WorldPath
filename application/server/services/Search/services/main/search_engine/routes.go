@@ -1,4 +1,4 @@
-package services
+package search_engine
 
 func SearchRoutes(req string) string {
 	//client := rpc.NewClient(conf.RabbitUser, conf.RabbitPass, conf.RabbitHost, conf.RabbitPort)

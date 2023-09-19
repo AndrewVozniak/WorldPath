@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	services "Search/services/main"
+	services "Search/services/main/search_engine"
 	"github.com/gin-gonic/gin"
 )
 

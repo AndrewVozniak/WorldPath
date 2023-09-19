@@ -1,4 +1,4 @@
-package services
+package search_engine
 
 import (
 	rpc "Search/services/rabbit"

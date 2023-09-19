@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="657067ce-58a9-4faa-b1ba-aec2ec25c614" name="Changes" comment="Added search travels function to search service.">
+    <list default="true" id="657067ce-58a9-4faa-b1ba-aec2ec25c614" name="Changes" comment="Small refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/main/search_travels.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/main/search_travels.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/controllers/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/controllers/search_places.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/controllers/search_places.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/controllers/search_routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/controllers/search_routes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/controllers/search_travels.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/controllers/search_travels.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/routes/api.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/main/search_places.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/main/search_engine/places.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/main/search_routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/main/search_engine/routes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/main/search_travels.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/main/search_engine/travels.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,10 +68,11 @@
       <recent name="C:\laragon\www\WorldPath\application\server\services\Search\api\controllers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\WorldPath\application\server\services\Search\api\controllers\search" />
+      <recent name="C:\laragon\www\WorldPath\application\server\services\Search\services\main\search_systems" />
       <recent name="C:\laragon\www\WorldPath\application\server\services\Search\services\main" />
       <recent name="C:\laragon\www\WorldPath\application\server\services\Search\api" />
       <recent name="C:\laragon\www\WorldPath\application\server\services\Search\services" />
-      <recent name="C:\laragon\www\WorldPath\application\server\services\Search\configuration" />
     </key>
   </component>
   <component name="RunManager">
@@ -87,7 +95,8 @@
     <MESSAGE value="Designed base architecture for search microservice" />
     <MESSAGE value="Added Dockerfile. Small refactor" />
     <MESSAGE value="Added search travels function to search service." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added search travels function to search service." />
+    <MESSAGE value="Small refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small refactor" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
