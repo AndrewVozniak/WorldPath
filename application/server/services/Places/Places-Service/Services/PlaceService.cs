@@ -13,6 +13,7 @@ public class PlaceService
     private readonly IMongoCollection<Place> _placeCollection;
     private readonly IMongoCollection<PlaceLike> _placeLikesCollection;
     private readonly IMongoCollection<PlaceComment> _placeCommentCollection;
+    private readonly IMongoCollection<ParsedPlacePhoto> _parsedPlacesPhotosCollection;
 
     public PlaceService(IOptions<MongoDatabaseSettings> databaseSettings)
     {
@@ -21,6 +22,8 @@ public class PlaceService
         _placeCollection = database.GetCollection<Place>(databaseSettings.Value.PlaceCollection);
         _placeLikesCollection = database.GetCollection<PlaceLike>(databaseSettings.Value.PlaceLikesCollection);
         _placeCommentCollection = database.GetCollection<PlaceComment>(databaseSettings.Value.PlaceCommentsCollection);
+        _parsedPlacesPhotosCollection =
+            database.GetCollection<ParsedPlacePhoto>(databaseSettings.Value.ParsedPlacePhotosCollection);
     }
 
     public async Task<Place> GetPlaceByName(string name)
@@ -47,6 +50,11 @@ public class PlaceService
     public async Task AddManyPlacesAsync(IEnumerable<Place> places)
     {
         await _placeCollection.InsertManyAsync(places);
+    }
+
+    public async Task AddManyParsedPlacePhotos(IEnumerable<ParsedPlacePhoto> places)
+    {
+        await _parsedPlacesPhotosCollection.InsertManyAsync(places);
     }
     
     public async Task AddPlaceLikeAsync(PlaceLike placeLike)

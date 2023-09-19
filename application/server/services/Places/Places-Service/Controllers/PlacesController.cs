@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using Places_Service.Dtos;
 using Places_Service.Models;
 using Places_Service.Services;
@@ -50,27 +51,58 @@ namespace Places_Service.Controllers
             if (placesNearby != null && placesNearby.Any()) return Ok(placesNearby);
             
             var newPlaces = new List<Place>();
+            var parsedPhotos = new List<ParsedPlacePhoto>();
             
             var placeData = await _googlePlaceService.GetPlaceByCoordinate(lat, lon);
             
             if (placeData != null)
             {
-                foreach (var result in placeData.Results)
-                {   
+                for (var i = 0; i < placeData.Results.Count; i++)
+                {
+                    var result = placeData.Results[i];
+    
                     var placeType = string.Join(",", result.Types);
                     
                     var newPlace = new Place
-                    {
+                    { 
+                        Id = ObjectId.GenerateNewId().ToString(),
                         Name = result.Name,
                         Lat = result.Geometry.Location.Lat,
                         Lon = result.Geometry.Location.Lng,
                         PlaceType = placeType,
-                        CreatedAt = DateTime.Now
+                        CreatedAt = DateTime.Now,
+                        PhotoReference = "nothing there"
                     };
+                    
+                    if (result.Photos != new List<Photo>() && i < result.Photos.Count)
+                    {
+                        newPlace.PhotoReference = result.Photos[i].PhotoReference; // Встановлюємо PhotoReference, якщо фотографія доступна
+                    }
+
                     newPlaces.Add(newPlace);
+
+                    if (result.Photos != null && result.Photos.Count > 0)
+                    {
+                        for (var j = 0; j < result.Photos.Count; j++)
+                        {
+                            var photo = result.Photos[j];
+
+                            var parsedPhoto = new ParsedPlacePhoto()
+                            {
+                                PlaceId = newPlace.Id,
+                                PhotoPath = newPlace.PhotoReference, // Використовуємо PhotoReference з newPlace
+                                CreatedAt = DateTime.Now
+                            };
+                            parsedPhotos.Add(parsedPhoto);
+                        }
+                    }
                 }
 
+
                 await _placeService.AddManyPlacesAsync(newPlaces);
+                if (parsedPhotos.Count > 0 && parsedPhotos != null)
+                    await _placeService.AddManyParsedPlacePhotos(parsedPhotos);
+    
                 return Ok(newPlaces);
             }
             else

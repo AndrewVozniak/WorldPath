@@ -51,4 +51,6 @@ public class Place
         }
     }
     
+    [BsonIgnore]
+    public string? PhotoReference { get; set; }
 }
