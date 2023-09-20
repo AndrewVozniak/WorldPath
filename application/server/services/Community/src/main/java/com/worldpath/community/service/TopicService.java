@@ -6,6 +6,8 @@ import com.worldpath.community.DTO.TopicDTO;
 import com.worldpath.community.model.Topic;
 import com.worldpath.community.repositories.TopicRepository;
 
+import java.util.List;
+
 @Service
 public class TopicService {
     private final TopicRepository topicRepository;
@@ -57,4 +59,22 @@ public class TopicService {
 
         return savedTopicDTO;
     }
+
+    /**
+     * Description: Get all topics
+     * @return List of TopicDTO
+     */
+    public List<TopicDTO> getAllTopics() {
+        List<Topic> topics = topicRepository.findAll();
+
+        return topics.stream().map(topic -> {
+            TopicDTO topicDTO = modelMapper.map(topic, TopicDTO.class);
+            topicDTO.setUser_id(topic.getUserId());
+            topicDTO.setCreated_at(topic.getCreatedAt());
+            topicDTO.setUpdated_at(topic.getUpdatedAt());
+
+            return topicDTO;
+        }).toList();
+    }
+
 }

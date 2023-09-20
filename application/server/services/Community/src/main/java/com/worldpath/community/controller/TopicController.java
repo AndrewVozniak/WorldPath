@@ -27,6 +27,16 @@ public class TopicController {
     }
 
     /**
+     * Description: Get all topics
+     * @return List of TopicDTO
+     */
+
+    @GetMapping("/")
+    public ResponseEntity<Iterable<TopicDTO>> getAllTopics() {
+        return ResponseEntity.ok(topicService.getAllTopics());
+    }
+
+    /**
      * Description: Create topic
      * @param topicDTO TopicDTO
      * @param userID User ID
