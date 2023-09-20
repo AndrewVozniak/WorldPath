@@ -16,14 +16,18 @@ public class TopicService {
         this.modelMapper = modelMapper;
     }
 
+    public TopicDTO getTopicById(String id) {
+        Topic topic = topicRepository.findById(id).orElse(null);
+
+        return modelMapper.map(topic, TopicDTO.class);
+    }
+
     public TopicDTO createTopic(TopicDTO topicDTO) {
-        // Convert TopicDTO to Topic
         Topic topic = modelMapper.map(topicDTO, Topic.class);
 
         // Save topic to database
         Topic savedTopic = topicRepository.save(topic);
 
-        // Convert saved Topic to TopicDTO
         return modelMapper.map(savedTopic, TopicDTO.class);
     }
 }
