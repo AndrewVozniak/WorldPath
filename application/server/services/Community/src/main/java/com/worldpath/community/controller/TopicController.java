@@ -1,5 +1,6 @@
 package com.worldpath.community.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.worldpath.community.DTO.TopicDTO;
@@ -7,6 +8,7 @@ import com.worldpath.community.DTO.TopicDTO;
 import com.worldpath.community.service.TopicService;
 
 @RestController
+@RequestMapping("/topic")
 public class TopicController {
     private final TopicService topicService;
 
@@ -15,25 +17,25 @@ public class TopicController {
     }
 
     /**
-     * Description: Create topic
-     * @param topicDTO TopicDTO
-     * @param user_id User ID
+     * Description: Get topic by ID
+     * @param topicID Topic ID
      * @return TopicDTO
      */
-    @PostMapping("/topic")
-    public TopicDTO createTopic(@RequestBody TopicDTO topicDTO, @RequestHeader("Userid") String user_id) {
-        topicDTO.setUser_id(user_id);
-
-        return topicService.createTopic(topicDTO);
+    @GetMapping("/{topicID}")
+    public ResponseEntity<TopicDTO> getTopicById(@PathVariable String topicID) {
+        return ResponseEntity.ok(topicService.getTopicById(topicID));
     }
 
     /**
-     * Description: Get topic by ID
-     * @param id Topic ID
+     * Description: Create topic
+     * @param topicDTO TopicDTO
+     * @param userID User ID
      * @return TopicDTO
      */
-    @GetMapping("/topic/{id}")
-    public TopicDTO getTopicById(@PathVariable String id) {
-        return topicService.getTopicById(id);
+    @PostMapping("/")
+    public ResponseEntity<TopicDTO> createTopic(@RequestBody TopicDTO topicDTO, @RequestHeader("Userid") String userID) {
+        topicDTO.setUser_id(userID);
+
+        return ResponseEntity.ok(topicService.createTopic(topicDTO));
     }
 }

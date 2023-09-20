@@ -29,7 +29,14 @@ public class TopicService {
     public TopicDTO getTopicById(String id) {
         Topic topic = topicRepository.findById(id).orElse(null);
 
-        return modelMapper.map(topic, TopicDTO.class);
+        TopicDTO topicDTO = modelMapper.map(topic, TopicDTO.class);
+
+        assert topic != null;
+        topicDTO.setUser_id(topic.getUserId());
+        topicDTO.setCreated_at(topic.getCreatedAt());
+        topicDTO.setUpdated_at(topic.getUpdatedAt());
+
+        return topicDTO;
     }
 
     /**
@@ -39,9 +46,15 @@ public class TopicService {
      */
     public TopicDTO createTopic(TopicDTO topicDTO) {
         Topic topic = modelMapper.map(topicDTO, Topic.class);
+        topic.setUserId(topicDTO.getUser_id());
 
         Topic savedTopic = topicRepository.save(topic);
 
-        return modelMapper.map(savedTopic, TopicDTO.class);
+        TopicDTO savedTopicDTO = modelMapper.map(savedTopic, TopicDTO.class);
+        savedTopicDTO.setUser_id(savedTopic.getUserId());
+        savedTopicDTO.setCreated_at(savedTopic.getCreatedAt());
+        savedTopicDTO.setUpdated_at(savedTopic.getUpdatedAt());
+
+        return savedTopicDTO;
     }
 }
