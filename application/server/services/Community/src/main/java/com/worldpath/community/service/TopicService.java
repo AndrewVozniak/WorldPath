@@ -6,25 +6,30 @@ import com.worldpath.community.DTO.TopicDTO;
 import com.worldpath.community.model.Topic;
 import com.worldpath.community.repositories.TopicRepository;
 
+import com.worldpath.community.action.ConvertToTopicDTOAction;
+
 import java.util.List;
 
 @Service
 public class TopicService {
     private final TopicRepository topicRepository;
+    private final ConvertToTopicDTOAction convertToTopicDTOAction;
     private final ModelMapper modelMapper;
 
+
     /**
-     * Description: Constructor
+     * @Description Constructor
      * @param topicRepository TopicRepository
      * @param modelMapper ModelMapper
      */
     public TopicService(TopicRepository topicRepository, ModelMapper modelMapper) {
         this.topicRepository = topicRepository;
         this.modelMapper = modelMapper;
+        this.convertToTopicDTOAction = new ConvertToTopicDTOAction(modelMapper);
     }
 
     /**
-     * Description: Get topic by ID
+     * @Description Get topic by ID
      * @param id Topic ID
      * @return TopicDTO
      */
@@ -35,11 +40,11 @@ public class TopicService {
             return null;
         }
 
-        return this.convertToTopicDTOAction(topic);
+        return convertToTopicDTOAction.execute(topic);
     }
 
     /**
-     * !Description: Create topic
+     * @Description Create topic
      * @param topicDTO TopicDTO
      * @return TopicDTO
      */
@@ -50,11 +55,11 @@ public class TopicService {
 
         Topic savedTopic = topicRepository.save(topic);
 
-        return this.convertToTopicDTOAction(savedTopic);
+        return convertToTopicDTOAction.execute(savedTopic);
     }
 
     /**
-     * !Description: Update topic by ID
+     * @Description Update topic by ID
      * @param topicDTO TopicDTO
      * @param topicID Topic ID
      * @return TopicDTO
@@ -80,30 +85,16 @@ public class TopicService {
         Topic savedTopic = topicRepository.save(topic);
 
         // ? Map saved topic to TopicDTO
-        return this.convertToTopicDTOAction(savedTopic);
+        return convertToTopicDTOAction.execute(savedTopic);
     }
 
     /**
-     * !Description: Get all topics
+     * @Description  Get all topics
      * @return List of TopicDTO
      */
     public List<TopicDTO> getAllTopics() {
         List<Topic> topics = topicRepository.findAll();
 
-        return topics.stream().map(this::convertToTopicDTOAction).toList();
-    }
-
-
-    /**
-     * !Description: Convert Topic to TopicDTO
-     * @param topic Topic
-     * @return TopicDTO
-     */
-    private TopicDTO convertToTopicDTOAction(Topic topic) {
-        TopicDTO topicDTO = modelMapper.map(topic, TopicDTO.class);
-        topicDTO.setUser_id(topic.getUserId());
-        topicDTO.setCreated_at(topic.getCreatedAt());
-        topicDTO.setUpdated_at(topic.getUpdatedAt());
-        return topicDTO;
+        return topics.stream().map(convertToTopicDTOAction::execute).toList();
     }
 }
