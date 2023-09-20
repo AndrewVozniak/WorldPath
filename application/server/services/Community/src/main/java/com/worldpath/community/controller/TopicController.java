@@ -15,6 +15,7 @@ public class TopicController {
     }
 
     /**
+     * Description: Create topic
      * @param topicDTO TopicDTO
      * @param user_id User ID
      * @return TopicDTO
@@ -26,9 +27,8 @@ public class TopicController {
         return topicService.createTopic(topicDTO);
     }
 
-
-
     /**
+     * Description: Get topic by ID
      * @param id Topic ID
      * @return TopicDTO
      */
