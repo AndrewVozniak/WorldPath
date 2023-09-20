@@ -31,50 +31,79 @@ public class TopicService {
     public TopicDTO getTopicById(String id) {
         Topic topic = topicRepository.findById(id).orElse(null);
 
-        TopicDTO topicDTO = modelMapper.map(topic, TopicDTO.class);
+        if (topic == null) {
+            return null;
+        }
 
-        assert topic != null;
-        topicDTO.setUser_id(topic.getUserId());
-        topicDTO.setCreated_at(topic.getCreatedAt());
-        topicDTO.setUpdated_at(topic.getUpdatedAt());
-
-        return topicDTO;
+        return this.convertToTopicDTOAction(topic);
     }
 
     /**
-     * Description: Create topic
+     * !Description: Create topic
      * @param topicDTO TopicDTO
      * @return TopicDTO
      */
     public TopicDTO createTopic(TopicDTO topicDTO) {
         Topic topic = modelMapper.map(topicDTO, Topic.class);
         topic.setUserId(topicDTO.getUser_id());
+        topic.createTopicDate();
 
         Topic savedTopic = topicRepository.save(topic);
 
-        TopicDTO savedTopicDTO = modelMapper.map(savedTopic, TopicDTO.class);
-        savedTopicDTO.setUser_id(savedTopic.getUserId());
-        savedTopicDTO.setCreated_at(savedTopic.getCreatedAt());
-        savedTopicDTO.setUpdated_at(savedTopic.getUpdatedAt());
-
-        return savedTopicDTO;
+        return this.convertToTopicDTOAction(savedTopic);
     }
 
     /**
-     * Description: Get all topics
+     * !Description: Update topic by ID
+     * @param topicDTO TopicDTO
+     * @param topicID Topic ID
+     * @return TopicDTO
+     */
+    public TopicDTO updateTopic(TopicDTO topicDTO, String topicID) {
+        // ? Find topic by ID
+        Topic topic = topicRepository.findById(topicID).orElse(null);
+
+        // ? If topic is null or user ID is not equal to topic's user ID, return null
+        if (topic == null) {
+            return null;
+        }
+
+        // ? If user ID is not equal to topic's user ID, return null
+        if (topicDTO.getUser_id() != null && !topicDTO.getUser_id().equals(topic.getUserId())) {
+            return null;
+        }
+
+        // ? Update topic fields
+        topic.updateTopic(topicDTO.getTitle(), topicDTO.getDescription());
+
+        // ? Save topic to database
+        Topic savedTopic = topicRepository.save(topic);
+
+        // ? Map saved topic to TopicDTO
+        return this.convertToTopicDTOAction(savedTopic);
+    }
+
+    /**
+     * !Description: Get all topics
      * @return List of TopicDTO
      */
     public List<TopicDTO> getAllTopics() {
         List<Topic> topics = topicRepository.findAll();
 
-        return topics.stream().map(topic -> {
-            TopicDTO topicDTO = modelMapper.map(topic, TopicDTO.class);
-            topicDTO.setUser_id(topic.getUserId());
-            topicDTO.setCreated_at(topic.getCreatedAt());
-            topicDTO.setUpdated_at(topic.getUpdatedAt());
-
-            return topicDTO;
-        }).toList();
+        return topics.stream().map(this::convertToTopicDTOAction).toList();
     }
 
+
+    /**
+     * !Description: Convert Topic to TopicDTO
+     * @param topic Topic
+     * @return TopicDTO
+     */
+    private TopicDTO convertToTopicDTOAction(Topic topic) {
+        TopicDTO topicDTO = modelMapper.map(topic, TopicDTO.class);
+        topicDTO.setUser_id(topic.getUserId());
+        topicDTO.setCreated_at(topic.getCreatedAt());
+        topicDTO.setUpdated_at(topic.getUpdatedAt());
+        return topicDTO;
+    }
 }

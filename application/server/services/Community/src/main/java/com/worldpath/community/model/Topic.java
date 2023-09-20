@@ -27,6 +27,26 @@ public class Topic {
     @Field("user_id")
     private String userId;
 
-    private Date updatedAt = new Date();
-    private Date createdAt = new Date();
+    @Field("updated_at")
+    private Date updatedAt;
+
+    @Field("created_at")
+    private Date createdAt;
+
+    public void createTopicDate() {
+        this.updatedAt = new Date();
+        this.createdAt = new Date();
+    }
+
+    public void updateTopic(String Title, String Description) {
+        if (Title != null && !Title.isEmpty()) {
+            this.title = Title;
+        }
+
+        if (Description != null && !Description.isEmpty()) {
+            this.description = Description;
+        }
+
+        this.updatedAt = new Date();
+    }
 }

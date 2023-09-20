@@ -17,35 +17,62 @@ public class TopicController {
     }
 
     /**
-     * Description: Get topic by ID
+     * ! Description: Get topic by ID
      * @param topicID Topic ID
      * @return TopicDTO
      */
     @GetMapping("/{topicID}")
     public ResponseEntity<TopicDTO> getTopicById(@PathVariable String topicID) {
-        return ResponseEntity.ok(topicService.getTopicById(topicID));
+        TopicDTO topic = topicService.getTopicById(topicID);
+
+        if (topic == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(topic);
     }
 
     /**
-     * Description: Get all topics
-     * @return List of TopicDTO
-     */
-
-    @GetMapping("/")
-    public ResponseEntity<Iterable<TopicDTO>> getAllTopics() {
-        return ResponseEntity.ok(topicService.getAllTopics());
-    }
-
-    /**
-     * Description: Create topic
+     * ! Description: Create topic
      * @param topicDTO TopicDTO
-     * @param userID User ID
+     * @param userId User ID
      * @return TopicDTO
      */
     @PostMapping("/")
-    public ResponseEntity<TopicDTO> createTopic(@RequestBody TopicDTO topicDTO, @RequestHeader("Userid") String userID) {
-        topicDTO.setUser_id(userID);
+    public ResponseEntity<TopicDTO> createTopic(@RequestBody TopicDTO topicDTO,
+                                                @RequestHeader("Userid") String userId) {
+        topicDTO.setUser_id(userId);
 
         return ResponseEntity.ok(topicService.createTopic(topicDTO));
+    }
+
+    /**
+     * ! Description: Update topic
+     * @param topicDTO TopicDTO
+     * @param topicID Topic ID
+     * @return TopicDTO
+     */
+    @PutMapping("/{topicID}")
+    public ResponseEntity<TopicDTO> updateTopic(@RequestBody TopicDTO topicDTO,
+                                                @RequestHeader("Userid") String userId,
+                                                @PathVariable String topicID) {
+        topicDTO.setUser_id(userId);
+
+        TopicDTO topic = topicService.updateTopic(topicDTO, topicID);
+
+        if (topic == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(topic);
+    }
+
+    /**
+     * ! Description: Get all topics
+     * @return List of TopicDTO
+     */
+    @GetMapping("/")
+    public ResponseEntity<Iterable<TopicDTO>> getAllTopics() {
+        return ResponseEntity.ok(topicService.getAllTopics());
     }
 }
