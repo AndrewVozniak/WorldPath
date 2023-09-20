@@ -15,9 +15,11 @@ public class ConvertToTopicDTOAction implements Action<Topic, TopicDTO> {
     @Override
     public TopicDTO execute(Topic topic) {
         TopicDTO topicDTO = modelMapper.map(topic, TopicDTO.class);
+
         topicDTO.setUser_id(topic.getUserId());
         topicDTO.setCreated_at(topic.getCreatedAt());
         topicDTO.setUpdated_at(topic.getUpdatedAt());
+
         return topicDTO;
     }
 }

@@ -17,7 +17,7 @@ public class TopicController {
     }
 
     /**
-     * ! Description: Get topic by ID
+     * @Description Get topic by ID
      * @param topicID Topic ID
      * @return TopicDTO
      */
@@ -33,7 +33,7 @@ public class TopicController {
     }
 
     /**
-     * ! Description: Create topic
+     * @Description Create topic
      * @param topicDTO TopicDTO
      * @param userId User ID
      * @return TopicDTO
@@ -47,7 +47,7 @@ public class TopicController {
     }
 
     /**
-     * ! Description: Update topic
+     * @Description Update topic
      * @param topicDTO TopicDTO
      * @param topicID Topic ID
      * @return TopicDTO
