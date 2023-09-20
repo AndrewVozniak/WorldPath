@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="657067ce-58a9-4faa-b1ba-aec2ec25c614" name="Changes" comment="Small refactor">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/controllers/main.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/controllers/search_places.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/controllers/search_places.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/controllers/search_routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/controllers/search_routes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/controllers/search_travels.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/controllers/search_travels.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/routes/api.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/api.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/main/search_places.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/main/search_engine/places.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/main/search_routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/main/search_engine/routes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/main/search_travels.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/main/search_engine/travels.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Community/src/main/java/com/worldpath/community/DTO/TopicDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Community/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../Community/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Community/src/main/java/com/worldpath/community/controller/TopicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Community/src/main/java/com/worldpath/community/controller/TopicController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Community/src/main/java/com/worldpath/community/model/Topic.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Community/src/main/java/com/worldpath/community/model/Topic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Community/src/main/java/com/worldpath/community/service/TopicService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Community/src/main/java/com/worldpath/community/service/TopicService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
