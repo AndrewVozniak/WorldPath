@@ -17,9 +17,6 @@ public class ConvertToCategoryDTOAction implements Action<Category, CategoryDTO>
         CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
 
         categoryDTO.setBackground_colour(category.getBackgroundColour());
-
-        System.out.println(category.getBackgroundColour());
-
         categoryDTO.setCreated_at(category.getCreatedAt());
         categoryDTO.setUpdated_at(category.getUpdatedAt());
 
