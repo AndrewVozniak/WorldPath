@@ -31,7 +31,19 @@ public class CategoryService {
         return convertToCategoryDTOAction.execute(savedCategory);
     }
 
+    public CategoryDTO editCategoryById(CategoryDTO categoryDTO, String id) {
+        Category category = categoryRepository.findById(id).orElse(null);
 
+        if (category == null) {
+            return null;
+        }
+
+        category.updateCategory(categoryDTO.getTitle(), categoryDTO.getDescription(), categoryDTO.getBackground_colour());
+
+        Category savedCategory = categoryRepository.save(category);
+
+        return convertToCategoryDTOAction.execute(savedCategory);
+    }
 
     public List<CategoryDTO> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();

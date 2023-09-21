@@ -58,7 +58,7 @@ public class TopicController {
                                                 @PathVariable String topicID) {
         topicDTO.setUser_id(userId);
 
-        TopicDTO topic = topicService.updateTopic(topicDTO, topicID);
+        TopicDTO topic = topicService.updateTopicById(topicDTO, topicID);
 
         if (topic == null) {
             return ResponseEntity.notFound().build();

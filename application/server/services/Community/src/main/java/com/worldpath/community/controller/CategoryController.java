@@ -31,4 +31,9 @@ public class CategoryController {
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryDTO> editCategoryById(@RequestBody CategoryDTO categoryDTO, @PathVariable String id) {
+        return ResponseEntity.ok(categoryService.editCategoryById(categoryDTO, id));
+    }
 }

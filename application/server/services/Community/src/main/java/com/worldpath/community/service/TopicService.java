@@ -65,7 +65,7 @@ public class TopicService {
      * @param topicID Topic ID
      * @return TopicDTO
      */
-    public TopicDTO updateTopic(TopicDTO topicDTO, String topicID) {
+    public TopicDTO updateTopicById(TopicDTO topicDTO, String topicID) {
         // ? Find topic by ID
         Topic topic = topicRepository.findById(topicID).orElse(null);
 
