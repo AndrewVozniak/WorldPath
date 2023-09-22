@@ -1,5 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 WORKDIR /app
+EXPOSE 3002
 
 COPY *.csproj ./
 RUN dotnet restore
@@ -8,7 +9,6 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 
 ENV ASPNETCORE_URLS=http://*:3002
-EXPOSE 3002
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
