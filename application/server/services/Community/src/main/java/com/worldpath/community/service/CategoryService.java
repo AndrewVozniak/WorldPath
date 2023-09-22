@@ -7,6 +7,8 @@ import com.worldpath.community.repositories.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoryService {
     private final CategoryRepository categoryRepository;
@@ -27,5 +29,25 @@ public class CategoryService {
         Category savedCategory = categoryRepository.save(category);
 
         return convertToCategoryDTOAction.execute(savedCategory);
+    }
+
+    public CategoryDTO editCategoryById(CategoryDTO categoryDTO, String id) {
+        Category category = categoryRepository.findById(id).orElse(null);
+
+        if (category == null) {
+            return null;
+        }
+
+        category.updateCategory(categoryDTO.getTitle(), categoryDTO.getDescription(), categoryDTO.getBackground_colour());
+
+        Category savedCategory = categoryRepository.save(category);
+
+        return convertToCategoryDTOAction.execute(savedCategory);
+    }
+
+    public List<CategoryDTO> getAllCategories() {
+        List<Category> categories = categoryRepository.findAll();
+
+        return categories.stream().map(convertToCategoryDTOAction::execute).toList();
     }
 }

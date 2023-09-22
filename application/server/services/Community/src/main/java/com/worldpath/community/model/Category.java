@@ -38,13 +38,17 @@ public class Category {
         this.updatedAt = new Date();
     }
 
-    public void updateCategory(String title, String description) {
+    public void updateCategory(String title, String description, String backgroundColour) {
         if (title != null && !title.isEmpty()) {
             this.title = title;
         }
 
         if (description != null && !description.isEmpty()) {
             this.description = description;
+        }
+
+        if (backgroundColour != null && !backgroundColour.isEmpty()) {
+            this.backgroundColour = backgroundColour;
         }
 
         this.updatedAt = new Date();
