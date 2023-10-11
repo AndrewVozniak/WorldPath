@@ -1,7 +1,8 @@
 ﻿using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Places_Service.Models;
+using Places.Application.Dtos;
+using Places.Application.Interfaces;
 
 namespace Places_Service.Services;
 

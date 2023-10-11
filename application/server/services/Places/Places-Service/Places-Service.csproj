@@ -19,13 +19,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Places.Application\Places.Application.csproj" />
+      <ProjectReference Include="..\Places.Persistence\Places.Persistence.csproj" />
+    </ItemGroup>
+
 
 </Project>

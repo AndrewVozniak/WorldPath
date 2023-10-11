@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Places_Service.Models;
+﻿using Places.Application.Dtos;
 
-namespace Places_Service.Services;
+namespace Places.Application.Interfaces;
 
 public interface IGooglePlaceService
 {

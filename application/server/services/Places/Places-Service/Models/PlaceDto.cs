@@ -1,9 +1,9 @@
 ﻿using Microsoft.Build.Framework;
 
-namespace Places_Service.Dtos;
+namespace Places_Service.Models;
 
 public class PlaceDto
-{   
+{
     [Required]
     public required string Name { get; set; }
     
