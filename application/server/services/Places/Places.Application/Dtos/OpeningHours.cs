@@ -2,5 +2,5 @@
 
 public class OpeningHours
 {
-    
+    public bool OpenNow { get; set; }
 }

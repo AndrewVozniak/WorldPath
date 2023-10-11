@@ -8,6 +8,7 @@ public interface IMongoDb
     Task<Place> GetPlaceById(string id);
     Task AddOnePlaceAsync(Place place);
     Task AddManyPlacesAsync(IEnumerable<Place> places);
+    Task AddOneParsedPlacePhoto(ParsedPlacePhoto photo);
     Task AddManyParsedPlacePhotos(IEnumerable<ParsedPlacePhoto> places);
     Task AddPlaceLikeAsync(PlaceLike placeLike);
     Task AddPlaceCommentAsync(PlaceComment placeComment);

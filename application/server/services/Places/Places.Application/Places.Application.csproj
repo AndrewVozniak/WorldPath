@@ -11,4 +11,16 @@
       <ProjectReference Include="..\Places.Domain\Places.Domain.csproj" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <Folder Include="Places\Queries\" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="12.0.1" />
+      <PackageReference Include="MediatR" Version="12.1.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    </ItemGroup>
+
 </Project>
