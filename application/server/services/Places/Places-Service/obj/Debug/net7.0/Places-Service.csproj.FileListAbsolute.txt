@@ -1166,3 +1166,15 @@ C:\laragon\www\WorldPath\application\server\services\Places\Places-Service\obj\D
 C:\laragon\www\WorldPath\application\server\services\Places\Places-Service\obj\Debug\net7.0\Places-Service.pdb
 C:\laragon\www\WorldPath\application\server\services\Places\Places-Service\obj\Debug\net7.0\Places-Service.genruntimeconfig.cache
 C:\laragon\www\WorldPath\application\server\services\Places\Places-Service\obj\Debug\net7.0\ref\Places-Service.dll
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\appsettings.Production.json
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\MediatR.dll
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\MediatR.Contracts.dll
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Refit.dll
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Refit.HttpClientFactory.dll
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Places.Application.dll
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Places.Domain.dll
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Places.Persistence.dll
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Places.Application.pdb
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Places.Persistence.pdb
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Places.Domain.pdb

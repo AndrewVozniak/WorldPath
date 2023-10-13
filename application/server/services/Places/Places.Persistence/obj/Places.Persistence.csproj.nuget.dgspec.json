@@ -55,6 +55,14 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[9.0.1, )"
+            },
+            "Refit": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Refit.HttpClientFactory": {
+              "target": "Package",
+              "version": "[7.0.0, )"
             }
           },
           "imports": [

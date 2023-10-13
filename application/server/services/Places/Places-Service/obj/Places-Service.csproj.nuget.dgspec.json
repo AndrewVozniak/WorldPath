@@ -66,11 +66,15 @@
             },
             "MongoDB.Bson": {
               "target": "Package",
-              "version": "[2.21.0, )"
+              "version": "[2.22.0, )"
             },
             "MongoDB.Driver": {
               "target": "Package",
-              "version": "[2.21.0, )"
+              "version": "[2.22.0, )"
+            },
+            "Refit.HttpClientFactory": {
+              "target": "Package",
+              "version": "[7.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -151,6 +155,14 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[9.0.1, )"
+            },
+            "Refit": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Refit.HttpClientFactory": {
+              "target": "Package",
+              "version": "[7.0.0, )"
             }
           },
           "imports": [

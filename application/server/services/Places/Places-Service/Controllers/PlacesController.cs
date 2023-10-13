@@ -7,6 +7,7 @@ using Places_Service.Services;
 using Places.Application.Interfaces;
 using Places.Application.Places.Commands.CreateManyPlaces;
 using Places.Domain;
+using Refit;
 
 namespace Places_Service.Controllers
 {
@@ -14,15 +15,15 @@ namespace Places_Service.Controllers
     [ApiController]
     public class PlacesController : BaseController
     {
-        private readonly IGooglePlaceService _googlePlaceService;
+        private readonly IGooglePlaceApi _googlePlaceApi;
         private readonly IMongoDb _mongoDb;
         private readonly IMapper _mapper;
 
-        public PlacesController(IGooglePlaceService googlePlaceService, IMongoDb mongoDb, IMapper mapper, IMediator mediator): base(mediator)
+        public PlacesController(IMongoDb mongoDb, IMapper mapper, IMediator mediator, IGooglePlaceApi googlePlaceApi): base(mediator)
         {
-            _googlePlaceService = googlePlaceService;
             _mongoDb = mongoDb;
             _mapper = mapper;
+            _googlePlaceApi = googlePlaceApi;
         }
         
         [HttpGet]
@@ -53,7 +54,9 @@ namespace Places_Service.Controllers
             // If places founded
             if (placesNearby != null && placesNearby.Any()) return Ok(placesNearby);
             
-            var placeData = await _googlePlaceService.GetPlaceByCoordinate(lat, lon);
+            var placesApi = RestService.For<IGooglePlaceApi>("https://maps.googleapis.com/maps/api/place/");
+            var placeData = await placesApi.GetPlacesByCoordinate(lat, lon);
+            
             var query = new CreatePlacesCommand()
             {
                 PlacesApiResponse = placeData
