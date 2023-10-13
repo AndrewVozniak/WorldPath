@@ -4,7 +4,7 @@ using Places.Domain;
 
 namespace Places.Application.Places.Commands.CreateOnePlace;
 
-public class CreatePlaceCommand : IRequest, IRequest<Place>
+public class CreateOnePlaceCommand : IRequest, IRequest<Place>
 {
     public string Id { get; set; }
     public string Name { get; set; }

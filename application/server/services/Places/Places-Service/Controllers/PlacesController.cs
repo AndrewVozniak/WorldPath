@@ -1,12 +1,17 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using Places_Service.Models;
-using Places_Service.Services;
+using Places.Application.Comments.Commands;
 using Places.Application.Interfaces;
+using Places.Application.Likes.CreatePlaceLike;
 using Places.Application.Places.Commands.CreateManyPlaces;
-using Places.Domain;
+using Places.Application.Places.Commands.CreateOnePlace;
+using Places.Application.Places.Commands.DeletePlace;
+using Places.Application.Places.Commands.UpdatePlace;
+using Places.Application.Places.Queries.GetPlaceByCoordinate;
+using Places.Application.Places.Queries.GetPlaceById;
+using Places.Application.Places.Queries.GetPlaceByName;
 using Refit;
 
 namespace Places_Service.Controllers
@@ -15,21 +20,20 @@ namespace Places_Service.Controllers
     [ApiController]
     public class PlacesController : BaseController
     {
-        private readonly IGooglePlaceApi _googlePlaceApi;
-        private readonly IMongoDb _mongoDb;
         private readonly IMapper _mapper;
 
-        public PlacesController(IMongoDb mongoDb, IMapper mapper, IMediator mediator, IGooglePlaceApi googlePlaceApi): base(mediator)
+        public PlacesController(IMapper mapper, IMediator mediator): base(mediator)
         {
-            _mongoDb = mongoDb;
             _mapper = mapper;
-            _googlePlaceApi = googlePlaceApi;
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetPlacesById([FromQuery] string id)
+        public async Task<IActionResult> GetPlacesById([FromQuery] string id,
+            CancellationToken cancellationToken)
         {
-            var place = await _mongoDb.GetPlaceById(id);
+            var query = new GetPlaceByIdQuery(id);
+
+            var place = await Mediator.Send(query, cancellationToken);
             
             if (place == null) return NotFound();
 
@@ -37,9 +41,12 @@ namespace Places_Service.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPlacesByName([FromQuery] string name)
+        public async Task<IActionResult> GetPlacesByName([FromQuery] string name,
+            CancellationToken cancellationToken)
         {
-            var place = await _mongoDb.GetPlaceById(name);
+            var query = new GetPlaceByNameQuery(name);
+            
+            var place = await Mediator.Send(query, cancellationToken);
             
             if (place == null) return NotFound();
             
@@ -47,102 +54,77 @@ namespace Places_Service.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPlacesByCoordinate([FromQuery] float lat, [FromQuery] float lon)
+        public async Task<IActionResult> GetPlacesByCoordinate([FromQuery] float lat, [FromQuery] float lon,
+            CancellationToken cancellationToken)
         {
-            var placesNearby = await _mongoDb.FindPlacesNearbyAsync(lat, lon, 1000);
+            var command = new GetPlaceByCoordinateQuery(lat, lon);
+
+            var placesNearby = await Mediator.Send(command, cancellationToken);
             
             // If places founded
-            if (placesNearby != null && placesNearby.Any()) return Ok(placesNearby);
+            if (placesNearby != null) return Ok(placesNearby);
             
             var placesApi = RestService.For<IGooglePlaceApi>("https://maps.googleapis.com/maps/api/place/");
             var placeData = await placesApi.GetPlacesByCoordinate(lat, lon);
             
-            var query = new CreatePlacesCommand()
+            var query = new CreateManyPlacesCommand()
             {
                 PlacesApiResponse = placeData
             };
 
-            var vm = await Mediator.Send(query);
+            var vm = await Mediator.Send(query, cancellationToken);
             return Ok(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Like([FromBody] PlaceLikeDto placeLikeDto)
+        public async Task<IActionResult> Like([FromBody] PlaceLikeDto placeLikeDto,
+            CancellationToken cancellationToken)
         {
-            var placeExists = await _mongoDb.PlaceExistsAsync(placeLikeDto.PlaceId);
-        
-            if (!placeExists)
-            {
-                return NotFound("The specified PlaceId does not exist.");
-            }
-
-            var placeLikeFromDb = await _mongoDb.FindPlaceLikeAsync(placeLikeDto.PlaceId, placeLikeDto.UserId);
-        
-            if (placeLikeFromDb is not null)
-            {
-                await _mongoDb.DeletePlaceLikeAsync(placeLikeDto.PlaceId, placeLikeDto.UserId);
-                return Ok("Dislike was Ok!");
-            }
-
-            var placeLike = _mapper.Map<PlaceLike>(placeLikeDto);
-
-            await _mongoDb.AddPlaceLikeAsync(placeLike);
+            var command = _mapper.Map<CreatePlaceLikeCommand>(placeLikeDto);
+            var placeLike = Mediator.Send(command, cancellationToken);
             return Ok(placeLike);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Comment([FromBody] PlaceCommentDto commentDto)
+        public async Task<IActionResult> Comment([FromBody] PlaceCommentDto commentDto,
+            CancellationToken cancellationToken)
         {
-            var placeExists = await _mongoDb.PlaceExistsAsync(commentDto.PlaceId);
-        
-            if (!placeExists) return NotFound("The specified PlaceId does not exist.");
-            
-            var placeComment = new PlaceComment
-            {
-                PlaceId = commentDto.PlaceId,
-                UserId = commentDto.UserId,
-                Text = commentDto.Text,
-            };
-
-            await _mongoDb.AddPlaceCommentAsync(placeComment);
-        
+            var command = _mapper.Map<CreatePlaceCommentCommand>(commentDto);
+            var placeComment = await Mediator.Send(command, cancellationToken);
             return Ok(placeComment);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPlace([FromBody] PlaceDto placeDto)
+        public async Task<IActionResult> AddPlace([FromBody] PlaceDto placeDto,
+            CancellationToken cancellationToken)
         {
-            var placeFromDb = await _mongoDb.GetPlaceByName(placeDto.Name);
+            var query = new GetPlaceByNameQuery(placeDto.Name);
+            var placeFromDb = await Mediator.Send(query, cancellationToken);
 
             if (placeFromDb != null) return NotFound("Place already exists");
 
-            var place = _mapper.Map<Place>(placeDto);
-
-            await _mongoDb.AddOnePlaceAsync(place);
+            var place = _mapper.Map<CreateOnePlaceCommand>(placeDto);
+            await Mediator.Send(place, cancellationToken);
 
             return Ok(place);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePlace(string id, [FromBody] PlaceDto updatePlaceDto)
+        public async Task<IActionResult> UpdatePlace([FromBody] UpdatePlaceDto updatePlaceDto,
+            CancellationToken cancellationToken)
         {
-            var success = await _mongoDb.UpdatePlaceAsync(id, _mapper.Map<Place>(updatePlaceDto));
-            
-            if (!success) return NotFound("Place not found");
-            
-            return Ok("Place updated successfully");
+            var command = _mapper.Map<UpdatePlaceCommand>(updatePlaceDto);
+            await Mediator.Send(command, cancellationToken);
+            return NoContent();
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeletePlace(string placeId)
+        public async Task<IActionResult> DeletePlace(string placeId,
+            CancellationToken cancellationToken)
         {
-            var isExists = await _mongoDb.PlaceExistsAsync(placeId);
-
-            if (!isExists) return NotFound();
-
-            await _mongoDb.DeletePlaceAsync(placeId);
-
-            return Ok("Place deleted successfully");
+            var command = new DeletePlaceCommand(placeId);
+            await Mediator.Send(command, cancellationToken);
+            return NoContent();
         }
     }
 }    

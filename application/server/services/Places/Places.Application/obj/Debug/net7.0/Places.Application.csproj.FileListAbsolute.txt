@@ -1,0 +1,15 @@
+D:\WorldPath\application\server\services\Places\Places.Application\bin\Debug\net7.0\Places.Application.deps.json
+D:\WorldPath\application\server\services\Places\Places.Application\bin\Debug\net7.0\Places.Application.dll
+D:\WorldPath\application\server\services\Places\Places.Application\bin\Debug\net7.0\Places.Application.pdb
+D:\WorldPath\application\server\services\Places\Places.Application\bin\Debug\net7.0\Places.Domain.dll
+D:\WorldPath\application\server\services\Places\Places.Application\bin\Debug\net7.0\Places.Domain.pdb
+D:\WorldPath\application\server\services\Places\Places.Application\obj\Debug\net7.0\Places.Application.csproj.AssemblyReference.cache
+D:\WorldPath\application\server\services\Places\Places.Application\obj\Debug\net7.0\Places.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\WorldPath\application\server\services\Places\Places.Application\obj\Debug\net7.0\Places.Application.AssemblyInfoInputs.cache
+D:\WorldPath\application\server\services\Places\Places.Application\obj\Debug\net7.0\Places.Application.AssemblyInfo.cs
+D:\WorldPath\application\server\services\Places\Places.Application\obj\Debug\net7.0\Places.Application.csproj.CoreCompileInputs.cache
+D:\WorldPath\application\server\services\Places\Places.Application\obj\Debug\net7.0\Places.Application.csproj.CopyComplete
+D:\WorldPath\application\server\services\Places\Places.Application\obj\Debug\net7.0\Places.Application.dll
+D:\WorldPath\application\server\services\Places\Places.Application\obj\Debug\net7.0\refint\Places.Application.dll
+D:\WorldPath\application\server\services\Places\Places.Application\obj\Debug\net7.0\Places.Application.pdb
+D:\WorldPath\application\server\services\Places\Places.Application\obj\Debug\net7.0\ref\Places.Application.dll

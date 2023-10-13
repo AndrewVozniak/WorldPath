@@ -1,0 +1,17 @@
+D:\WorldPath\application\server\services\Places\Places.Persistence\bin\Debug\net7.0\Places.Persistence.deps.json
+D:\WorldPath\application\server\services\Places\Places.Persistence\bin\Debug\net7.0\Places.Persistence.dll
+D:\WorldPath\application\server\services\Places\Places.Persistence\bin\Debug\net7.0\Places.Persistence.pdb
+D:\WorldPath\application\server\services\Places\Places.Persistence\bin\Debug\net7.0\Places.Application.dll
+D:\WorldPath\application\server\services\Places\Places.Persistence\bin\Debug\net7.0\Places.Domain.dll
+D:\WorldPath\application\server\services\Places\Places.Persistence\bin\Debug\net7.0\Places.Application.pdb
+D:\WorldPath\application\server\services\Places\Places.Persistence\bin\Debug\net7.0\Places.Domain.pdb
+D:\WorldPath\application\server\services\Places\Places.Persistence\obj\Debug\net7.0\Places.Persistence.csproj.AssemblyReference.cache
+D:\WorldPath\application\server\services\Places\Places.Persistence\obj\Debug\net7.0\Places.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+D:\WorldPath\application\server\services\Places\Places.Persistence\obj\Debug\net7.0\Places.Persistence.AssemblyInfoInputs.cache
+D:\WorldPath\application\server\services\Places\Places.Persistence\obj\Debug\net7.0\Places.Persistence.AssemblyInfo.cs
+D:\WorldPath\application\server\services\Places\Places.Persistence\obj\Debug\net7.0\Places.Persistence.csproj.CoreCompileInputs.cache
+D:\WorldPath\application\server\services\Places\Places.Persistence\obj\Debug\net7.0\Places.Persistence.csproj.CopyComplete
+D:\WorldPath\application\server\services\Places\Places.Persistence\obj\Debug\net7.0\Places.Persistence.dll
+D:\WorldPath\application\server\services\Places\Places.Persistence\obj\Debug\net7.0\refint\Places.Persistence.dll
+D:\WorldPath\application\server\services\Places\Places.Persistence\obj\Debug\net7.0\Places.Persistence.pdb
+D:\WorldPath\application\server\services\Places\Places.Persistence\obj\Debug\net7.0\ref\Places.Persistence.dll

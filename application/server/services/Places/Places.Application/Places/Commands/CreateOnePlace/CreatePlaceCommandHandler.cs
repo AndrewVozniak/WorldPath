@@ -5,7 +5,7 @@ using Places.Domain;
 
 namespace Places.Application.Places.Commands.CreateOnePlace;
 
-public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, Place>
+public class CreatePlaceCommandHandler : IRequestHandler<CreateOnePlaceCommand, Place>
 {
     private readonly IMongoDb _mongoDb;
 
@@ -14,7 +14,7 @@ public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, Pla
         _mongoDb = mongoDb;
     }
 
-    public async Task<Place> Handle(CreatePlaceCommand request, CancellationToken cancellationToken)
+    public async Task<Place> Handle(CreateOnePlaceCommand request, CancellationToken cancellationToken)
     {
         var place = new Place
         {
@@ -34,8 +34,8 @@ public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, Pla
             CreatedAt = DateTime.Now
         };
 
-        await _mongoDb.AddOnePlaceAsync(place);
-        await _mongoDb.AddOneParsedPlacePhoto(parsedPhoto);
+        await _mongoDb.AddOnePlaceAsync(place, cancellationToken);
+        await _mongoDb.AddOneParsedPlacePhoto(parsedPhoto, cancellationToken);
 
         return place;
     }

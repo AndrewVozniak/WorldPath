@@ -1,0 +1,12 @@
+D:\WorldPath\application\server\services\Places\Places.Domain\bin\Debug\net7.0\Places.Domain.deps.json
+D:\WorldPath\application\server\services\Places\Places.Domain\bin\Debug\net7.0\Places.Domain.dll
+D:\WorldPath\application\server\services\Places\Places.Domain\bin\Debug\net7.0\Places.Domain.pdb
+D:\WorldPath\application\server\services\Places\Places.Domain\obj\Debug\net7.0\Places.Domain.csproj.AssemblyReference.cache
+D:\WorldPath\application\server\services\Places\Places.Domain\obj\Debug\net7.0\Places.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\WorldPath\application\server\services\Places\Places.Domain\obj\Debug\net7.0\Places.Domain.AssemblyInfoInputs.cache
+D:\WorldPath\application\server\services\Places\Places.Domain\obj\Debug\net7.0\Places.Domain.AssemblyInfo.cs
+D:\WorldPath\application\server\services\Places\Places.Domain\obj\Debug\net7.0\Places.Domain.csproj.CoreCompileInputs.cache
+D:\WorldPath\application\server\services\Places\Places.Domain\obj\Debug\net7.0\Places.Domain.dll
+D:\WorldPath\application\server\services\Places\Places.Domain\obj\Debug\net7.0\refint\Places.Domain.dll
+D:\WorldPath\application\server\services\Places\Places.Domain\obj\Debug\net7.0\Places.Domain.pdb
+D:\WorldPath\application\server\services\Places\Places.Domain\obj\Debug\net7.0\ref\Places.Domain.dll

@@ -1,0 +1,23 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.7"
+services:
+  routes-service:
+    build:
+      context: "D:\\WorldPath\\application\\server\\services\\Routes"
+      dockerfile: "Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net7.0/Routes-Service.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      NUGET_PACKAGES: "C:\\Users\\prozy\\.nuget\\packages"
+      NUGET_FALLBACK_PACKAGES: "C:\\Users\\prozy\\.nuget\\packages"
+    image: "routes-service:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\prozy\\.nuget\\packages:/root/.nuget/fallbackpackages"
+    - "D:\\WorldPath\\application\\server\\services\\Routes:/app:rw"
+    - "D:\\WorldPath\\application\\server\\services\\Routes:/src:rw"
+    working_dir: "/app"

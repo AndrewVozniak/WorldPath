@@ -5,7 +5,7 @@ using Places.Domain;
 
 namespace Places.Application.Places.Commands.CreateManyPlaces;
 
-public class CreatePlacesCommandHandler : IRequestHandler<CreatePlacesCommand, List<Place>>
+public class CreatePlacesCommandHandler : IRequestHandler<CreateManyPlacesCommand, List<Place>>
 {
     private readonly IMongoDb _mongoDb;
 
@@ -14,7 +14,7 @@ public class CreatePlacesCommandHandler : IRequestHandler<CreatePlacesCommand, L
         _mongoDb = mongoDb;
     }
 
-    public async Task<List<Place>> Handle(CreatePlacesCommand request, CancellationToken cancellationToken)
+    public async Task<List<Place>> Handle(CreateManyPlacesCommand request, CancellationToken cancellationToken)
     {
         var newPlaces = new List<Place>();
         var parsedPhotos = new List<ParsedPlacePhoto>();
@@ -50,8 +50,8 @@ public class CreatePlacesCommandHandler : IRequestHandler<CreatePlacesCommand, L
         }
         // parsedPhotos тепер завжди існує і може бути пустим списком, якщо фотографій не було
         
-        await _mongoDb.AddManyPlacesAsync(newPlaces);
-        await _mongoDb.AddManyParsedPlacePhotos(parsedPhotos);
+        await _mongoDb.AddManyPlacesAsync(newPlaces, cancellationToken);
+        await _mongoDb.AddManyParsedPlacePhotos(parsedPhotos, cancellationToken);
 
         return newPlaces;
     }
