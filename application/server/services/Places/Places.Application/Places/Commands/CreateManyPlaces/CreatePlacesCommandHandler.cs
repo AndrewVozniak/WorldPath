@@ -19,7 +19,7 @@ public class CreatePlacesCommandHandler : IRequestHandler<CreateManyPlacesComman
         var newPlaces = new List<Place>();
         var parsedPhotos = new List<ParsedPlacePhoto>();
 
-        foreach (var result in request.PlacesApiResponse.Results)
+        foreach (var result in request.Results)
         {
             var placeType = string.Join(",", result.Types);
 

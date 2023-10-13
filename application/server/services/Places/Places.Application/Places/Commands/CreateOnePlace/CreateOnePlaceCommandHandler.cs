@@ -5,11 +5,11 @@ using Places.Domain;
 
 namespace Places.Application.Places.Commands.CreateOnePlace;
 
-public class CreatePlaceCommandHandler : IRequestHandler<CreateOnePlaceCommand, Place>
+public class CreateOnePlaceCommandHandler : IRequestHandler<CreateOnePlaceCommand, Place>
 {
     private readonly IMongoDb _mongoDb;
 
-    public CreatePlaceCommandHandler(IMongoDb mongoDb)
+    public CreateOnePlaceCommandHandler(IMongoDb mongoDb)
     {
         _mongoDb = mongoDb;
     }
@@ -24,7 +24,6 @@ public class CreatePlaceCommandHandler : IRequestHandler<CreateOnePlaceCommand, 
             Lon = request.Lon,
             PlaceType = request.PlaceType,
             CreatedAt = DateTime.Now,
-            PhotoReference = request.PhotoReference
         };
 
         var parsedPhoto = new ParsedPlacePhoto()

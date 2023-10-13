@@ -66,11 +66,8 @@ namespace Places_Service.Controllers
             
             var placesApi = RestService.For<IGooglePlaceApi>("https://maps.googleapis.com/maps/api/place/");
             var placeData = await placesApi.GetPlacesByCoordinate(lat, lon);
-            
-            var query = new CreateManyPlacesCommand()
-            {
-                PlacesApiResponse = placeData
-            };
+
+            var query = _mapper.Map<CreateManyPlacesCommand>(placeData);
 
             var vm = await Mediator.Send(query, cancellationToken);
             return Ok(vm);
@@ -81,7 +78,7 @@ namespace Places_Service.Controllers
             CancellationToken cancellationToken)
         {
             var command = _mapper.Map<CreatePlaceLikeCommand>(placeLikeDto);
-            var placeLike = Mediator.Send(command, cancellationToken);
+            var placeLike = await Mediator.Send(command, cancellationToken);
             return Ok(placeLike);
         }
 

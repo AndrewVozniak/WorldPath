@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2oXh+7CRuDp5UV4rg9OYMPBYvVCvAeyKkmKuCxi7IeRdG8Lm0TXW78opXfpWyGCzFoJxgs/dwWjilyP/2ITkUw==",
+  "dgSpecHash": "Q1r0XxnjMkh3xnNSE/B3H7YqS2h8fkCEcqkSNOq+nMaPEWq/qWEtIebZkang950e87qDKDcUUCDrkiKARl58gg==",
   "success": true,
   "projectFilePath": "D:\\WorldPath\\application\\server\\services\\Places\\Places.Application\\Places.Application.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,8 @@
     "C:\\Users\\prozy\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
+    "C:\\Users\\prozy\\.nuget\\packages\\fluentvalidation\\11.7.1\\fluentvalidation.11.7.1.nupkg.sha512",
+    "C:\\Users\\prozy\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.7.1\\fluentvalidation.dependencyinjectionextensions.11.7.1.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\mediatr\\12.1.1\\mediatr.12.1.1.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

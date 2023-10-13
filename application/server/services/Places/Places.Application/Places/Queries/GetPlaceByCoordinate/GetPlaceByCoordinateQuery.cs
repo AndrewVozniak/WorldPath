@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using MongoDB.Driver.GeoJsonObjectModel;
 using Places.Domain;
 
 namespace Places.Application.Places.Queries.GetPlaceByCoordinate;

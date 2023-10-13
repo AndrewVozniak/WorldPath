@@ -24,5 +24,4 @@ public class CreateOnePlaceCommand : IRequest, IRequest<Place>
             Lat = value.Coordinates.Latitude;
         }
     }
-    public string? PhotoReference { get; set; }
 }

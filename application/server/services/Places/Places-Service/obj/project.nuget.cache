@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ONhXlU4c6gvcPBuborAxrqo8heHtqnexyE5wWPVQx4/maFvmE8fD1yieaBqA/S2fHlCR8a9Bd0Q+1TpdYmbAgw==",
+  "dgSpecHash": "eMDdzodT+31CI5fHLupPl8DtmotZvbM2B10snyNCQpFY7QJVM8H5U4W6Sn5cROweOqcBcwQH7nN4YFQ8zHmywQ==",
   "success": true,
   "projectFilePath": "D:\\WorldPath\\application\\server\\services\\Places\\Places-Service\\Places-Service.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,8 @@
     "C:\\Users\\prozy\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
+    "C:\\Users\\prozy\\.nuget\\packages\\fluentvalidation\\11.7.1\\fluentvalidation.11.7.1.nupkg.sha512",
+    "C:\\Users\\prozy\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.7.1\\fluentvalidation.dependencyinjectionextensions.11.7.1.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",
