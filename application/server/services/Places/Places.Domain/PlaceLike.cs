@@ -8,7 +8,7 @@ public class PlaceLike
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string? Id { get; set; }
+    public string? Id { get; set; } = ObjectId.GenerateNewId().ToString();
     [BsonElement("UserId")]
     [JsonPropertyName("UserId")]
     public string? UserId { get; set; }

@@ -12,6 +12,7 @@ using Places.Application.Places.Commands.UpdatePlace;
 using Places.Application.Places.Queries.GetPlaceByCoordinate;
 using Places.Application.Places.Queries.GetPlaceById;
 using Places.Application.Places.Queries.GetPlaceByName;
+using Places.Application.UploadedPlacePhotos.Commands;
 using Refit;
 
 namespace Places_Service.Controllers
@@ -104,6 +105,15 @@ namespace Places_Service.Controllers
             await Mediator.Send(place, cancellationToken);
 
             return Ok(place);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPlacePhoto([FromBody] UploadedPlacePhotoDto uploadPlacePhotoDto,
+            CancellationToken cancellationToken)
+        {
+            var command = _mapper.Map<CreateUploadedPlacePhotoCommand>(uploadPlacePhotoDto);
+            var uploadedPhoto = await Mediator.Send(command, cancellationToken);
+            return Ok(uploadedPhoto);
         }
 
         [HttpPut("{id}")]

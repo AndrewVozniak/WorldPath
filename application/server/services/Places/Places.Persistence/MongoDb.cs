@@ -15,6 +15,7 @@ public class MongoDb : IMongoDb
     private readonly IMongoCollection<PlaceLike> _placeLikesCollection;
     private readonly IMongoCollection<PlaceComment> _placeCommentCollection;
     private readonly IMongoCollection<ParsedPlacePhoto> _parsedPlacesPhotosCollection;
+    private readonly IMongoCollection<UploadedPlacePhoto> _uploadedPlacePhotosCollection;
 
     public MongoDb(IOptions<MongoDatabaseSettings> databaseSettings)
     {
@@ -25,6 +26,8 @@ public class MongoDb : IMongoDb
         _placeCommentCollection = database.GetCollection<PlaceComment>(databaseSettings.Value.PlaceCommentsCollection);
         _parsedPlacesPhotosCollection =
             database.GetCollection<ParsedPlacePhoto>(databaseSettings.Value.ParsedPlacePhotosCollection);
+        _uploadedPlacePhotosCollection =
+            database.GetCollection<UploadedPlacePhoto>(databaseSettings.Value.UploadedPlacePhotosCollection);
     }
     
     
@@ -57,12 +60,7 @@ public class MongoDb : IMongoDb
     {
         await _placeCollection.InsertManyAsync(places, cancellationToken: cancellationToken);
     }
-
-    public Task AddOneParsedPlacePhoto(ParsedPlacePhoto photo)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public async Task AddOneParsedPlacePhoto(ParsedPlacePhoto photo,
         CancellationToken cancellationToken)
     {
@@ -73,6 +71,17 @@ public class MongoDb : IMongoDb
         CancellationToken cancellationToken)
     {
         await _parsedPlacesPhotosCollection.InsertManyAsync(places, cancellationToken: cancellationToken);
+    }
+
+    public async Task AddOneUploadedPlacePhoto(UploadedPlacePhoto uploadedPlacePhoto)
+    {
+        await _uploadedPlacePhotosCollection.InsertOneAsync(uploadedPlacePhoto);
+    }
+
+    public async Task AddManyUploadedPlacePhotos(IEnumerable<UploadedPlacePhoto> uploadedPlacePhotos,
+        CancellationToken cancellationToken)
+    {
+        await _uploadedPlacePhotosCollection.InsertManyAsync(uploadedPlacePhotos, cancellationToken: cancellationToken);
     }
 
     public async Task AddPlaceLikeAsync(PlaceLike placeLike,

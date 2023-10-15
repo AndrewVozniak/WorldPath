@@ -8,4 +8,5 @@ public class MongoDatabaseSettings
     public string PlaceLikesCollection { get; set; } = null!;
     public string PlaceCommentsCollection { get; set; } = null!;
     public string ParsedPlacePhotosCollection { get; set; } = null!;
+    public string UploadedPlacePhotosCollection { get; set; } = null!;
 }

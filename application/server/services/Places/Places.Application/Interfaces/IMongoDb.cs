@@ -11,6 +11,10 @@ public interface IMongoDb
     Task AddOnePlaceAsync(Place place, CancellationToken cancellationToken);
     Task AddManyPlacesAsync(IEnumerable<Place> places, CancellationToken cancellationToken);
     Task AddOneParsedPlacePhoto(ParsedPlacePhoto photo, CancellationToken cancellationToken);
+    Task AddOneUploadedPlacePhoto(UploadedPlacePhoto uploadedPlacePhoto);
+
+    Task AddManyUploadedPlacePhotos(IEnumerable<UploadedPlacePhoto> uploadedPlacePhotos,
+        CancellationToken cancellationToken);
     Task AddManyParsedPlacePhotos(IEnumerable<ParsedPlacePhoto> places, CancellationToken cancellationToken);
     Task AddPlaceLikeAsync(PlaceLike placeLike, CancellationToken cancellationToken);
     Task AddPlaceCommentAsync(PlaceComment placeComment, CancellationToken cancellationToken);

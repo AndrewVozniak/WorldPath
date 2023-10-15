@@ -4,25 +4,25 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Places.Domain;
 
-public class ParsedPlacePhoto
+public class UploadedPlacePhoto
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; } = ObjectId.GenerateNewId().ToString();
     
     [BsonElement("PlaceId")]
-    [JsonPropertyName("placeId")]
+    [JsonPropertyName("PlaceId")]
     public string? PlaceId { get; set; }
     
-    [BsonElement("PhotoPath")]
-    [JsonPropertyName("photoPath")]
-    public string? PhotoPath { get; set; }
+    [BsonElement("PhotoData")]
+    [JsonPropertyName("PhotoData")]
+    public byte[] PhotoData { get; set; }
     
     [BsonElement("UpdatedAt")]
-    [JsonPropertyName("updatedAt")]
+    [JsonPropertyName("UpdatedAt")]
     public DateTime? UpdatedAt { get; set; }
     
     [BsonElement("CreatedAt")]
-    [JsonPropertyName("createdAt")]
+    [JsonPropertyName("CreatedAt")]
     public DateTime CreatedAt { get; set; }
 }
