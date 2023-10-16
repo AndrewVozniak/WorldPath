@@ -1,5 +1,4 @@
-﻿using Places.Application.Likes.CreatePlaceLike;
-using Places.Application.Places.Commands.UpdatePlace;
+﻿using Places.Application.Places.Commands.UpdatePlace;
 using Places.Domain;
 
 namespace Places.Application.Interfaces;
@@ -11,8 +10,11 @@ public interface IMongoDb
     Task AddOnePlaceAsync(Place place, CancellationToken cancellationToken);
     Task AddManyPlacesAsync(IEnumerable<Place> places, CancellationToken cancellationToken);
     Task AddOneParsedPlacePhoto(ParsedPlacePhoto photo, CancellationToken cancellationToken);
+    Task<ParsedPlacePhoto> FindParsedPlacePhoto(string id, CancellationToken cancellationToken);
+    Task LikeParsedPlacePhoto(ParsedPlacePhotoLike parsedPlacePhotoLike);
     Task AddOneUploadedPlacePhoto(UploadedPlacePhoto uploadedPlacePhoto);
-
+    Task<UploadedPlacePhoto> FindUploadedPlacePhoto(string id, CancellationToken cancellationToken);
+    Task LikeUploadedPlacePhoto(UploadedPlacePhotoLike uploadedPlacePhotoLike);
     Task AddManyUploadedPlacePhotos(IEnumerable<UploadedPlacePhoto> uploadedPlacePhotos,
         CancellationToken cancellationToken);
     Task AddManyParsedPlacePhotos(IEnumerable<ParsedPlacePhoto> places, CancellationToken cancellationToken);

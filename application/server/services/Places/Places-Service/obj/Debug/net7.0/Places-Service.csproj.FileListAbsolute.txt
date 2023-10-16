@@ -1178,3 +1178,6 @@ D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\
 D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Places.Application.pdb
 D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Places.Persistence.pdb
 D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Places.Domain.pdb
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\FluentValidation.dll
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll
+D:\WorldPath\application\server\services\Places\Places-Service\bin\Debug\net7.0\Microsoft.Extensions.Configuration.Binder.dll

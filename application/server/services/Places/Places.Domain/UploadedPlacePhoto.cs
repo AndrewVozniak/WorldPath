@@ -21,8 +21,8 @@ public class UploadedPlacePhoto
     [BsonElement("UpdatedAt")]
     [JsonPropertyName("UpdatedAt")]
     public DateTime? UpdatedAt { get; set; }
-    
+
     [BsonElement("CreatedAt")]
     [JsonPropertyName("CreatedAt")]
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 }

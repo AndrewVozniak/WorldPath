@@ -14,9 +14,11 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="12.0.1" />
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
       <PackageReference Include="FluentValidation" Version="11.7.1" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
       <PackageReference Include="MediatR" Version="12.1.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
       <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
       <PackageReference Include="Refit" Version="7.0.0" />
       <PackageReference Include="Refit.HttpClientFactory" Version="7.0.0" />
@@ -29,6 +31,7 @@
       <Folder Include="Comments\Queries\" />
       <Folder Include="Likes\Commands\" />
       <Folder Include="Likes\Queries\" />
+      <Folder Include="PlacePhotoLike\Queries\" />
       <Folder Include="UploadedPlacePhotos\Queries\" />
     </ItemGroup>
 

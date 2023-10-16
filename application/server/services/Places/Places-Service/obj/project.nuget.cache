@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "eMDdzodT+31CI5fHLupPl8DtmotZvbM2B10snyNCQpFY7QJVM8H5U4W6Sn5cROweOqcBcwQH7nN4YFQ8zHmywQ==",
+  "dgSpecHash": "tJYJdOFElgzDtTXT0TISWXtuDN4LjECdX17Xa0ezJ59hGIZa7ItIbWxy6W6sJUND8SKkrPu4kGAU3SUkHpnU9g==",
   "success": true,
   "projectFilePath": "D:\\WorldPath\\application\\server\\services\\Places\\Places-Service\\Places-Service.csproj",
   "expectedPackageFiles": [
@@ -85,6 +85,7 @@
     "C:\\Users\\prozy\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\prozy\\.nuget\\packages\\microsoft.extensions.configuration.binder\\7.0.4\\microsoft.extensions.configuration.binder.7.0.4.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\prozy\\.nuget\\packages\\microsoft.extensions.http\\7.0.0\\microsoft.extensions.http.7.0.0.nupkg.sha512",

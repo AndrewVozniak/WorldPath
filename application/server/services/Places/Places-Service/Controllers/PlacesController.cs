@@ -5,6 +5,7 @@ using Places_Service.Models;
 using Places.Application.Comments.Commands;
 using Places.Application.Interfaces;
 using Places.Application.Likes.CreatePlaceLike;
+using Places.Application.PlacePhotoLike.Commands;
 using Places.Application.Places.Commands.CreateManyPlaces;
 using Places.Application.Places.Commands.CreateOnePlace;
 using Places.Application.Places.Commands.DeletePlace;
@@ -13,7 +14,6 @@ using Places.Application.Places.Queries.GetPlaceByCoordinate;
 using Places.Application.Places.Queries.GetPlaceById;
 using Places.Application.Places.Queries.GetPlaceByName;
 using Places.Application.UploadedPlacePhotos.Commands;
-using Refit;
 
 namespace Places_Service.Controllers
 {
@@ -22,10 +22,12 @@ namespace Places_Service.Controllers
     public class PlacesController : BaseController
     {
         private readonly IMapper _mapper;
+        private readonly IGooglePlaceApi _placeApi;
 
-        public PlacesController(IMapper mapper, IMediator mediator): base(mediator)
+        public PlacesController(IMapper mapper, IMediator mediator, IGooglePlaceApi placeApi): base(mediator)
         {
             _mapper = mapper;
+            _placeApi = placeApi;
         }
         
         [HttpGet]
@@ -65,8 +67,8 @@ namespace Places_Service.Controllers
             // If places founded
             if (placesNearby != null) return Ok(placesNearby);
             
-            var placesApi = RestService.For<IGooglePlaceApi>("https://maps.googleapis.com/maps/api/place/");
-            var placeData = await placesApi.GetPlacesByCoordinate(lat, lon);
+            var placeData = await _placeApi.GetPlacesByCoordinate(lat, lon, 
+                cancellationToken: cancellationToken);
 
             var query = _mapper.Map<CreateManyPlacesCommand>(placeData);
 
@@ -75,7 +77,7 @@ namespace Places_Service.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Like([FromBody] PlaceLikeDto placeLikeDto,
+        public async Task<IActionResult> LikePlace([FromBody] PlaceLikeDto placeLikeDto,
             CancellationToken cancellationToken)
         {
             var command = _mapper.Map<CreatePlaceLikeCommand>(placeLikeDto);
@@ -84,12 +86,21 @@ namespace Places_Service.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Comment([FromBody] PlaceCommentDto commentDto,
+        public async Task<IActionResult> CommentPlace([FromBody] PlaceCommentDto commentDto,
             CancellationToken cancellationToken)
         {
             var command = _mapper.Map<CreatePlaceCommentCommand>(commentDto);
             var placeComment = await Mediator.Send(command, cancellationToken);
             return Ok(placeComment);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LikePlacePhoto([FromBody] PlacePhotoLikeDto photoLikeDto,
+            CancellationToken cancellationToken)
+        {
+            var command = _mapper.Map<CreatePlacePhotoLikeCommand>(photoLikeDto);
+            var placePhotoLike = await Mediator.Send(command, cancellationToken);
+            return Ok(placePhotoLike);
         }
 
         [HttpPost]
@@ -116,7 +127,7 @@ namespace Places_Service.Controllers
             return Ok(uploadedPhoto);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> UpdatePlace([FromBody] UpdatePlaceDto updatePlaceDto,
             CancellationToken cancellationToken)
         {
@@ -126,7 +137,7 @@ namespace Places_Service.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeletePlace(string placeId,
+        public async Task<IActionResult> DeletePlace([FromQuery] string placeId,
             CancellationToken cancellationToken)
         {
             var command = new DeletePlaceCommand(placeId);

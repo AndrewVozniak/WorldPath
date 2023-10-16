@@ -2,8 +2,10 @@
 using MediatR;
 using Refit;
 using FluentValidation;
+using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Places.Application.Common.Behaviors;
+using Places.Application.Common.Mappings;
 using Places.Application.Interfaces;
 
 namespace Places.Application;
@@ -20,6 +22,10 @@ public static class DependencyInjection
         services.AddValidatorsFromAssemblies(new[] { Assembly.GetExecutingAssembly() });
         services.AddTransient(typeof(IPipelineBehavior<,>),
             typeof(ValidationBehavior<,>));
+        services.AddAutoMapper(config =>
+        {
+            config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+        });
         return services;
     }
 }

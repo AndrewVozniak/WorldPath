@@ -15,7 +15,9 @@ public class MongoDb : IMongoDb
     private readonly IMongoCollection<PlaceLike> _placeLikesCollection;
     private readonly IMongoCollection<PlaceComment> _placeCommentCollection;
     private readonly IMongoCollection<ParsedPlacePhoto> _parsedPlacesPhotosCollection;
+    private readonly IMongoCollection<ParsedPlacePhotoLike> _parsedPlacePhotoLikesCollection;
     private readonly IMongoCollection<UploadedPlacePhoto> _uploadedPlacePhotosCollection;
+    private readonly IMongoCollection<UploadedPlacePhotoLike> _uploadedPlacePhotoLikesCollection;
 
     public MongoDb(IOptions<MongoDatabaseSettings> databaseSettings)
     {
@@ -28,6 +30,10 @@ public class MongoDb : IMongoDb
             database.GetCollection<ParsedPlacePhoto>(databaseSettings.Value.ParsedPlacePhotosCollection);
         _uploadedPlacePhotosCollection =
             database.GetCollection<UploadedPlacePhoto>(databaseSettings.Value.UploadedPlacePhotosCollection);
+        _parsedPlacePhotoLikesCollection =
+            database.GetCollection<ParsedPlacePhotoLike>(databaseSettings.Value.ParsedPlacePhotoLikesCollection);
+        _uploadedPlacePhotoLikesCollection =
+            database.GetCollection<UploadedPlacePhotoLike>(databaseSettings.Value.UploadedPlacePhotoLikesCollection);
     }
     
     
@@ -48,11 +54,10 @@ public class MongoDb : IMongoDb
         return place;
     }
     
-    [Obsolete("Obsolete")]
     public async Task AddOnePlaceAsync(Place place,
         CancellationToken cancellationToken)
     {
-        await _placeCollection.InsertOneAsync(place, cancellationToken);
+        await _placeCollection.InsertOneAsync(place, cancellationToken: cancellationToken);
     }
 
     public async Task AddManyPlacesAsync(IEnumerable<Place> places,
@@ -67,6 +72,21 @@ public class MongoDb : IMongoDb
         await _parsedPlacesPhotosCollection.InsertOneAsync(photo, cancellationToken: cancellationToken);
     }
 
+    public async Task<ParsedPlacePhoto> FindParsedPlacePhoto(string id, CancellationToken cancellationToken)
+    {
+        var filter = Builders<ParsedPlacePhoto>.Filter.Eq(pl => pl.PlaceId, id);
+
+        var placePhoto = await _parsedPlacesPhotosCollection.Find(filter)
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+
+        return placePhoto;
+    }
+
+    public async Task LikeParsedPlacePhoto(ParsedPlacePhotoLike parsedPlacePhotoLike)
+    {
+        await _parsedPlacePhotoLikesCollection.InsertOneAsync(parsedPlacePhotoLike);
+    }
+
     public async Task AddManyParsedPlacePhotos(IEnumerable<ParsedPlacePhoto> places,
         CancellationToken cancellationToken)
     {
@@ -76,6 +96,21 @@ public class MongoDb : IMongoDb
     public async Task AddOneUploadedPlacePhoto(UploadedPlacePhoto uploadedPlacePhoto)
     {
         await _uploadedPlacePhotosCollection.InsertOneAsync(uploadedPlacePhoto);
+    }
+
+    public async Task<UploadedPlacePhoto> FindUploadedPlacePhoto(string id, CancellationToken cancellationToken)
+    {
+        var filter = Builders<UploadedPlacePhoto>.Filter.Eq(pl => pl.PlaceId, id);
+
+        var placePhoto = await _uploadedPlacePhotosCollection.Find(filter)
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+
+        return placePhoto;
+    }
+
+    public async Task LikeUploadedPlacePhoto(UploadedPlacePhotoLike uploadedPlacePhotoLike)
+    {
+        await _uploadedPlacePhotoLikesCollection.InsertOneAsync(uploadedPlacePhotoLike);
     }
 
     public async Task AddManyUploadedPlacePhotos(IEnumerable<UploadedPlacePhoto> uploadedPlacePhotos,
