@@ -5,6 +5,7 @@ using Places_Service.Models;
 using Places.Application.Comments.Commands;
 using Places.Application.Interfaces;
 using Places.Application.Likes.CreatePlaceLike;
+using Places.Application.PlacePhotoComment;
 using Places.Application.PlacePhotoLike.Commands;
 using Places.Application.Places.Commands.CreateManyPlaces;
 using Places.Application.Places.Commands.CreateOnePlace;
@@ -98,9 +99,18 @@ namespace Places_Service.Controllers
         public async Task<IActionResult> LikePlacePhoto([FromBody] PlacePhotoLikeDto photoLikeDto,
             CancellationToken cancellationToken)
         {
-            var command = _mapper.Map<CreatePlacePhotoLikeCommand>(photoLikeDto);
+            var command = _mapper.Map<PlacePhotoLikeCommand>(photoLikeDto);
             var placePhotoLike = await Mediator.Send(command, cancellationToken);
             return Ok(placePhotoLike);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CommentPlacePhoto([FromBody] PlacePhotoCommentDto placePhotoCommentDto,
+            CancellationToken cancellationToken)
+        {
+            var command = _mapper.Map<PlacePhotoCommentCommand>(placePhotoCommentDto);
+            var placePhotoComment = await Mediator.Send(command, cancellationToken);
+            return Ok(placePhotoComment);
         }
 
         [HttpPost]

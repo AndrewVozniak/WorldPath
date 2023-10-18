@@ -12,9 +12,11 @@ public interface IMongoDb
     Task AddOneParsedPlacePhoto(ParsedPlacePhoto photo, CancellationToken cancellationToken);
     Task<ParsedPlacePhoto> FindParsedPlacePhoto(string id, CancellationToken cancellationToken);
     Task LikeParsedPlacePhoto(ParsedPlacePhotoLike parsedPlacePhotoLike);
+    Task CommentParsedPlacePhoto(ParsedPlacePhotoComment comment);
     Task AddOneUploadedPlacePhoto(UploadedPlacePhoto uploadedPlacePhoto);
     Task<UploadedPlacePhoto> FindUploadedPlacePhoto(string id, CancellationToken cancellationToken);
     Task LikeUploadedPlacePhoto(UploadedPlacePhotoLike uploadedPlacePhotoLike);
+    Task CommentUploadedPlacePhoto(UploadedPlacePhotoComment comment);
     Task AddManyUploadedPlacePhotos(IEnumerable<UploadedPlacePhoto> uploadedPlacePhotos,
         CancellationToken cancellationToken);
     Task AddManyParsedPlacePhotos(IEnumerable<ParsedPlacePhoto> places, CancellationToken cancellationToken);

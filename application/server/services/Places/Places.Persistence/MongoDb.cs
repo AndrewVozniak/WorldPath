@@ -16,8 +16,10 @@ public class MongoDb : IMongoDb
     private readonly IMongoCollection<PlaceComment> _placeCommentCollection;
     private readonly IMongoCollection<ParsedPlacePhoto> _parsedPlacesPhotosCollection;
     private readonly IMongoCollection<ParsedPlacePhotoLike> _parsedPlacePhotoLikesCollection;
+    private readonly IMongoCollection<ParsedPlacePhotoComment> _parsedPlacePhotoCommentsCollection;
     private readonly IMongoCollection<UploadedPlacePhoto> _uploadedPlacePhotosCollection;
     private readonly IMongoCollection<UploadedPlacePhotoLike> _uploadedPlacePhotoLikesCollection;
+    private readonly IMongoCollection<UploadedPlacePhotoComment> _uploadedPlacePhotoCommentsCollection;
 
     public MongoDb(IOptions<MongoDatabaseSettings> databaseSettings)
     {
@@ -34,6 +36,11 @@ public class MongoDb : IMongoDb
             database.GetCollection<ParsedPlacePhotoLike>(databaseSettings.Value.ParsedPlacePhotoLikesCollection);
         _uploadedPlacePhotoLikesCollection =
             database.GetCollection<UploadedPlacePhotoLike>(databaseSettings.Value.UploadedPlacePhotoLikesCollection);
+        _uploadedPlacePhotoCommentsCollection =
+            database.GetCollection<UploadedPlacePhotoComment>(databaseSettings.Value
+                .UploadedPlacePhotoCommentsCollection);
+        _parsedPlacePhotoCommentsCollection =
+            database.GetCollection<ParsedPlacePhotoComment>(databaseSettings.Value.ParsedPlacePhotoCommentsCollection);
     }
     
     
@@ -87,6 +94,11 @@ public class MongoDb : IMongoDb
         await _parsedPlacePhotoLikesCollection.InsertOneAsync(parsedPlacePhotoLike);
     }
 
+    public async Task CommentParsedPlacePhoto(ParsedPlacePhotoComment comment)
+    {
+        await _parsedPlacePhotoCommentsCollection.InsertOneAsync(comment);
+    }
+
     public async Task AddManyParsedPlacePhotos(IEnumerable<ParsedPlacePhoto> places,
         CancellationToken cancellationToken)
     {
@@ -111,6 +123,11 @@ public class MongoDb : IMongoDb
     public async Task LikeUploadedPlacePhoto(UploadedPlacePhotoLike uploadedPlacePhotoLike)
     {
         await _uploadedPlacePhotoLikesCollection.InsertOneAsync(uploadedPlacePhotoLike);
+    }
+
+    public async Task CommentUploadedPlacePhoto(UploadedPlacePhotoComment comment)
+    {
+        await _uploadedPlacePhotoCommentsCollection.InsertOneAsync(comment);
     }
 
     public async Task AddManyUploadedPlacePhotos(IEnumerable<UploadedPlacePhoto> uploadedPlacePhotos,
