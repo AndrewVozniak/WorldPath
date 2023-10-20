@@ -7,6 +7,7 @@ using Places.Application.Interfaces;
 using Places.Application.Likes.CreatePlaceLike;
 using Places.Application.PlacePhotoComment;
 using Places.Application.PlacePhotoLike.Commands;
+using Places.Application.PlacePhotos.Queries;
 using Places.Application.Places.Commands.CreateManyPlaces;
 using Places.Application.Places.Commands.CreateOnePlace;
 using Places.Application.Places.Commands.DeletePlace;
@@ -126,6 +127,15 @@ namespace Places_Service.Controllers
             await Mediator.Send(place, cancellationToken);
 
             return Ok(place);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllPlacePhotos([FromQuery] GetPlacePhotoDto photoDto,
+            CancellationToken cancellationToken)
+        {
+            var query = _mapper.Map<GetPlacePhotosQuery>(photoDto);
+            var photos = await Mediator.Send(query, cancellationToken);
+            return Ok(photos);
         }
 
         [HttpPost]

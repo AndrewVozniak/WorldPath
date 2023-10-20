@@ -79,6 +79,17 @@ public class MongoDb : IMongoDb
         await _parsedPlacesPhotosCollection.InsertOneAsync(photo, cancellationToken: cancellationToken);
     }
 
+    public async Task<List<ParsedPlacePhoto>> GetAllParsedPlacePhoto(string placeId, CancellationToken cancellationToken)
+    {
+        var filter = Builders<ParsedPlacePhoto>.Filter.Eq(p => p.PlaceId, placeId);
+
+        var placePhoto = await _parsedPlacesPhotosCollection
+            .Find(filter)
+            .ToListAsync(cancellationToken);
+
+        return placePhoto;
+    }
+
     public async Task<ParsedPlacePhoto> FindParsedPlacePhoto(string id, CancellationToken cancellationToken)
     {
         var filter = Builders<ParsedPlacePhoto>.Filter.Eq(pl => pl.PlaceId, id);
@@ -108,6 +119,17 @@ public class MongoDb : IMongoDb
     public async Task AddOneUploadedPlacePhoto(UploadedPlacePhoto uploadedPlacePhoto)
     {
         await _uploadedPlacePhotosCollection.InsertOneAsync(uploadedPlacePhoto);
+    }
+
+    public async Task<List<UploadedPlacePhoto>> GetAllUploadedPlacePhoto(string placeId, CancellationToken cancellationToken)
+    {
+        var filter = Builders<UploadedPlacePhoto>.Filter.Eq(p => p.PlaceId, placeId);
+
+        var placePhoto = await _uploadedPlacePhotosCollection
+            .Find(filter)
+            .ToListAsync(cancellationToken);
+
+        return placePhoto;
     }
 
     public async Task<UploadedPlacePhoto> FindUploadedPlacePhoto(string id, CancellationToken cancellationToken)

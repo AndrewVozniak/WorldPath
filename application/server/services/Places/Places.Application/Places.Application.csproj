@@ -28,10 +28,11 @@
 
 
     <ItemGroup>
-      <Folder Include="Comments\Queries\" />
-      <Folder Include="Likes\Commands\" />
-      <Folder Include="Likes\Queries\" />
+      <Folder Include="PlaceComments\Queries\" />
+      <Folder Include="PlaceLikes\Commands\" />
+      <Folder Include="PlaceLikes\Queries\" />
       <Folder Include="PlacePhotoLike\Queries\" />
+      <Folder Include="PlacePhotos\Commands\" />
       <Folder Include="UploadedPlacePhotos\Queries\" />
     </ItemGroup>
 
