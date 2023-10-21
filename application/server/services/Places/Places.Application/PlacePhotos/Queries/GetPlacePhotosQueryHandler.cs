@@ -18,32 +18,24 @@ public class GetPlacePhotosQueryHandler : IRequestHandler<GetPlacePhotosQuery, P
 
     public async Task<PlacePhotoViewModel> Handle(GetPlacePhotosQuery request, CancellationToken cancellationToken)
     {
+        var placePhoto = new PlacePhotoViewModel();
+        
         var parsedPhotos = await _mongoDb
             .GetAllParsedPlacePhoto(request.PlaceId, cancellationToken);
 
         if (parsedPhotos != null)
         {
-            var photos = new PlacePhotoViewModel()
-            {
-                ParsedPlacePhotos = parsedPhotos
-            };
-
-            return photos;
+            placePhoto.ParsedPlacePhotos = parsedPhotos;
         }
-
+        
         var uploadedPhotos = await _mongoDb
             .GetAllUploadedPlacePhoto(request.PlaceId, cancellationToken);
 
         if (uploadedPhotos != null)
         {
-            var photos = new PlacePhotoViewModel()
-            {
-                UploadedPlacePhotos = uploadedPhotos
-            };
-
-            return photos;
+            placePhoto.UploadedPlacePhotos = uploadedPhotos;
         }
 
-        throw new NotFoundException(nameof(PlacePhotoViewModel), request.PlaceId);
+        return placePhoto;
     }
 }
