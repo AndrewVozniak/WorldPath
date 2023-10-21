@@ -19,40 +19,55 @@ public class CreatePlacesCommandHandler : IRequestHandler<CreateManyPlacesComman
         var newPlaces = new List<Place>();
         var parsedPhotos = new List<ParsedPlacePhoto>();
 
-        foreach (var result in request.Results)
+        for (var i = 0; i < request.Results.Count; i++)
         {
+                    // Get place from placeData
+            var result = request.Results[i];
+                    
             var placeType = string.Join(",", result.Types);
-
+                    
             var newPlace = new Place
             {
                 Name = result.Name,
                 Lat = result.Geometry.Location.Lat,
                 Lon = result.Geometry.Location.Lng,
                 PlaceType = placeType,
-                CreatedAt = DateTime.Now
+                PhotoReference = null
             };
+                    
 
-            newPlaces.Add(newPlace);
-
-            // Перевірка наявності фотографій і ініціалізація parsedPhotos за замовчуванням, якщо фотографій немає
             if (result.Photos != null)
             {
-                foreach (var photo in result.Photos)
+                if (i < result.Photos.Count)
                 {
+                    newPlace.PhotoReference =
+                        result.Photos[i].PhotoReference; // Set photoReference if it exists
+                    
+                }
+
+                newPlaces.Add(newPlace);
+                        
+                for (var j = 0; j < result.Photos.Count; j++)
+                {
+                    var photo = result.Photos[j];
+
                     var parsedPhoto = new ParsedPlacePhoto()
                     {
                         PlaceId = newPlace.Id,
-                        PhotoPath = photo.PhotoReference // Або інший спосіб отримання шляху до фотографії
+                        PhotoReference = newPlace.PhotoReference,
+                        CreatedAt = DateTime.Now
                     };
-                    parsedPhotos.Add(parsedPhoto); // Додавання об'єкта ParsedPlacePhoto в список
+                    parsedPhotos.Add(parsedPhoto);
                 }
             }
         }
-        // parsedPhotos тепер завжди існує і може бути пустим списком, якщо фотографій не було
-        
+
+
         await _mongoDb.AddManyPlacesAsync(newPlaces, cancellationToken);
-        await _mongoDb.AddManyParsedPlacePhotos(parsedPhotos, cancellationToken);
+        if (parsedPhotos.Count > 0)
+            await _mongoDb.AddManyParsedPlacePhotos(parsedPhotos, cancellationToken);
 
         return newPlaces;
     }
+
 }

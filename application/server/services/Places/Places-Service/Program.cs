@@ -1,4 +1,6 @@
+using System.Reflection;
 using Places.Application;
+using Places.Application.Common.Mappings;
 using Places.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddAutoMapper(config =>
+{
+    config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+});
 builder.Services.AddCors(options =>  
 {  
     options.AddPolicy("AllowAll", policy =>  

@@ -6,6 +6,6 @@ namespace Places.Application.Places.Commands.CreateManyPlaces;
 
 public class CreateManyPlacesCommand : IRequest<List<Place>>
 {
-    public List<Result> Results { get; set; }
-    public string Status { get; set; }
+    public List<Result> Results { get; set; } = null!;
+    public string Status { get; set; } = null!;
 }

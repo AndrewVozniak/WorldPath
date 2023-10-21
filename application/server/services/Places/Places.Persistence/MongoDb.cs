@@ -36,11 +36,11 @@ public class MongoDb : IMongoDb
             database.GetCollection<ParsedPlacePhotoLike>(databaseSettings.Value.ParsedPlacePhotoLikesCollection);
         _uploadedPlacePhotoLikesCollection =
             database.GetCollection<UploadedPlacePhotoLike>(databaseSettings.Value.UploadedPlacePhotoLikesCollection);
+        _parsedPlacePhotoCommentsCollection =
+            database.GetCollection<ParsedPlacePhotoComment>(databaseSettings.Value.ParsedPlacePhotoCommentsCollection);
         _uploadedPlacePhotoCommentsCollection =
             database.GetCollection<UploadedPlacePhotoComment>(databaseSettings.Value
                 .UploadedPlacePhotoCommentsCollection);
-        _parsedPlacePhotoCommentsCollection =
-            database.GetCollection<ParsedPlacePhotoComment>(databaseSettings.Value.ParsedPlacePhotoCommentsCollection);
     }
     
     

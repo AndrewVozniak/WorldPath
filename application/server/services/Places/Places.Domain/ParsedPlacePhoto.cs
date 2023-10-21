@@ -14,9 +14,9 @@ public class ParsedPlacePhoto
     [JsonPropertyName("placeId")]
     public string? PlaceId { get; set; }
     
-    [BsonElement("PhotoPath")]
-    [JsonPropertyName("photoPath")]
-    public string? PhotoPath { get; set; }
+    [BsonElement("PhotoReference")]
+    [JsonPropertyName("photo_reference")]
+    public string? PhotoReference { get; set; }
     
     [BsonElement("UpdatedAt")]
     [JsonPropertyName("updatedAt")]

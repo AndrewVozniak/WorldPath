@@ -18,19 +18,16 @@ public class CreateOnePlaceCommandHandler : IRequestHandler<CreateOnePlaceComman
     {
         var place = new Place
         {
-            Id = ObjectId.GenerateNewId().ToString(),
             Name = request.Name,
             Lat = request.Lat,
             Lon = request.Lon,
             PlaceType = request.PlaceType,
-            CreatedAt = DateTime.Now,
         };
 
         var parsedPhoto = new ParsedPlacePhoto()
         {
             PlaceId = place.Id,
-            PhotoPath = place.PhotoReference,
-            CreatedAt = DateTime.Now
+            PhotoReference = place.PhotoReference,
         };
 
         await _mongoDb.AddOnePlaceAsync(place, cancellationToken);

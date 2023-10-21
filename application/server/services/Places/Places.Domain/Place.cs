@@ -48,7 +48,7 @@ public class Place
             Lat = value.Coordinates.Latitude;
         }
     }
-    
-    [BsonIgnore]
+
+    [BsonIgnore] 
     public string? PhotoReference { get; set; }
 }

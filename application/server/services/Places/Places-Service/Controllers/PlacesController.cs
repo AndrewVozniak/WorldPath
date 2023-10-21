@@ -16,6 +16,7 @@ using Places.Application.Places.Queries.GetPlaceByCoordinate;
 using Places.Application.Places.Queries.GetPlaceById;
 using Places.Application.Places.Queries.GetPlaceByName;
 using Places.Application.UploadedPlacePhotos.Commands;
+using Refit;
 
 namespace Places_Service.Controllers
 {
@@ -24,12 +25,10 @@ namespace Places_Service.Controllers
     public class PlacesController : BaseController
     {
         private readonly IMapper _mapper;
-        private readonly IGooglePlaceApi _placeApi;
 
-        public PlacesController(IMapper mapper, IMediator mediator, IGooglePlaceApi placeApi): base(mediator)
+        public PlacesController(IMapper mapper, IMediator mediator): base(mediator)
         {
             _mapper = mapper;
-            _placeApi = placeApi;
         }
         
         [HttpGet]
@@ -67,10 +66,10 @@ namespace Places_Service.Controllers
             var placesNearby = await Mediator.Send(command, cancellationToken);
             
             // If places founded
-            if (placesNearby != null) return Ok(placesNearby);
+            if (placesNearby != null && placesNearby.Any()) return Ok(placesNearby);
             
-            var placeData = await _placeApi.GetPlacesByCoordinate(lat, lon, 
-                cancellationToken: cancellationToken);
+            var placesApi = RestService.For<IGooglePlaceApi>("https://maps.googleapis.com/maps/api/place/");
+            var placeData = await placesApi.GetPlacesByCoordinate(lat, lon, cancellationToken);
 
             var query = _mapper.Map<CreateManyPlacesCommand>(placeData);
 

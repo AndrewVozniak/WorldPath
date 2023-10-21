@@ -1,4 +1,7 @@
-﻿namespace Places.Application.Comments.Commands;
+﻿using AutoMapper;
+using Places.Domain;
+
+namespace Places.Application.Comments.Commands;
 
 public class PlaceCommentViewModel
 {
@@ -8,4 +11,9 @@ public class PlaceCommentViewModel
     public string? Text { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public DateTime CreatedAt { get; set; }
+
+    public void Mapper(Profile profile)
+    {
+        profile.CreateMap<PlaceComment, PlaceCommentViewModel>();
+    }
 }

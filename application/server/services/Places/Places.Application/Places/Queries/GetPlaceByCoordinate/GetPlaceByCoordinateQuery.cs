@@ -3,7 +3,7 @@ using Places.Domain;
 
 namespace Places.Application.Places.Queries.GetPlaceByCoordinate;
 
-public class GetPlaceByCoordinateQuery : IRequest<Place>, IRequest<PlaceByCoordinatesViewModel>, IRequest<List<PlaceByCoordinatesViewModel>>
+public class GetPlaceByCoordinateQuery : IRequest<IEnumerable<PlaceByCoordinatesViewModel>>
 {
     public double Lat { get; set; }
     public double Lon { get; set; }
